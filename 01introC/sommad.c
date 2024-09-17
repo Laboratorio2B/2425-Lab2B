@@ -10,6 +10,8 @@
 // da compilare con:
 //  gcc -std=c11 -Wall -O -g -o sommad  sommad.c
 
+// Il programma esegue esattamente le stesse operazioni di somma.c
+// ma utilizza un array "dinamico" ottenuto con malloc
 
 // Scopo del programma:
 //  legge un intero N da tastiera
@@ -35,6 +37,7 @@ int main(int argc, char *argv[])
     exit(2);
   }
   
+  // prima era solo:   int a[n]
   // crea un array dinamico e riempi array
   int *a;  // dichiaro che a sarà usata come array
   a  = malloc(n*sizeof(int));
@@ -59,6 +62,7 @@ int main(int argc, char *argv[])
   
   printf("%d\n",somma);
   
+  // la memoria che è stata ottenuta con malloc() va restituita con free()
   free(a);
   return 0;
 }

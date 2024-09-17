@@ -3,11 +3,11 @@
 
 **Lezione 1** (17/9/24)
 
-* Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal terminale. Compilazione. Esecuzione di programmi 
+* Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal terminale. Compilazione: errori e warning. Permessi di lettura scrittura esecuzione `rwx`. Esecuzione di programmi. Array "statici" (tipo `int a[n]` in `somma.c`) vs array "dinamici" gestiti con `malloc/free` utilizzati in `sommad.c`
 
 -----------------------
 
-**Lezione 2** (29/9/24)
+**Lezione 2** (19/9/24)
 
 * Allocazione dinamica di array in C. Funzioni: malloc/free/realloc. 
 * Utilizzo di *valgrind* per verificare il corretto utilizzo degli array

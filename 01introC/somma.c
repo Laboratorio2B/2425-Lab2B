@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
   int n; // definisco variabile intera di nome n
 
   // spiego cosa voglio leggere e lo leggo con scanf  
-  printf("Inserisci il numero di elementi: ");
+  puts("Inserisci il numero di elementi: ");
   int e = scanf("%d",&n); // il motivo della & lo vedremo più avanti 
   // controlli sulla lettura
   if(e!=1) {
@@ -48,8 +48,9 @@ int main(int argc, char *argv[])
   
   // calcola e stampa la somma
   int somma=0;
-  for(int i=0;i<n;i++)
+  for(int i=0;i<n;i++)  { // inizializ; test; aggiornamento
     somma += a[i];
+  }
   
   printf("%d\n",somma);
   
