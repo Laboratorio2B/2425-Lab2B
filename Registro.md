@@ -9,8 +9,8 @@
 
 **Lezione 2** (19/9/24)
 
-* Allocazione dinamica di array in C. Funzioni: malloc/free/realloc. 
-* Utilizzo di *valgrind* per verificare il corretto utilizzo degli array
+* Allocazione dinamica di array in C. Funzioni: malloc/free/realloc. Programma `primi.c`.
+* Utilizzo di *valgrind* per verificare il corretto utilizzo e deallocazione degli array
 
 -------
 
