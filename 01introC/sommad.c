@@ -54,12 +54,13 @@ int main(int argc, char *argv[])
       exit(1);
     }
   }
+
   
   // calcola e stampa la somma
   int somma = 0;
   for(int i=0;i<n;i++)
     somma += a[i];
-  
+      
   printf("%d\n",somma);
   
   // la memoria che è stata ottenuta con malloc() va restituita con free()
