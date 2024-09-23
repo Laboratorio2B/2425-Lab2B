@@ -60,8 +60,7 @@ int main(int argc, char *argv[])
 
   // spiego cosa voglio leggere e lo leggo con scanf  
   printf("Inserisci il valore N: ");
-  int *m = &n;
-  int e = scanf("%d",m); // il motivo della & lo vedremo più avanti 
+  int e = scanf("%d",&n); // il motivo della & lo vedremo più avanti 
   // controlli sulla lettura
   if(e!=1) termina("Valore non trovato");
   if(n<2)  termina("Non ci sono numeri primi");
@@ -116,7 +115,4 @@ void termina(char *messaggio)
   puts(messaggio);
   exit(1);
 }
-
-
-
 
