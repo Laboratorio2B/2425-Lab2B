@@ -26,7 +26,7 @@ int incrementa1(int z)
 }
 
 // funzione che incrementa di 1 un parametro 
-// passato per riferimento atraverso un puntatore
+// passato per riferimento attraverso un puntatore
 int incrementa1p(int *p)
 {
   printf("incrementa1p: p si trova nella posizione %ld e vale %ld\n",
@@ -38,15 +38,14 @@ int incrementa1p(int *p)
 
 int main(int argc, char *argv[])
 {
-  int n; // definisco variabile intera di nome n
-
-  n = 5;
+  int n =5;
+  
   printf("main 1: n si trova nella posizione %ld e vale %ld\n",
          (long) &n, (long )n);  
-  incrementa1(n);
+  incrementa1(n);    // chiamata per valore: non ha effetto su n
   printf("main 2: n si trova nella posizione %ld e vale %ld\n",
          (long) &n, (long )n);  
-  incrementa1p(&n);
+  incrementa1p(&n);  // chiamata per riferimento: modifica n
   printf("main 3: n si trova nella posizione %ld e vale %ld\n",
          (long) &n, (long )n);  
   return 0;
