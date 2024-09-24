@@ -18,7 +18,6 @@
 
 // da compilare con:
 //  gcc -std=c11 -Wall -O -g -o primi  primi.c
-// oppure con il makefile visto a lezione
 
 
 // Scopo del programma:
