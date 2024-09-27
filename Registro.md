@@ -25,15 +25,17 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 4** (27/9/24)
 
-* Warning di valore ignorato. Comando `man`, sezioni del manuale, comando `whatis`. Esempi `printf`/`scanf`
-* Rappresentazione di stringhe in C: i tipi `char` e `char *`. Stampa di stringhe con `printf` e `puts`. 
+* Warning di valore ignorato. Comando `man`, sezioni del manuale, 
+* Rappresentazione di stringhe in C: i tipi `char` e `char *`. Stampa di stringhe con `printf`, calcolo lunghezza con `strlen`. 
 * Uso dei parametri argc/argv di main()
-* Introduzione al *makefile*; compilazione con il comando *make*
+* Copia di un puntatore vs copia degli elementi di un array: la funzione strdup()
+
 
 -------
 
 **Lezione 5** (1/10/24)
 
-* Copia di un puntatore vs copia di un array: la funzione strdup()
+* Introduzione al *makefile*; compilazione con il comando *make*
 * Scrittura in un file di testo: fopen(), fprintf(), fclose(). Modalità append.
 * Terminazione in caso di errori: funzione perror() e variabile globale `errno`
+

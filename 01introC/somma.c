@@ -11,7 +11,7 @@
 //  gcc -std=c11 -Wall -O -g -o somma  somma.c
 
 
-// Scopo del programma:
+// Scopo del programma: 
 //  legge un intero N da tastiera
 //  crea un array di N int
 //  legge N interi mettendoli nell'array
@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
 
   // spiego cosa voglio leggere e lo leggo con scanf  
   puts("Inserisci il numero di elementi: ");
-  int e = scanf("%d",&n); // il motivo della & lo vedremo più avanti 
+  int e;
+  scanf("%d",&n); // il motivo della & lo vedremo più avanti 
   // controlli sulla lettura
   if(e!=1) {
     puts("Valore non trovato");
