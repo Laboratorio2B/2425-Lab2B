@@ -39,22 +39,17 @@ bool primo(int k) {
 }
 
 
-
-// questo è il vecchio programma primi.c 
-// verrà modificato a lezione 
-
-
 int main(int argc, char *argv[])
 {
   int n; // definisco variabile intera di nome n
-
-  // spiego cosa voglio leggere e lo leggo con scanf  
-  printf("Inserisci il valore N: ");
-  int e = scanf("%d",&n); // il motivo della & lo vedremo più avanti 
-  // controlli sulla lettura
-  if(e!=1) termina("Valore non trovato");
-  if(n<2)  termina("Non ci sono numeri primi");
   
+  if(argc!=3) {
+    printf("Uso: %s intero_pos nome_file\n",argv[0]);
+    return 1;
+  }
+  n = atoi(argv[1]); // converto argv[1] in intero
+  if(n<1) 
+    termina("E' richiesto un intero *positivo*!");
   
   // crea un array dinamico inizialmente di 10 elementi
   int *a;  // dichiaro che a sarà usata come array
@@ -63,7 +58,6 @@ int main(int argc, char *argv[])
   a = malloc(capacita*sizeof(int));
   if(a==NULL) 
     termina("Malloc fallita");
-
 
   // riempio array
   for(int i=2; i<=n; i++) {
@@ -87,12 +81,19 @@ int main(int argc, char *argv[])
   capacita = messi;
   a = realloc(a,capacita*sizeof(int));
   if(a==NULL) termina("Realloc fallita");
+
+  // apriamo il file per scriveci gli interi
+  FILE *f = fopen(argv[2],"at");
+  if(f==NULL)
+    termina("Apertura del file fallita");
     
-  // stampa contenuto array, usando 8 caratteri per intero 
+  // scrivi su f il contenuto array, un intero per riga 
   for(int i=0;i<messi;i++) {     
-    printf("%8d",a[i]);                    
+    fprintf(f,"%d\n",a[i]);                    
   }
-  printf("\n");
+  if(fclose(f)!=0)
+    termina("Errore chiusura file");
+    
   // dealloco la memoria della tabella
   free(a);
   return 0;
@@ -102,7 +103,7 @@ int main(int argc, char *argv[])
 // stampa un messaggio d'errore e termina il programma
 void termina(char *messaggio)
 {
-  puts(messaggio);
+  perror(messaggio);
   exit(1);
 }
 

@@ -37,10 +37,19 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 * Introduzione al *makefile*; compilazione con il comando *make*
 * Scrittura in un file di testo: fopen(), fprintf(), fclose(). Modalità append.
-* Terminazione in caso di errori: funzione perror() e `stderr`. Ridirezione di `stdout` e `stderr`.
+* Comandi `less` e `od` per visualizzare il contenuto di un file
+* Lettura da un file di testo: comando fscanf().  
+* Terminazione in caso di errori: funzione perror(). Cenni sulla ridirezione di `stdout`
 
 -------
 
 **Lezione 6** (4/10/24)
 
+* Passaggio di array dalle/alle funzioni
+* Uso di `assert`
+* stdout/stderr/stdin e loro ridirezione; esempi
+* Terminazione in caso di errori: funzione perror() e variabile globale `errno`
+* Esercitazione sul passaggio di array alle funzioni.
 
+
+-------

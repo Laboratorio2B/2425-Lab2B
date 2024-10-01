@@ -69,3 +69,33 @@ Eseguire il programma anche utilizzando `valgrind` verificando che non stampi ne
 HEAP SUMMARY:
  in use at exit: 0 bytes in 0 blocks
 ```
+
+----
+
+**1/10/24**
+
+Scrivere un programma `paridispari` che legge gli interi dal un file di testo `argv[1]` e copia quelli pari in un  in file di nome `argv[2]` e quelli dispari in un file di nome `argv[3]`. In altre parole se il programma viene invocato scrivendo
+```
+paridispari interi.txt pari dispari
+```
+e il file `interi.txt` contiene
+```
+10
+70
+17
+36
+-23
+```
+al termine dell'esecuzione il file `pari` deve contenere
+```
+10
+70
+36
+```
+e il file `dispari`
+```
+17
+-23
+```
+Si noti che non è necessario salvare gli interi in un array; il programma può aprire i tre file contemporaneamente, leggere dal primo con `fscanf` e scrivere sul secondo o terzo file con `fprintf`. Quando non ci sono altri interi da leggere (cioè `fscanf` restituisce `EOF` si devono chiudere tutti i file e terminare,
+

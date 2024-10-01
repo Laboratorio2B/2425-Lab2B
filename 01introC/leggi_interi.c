@@ -17,6 +17,8 @@ void termina(char *messaggio);
 // legge gli interi che sono nel file f
 // e li salva in un array che viene restituito
 // con return + passaggio per riferimento
+// !!!!! Per il momento ignorate il modo in cui l'array a[]
+// !!!!! viene restituito a main() lo vedremo la prossima lezione
 int *leggi_file(FILE *f, int *num_elementi)
 {
   assert(f!=NULL); // il file deve essere valido
@@ -53,8 +55,9 @@ int *leggi_file(FILE *f, int *num_elementi)
   return a;  
 } 
 
-// visualizza elementi di un qualsiasi 
-// array di int sul terminale
+// visualizza elementi di un array di int su stdout 
+// stampa "Ho finito!" su stderr
+// Nota: fprintf(stdout,... è equivalente a printf(....) 
 void stampa_array(int *a, int n)
 {
   assert(a!=NULL);
@@ -97,7 +100,7 @@ int main(int argc, char *argv[])
 // stampa un messaggio d'errore e termina il programma
 void termina(char *messaggio)
 {
-  puts(messaggio);
+  perror(messaggio);
   exit(1);
 }
 
