@@ -47,9 +47,8 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 * Passaggio di array dalle/alle funzioni
 * Uso di `assert`
-* stdout/stderr/stdin e loro ridirezione; esempi
+* stdout/stderr e loro ridirezione; esempi
+* Esercitazione sulle stringhe e sul passaggio di array alle funzioni. Significato del tipo `const char *`
 * Terminazione in caso di errori: funzione perror() e variabile globale `errno`
-* Esercitazione sul passaggio di array alle funzioni.
-
 
 -------

@@ -63,8 +63,8 @@ void stampa_array(int *a, int n)
   assert(a!=NULL);
   // stampo il contenuto dell'array
   for(int i=0;i<n;i++)
-    fprintf(stdout,"%8d",a[i]); // stampo gli elementi in un campo di 8 caratteri
-  fprintf(stdout,"\nIn totale l'array contiene %d interi\n",n);
+    printf("%8d",a[i]); // stampo gli elementi in un campo di 8 caratteri
+  fprintf(stdout,"\nIn totale l'array contiene %d interi\n",n);// equivalente a fprintf
   fprintf(stderr,"Ho finito!\n");
 }
 
