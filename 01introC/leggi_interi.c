@@ -6,9 +6,10 @@
 #include <string.h>   // funzioni di confronto/copia/etc di stringhe
 #include <errno.h>    // necessaria per usare errno
 
-
 // Scopo del programma:
 //  mostrare come si legge da un file di testo 
+//  e come una funzione può restituier un array
+//  alla fuznione chiamante
 
 // prototipo della funzione termina()
 void termina(char *messaggio);
@@ -17,8 +18,6 @@ void termina(char *messaggio);
 // legge gli interi che sono nel file f
 // e li salva in un array che viene restituito
 // con return + passaggio per riferimento
-// !!!!! Per il momento ignorate il modo in cui l'array a[]
-// !!!!! viene restituito a main() lo vedremo la prossima lezione
 int *leggi_file(FILE *f, int *num_elementi)
 {
   assert(f!=NULL); // il file deve essere valido
@@ -61,6 +60,7 @@ int *leggi_file(FILE *f, int *num_elementi)
 void stampa_array(int *a, int n)
 {
   assert(a!=NULL);
+  assert(n>=0);
   // stampo il contenuto dell'array
   for(int i=0;i<n;i++)
     printf("%8d",a[i]); // stampo gli elementi in un campo di 8 caratteri
@@ -103,5 +103,3 @@ void termina(char *messaggio)
   perror(messaggio);
   exit(1);
 }
-
-
