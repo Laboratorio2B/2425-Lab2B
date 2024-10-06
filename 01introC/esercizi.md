@@ -99,3 +99,70 @@ e il file `dispari`
 ```
 Si noti che non è necessario salvare gli interi in un array; il programma può aprire i tre file contemporaneamente, leggere dal primo con `fscanf` e scrivere sul secondo o terzo file con `fprintf`. Quando non ci sono altri interi da leggere (cioè `fscanf` restituisce `EOF`) si devono chiudere tutti i file e terminare,
 
+
+----
+
+**4/10/24**
+
+
+Scrivere una funzione C
+
+    int *somme_distinte(int a[], int n, int *size)
+che dato un array  di interi  `a[]` di lunghezza `n>0` alloca e restituisce un nuovo array `b[]` contenente tutti gli interi distinti che si possono ottenere sommando tra loro due elementi di `a` (compreso un elemento sommato a se stesso). Ad esempio
+
+		input: 1 2
+		output: 2 3 4   [infatti: 2=1+1, 3=1+2, 4=2+2] 
+		input: 1 0 0 1 0 0 1 
+		output: 2 1 0   [l'ordine nell'array di output non è importante]
+		input: -2 3 1 10 
+		output: -4 1 -1 8 6 4 13 2 11 20
+
+Dato che non è possibile stabilire a priori quale sarà la lunghezza dell'array risultato, tale lunghezza deve essere passata per riferimento utilizzando il puntatore `*size`. Non vi preoccupate dell'efficienza della soluzione da voi proposta.  
+
+Si scriva poi un programma che invoca `somme_distinte` passandogli l'array ottenuto convertendo in interi i valori forniti sulla linea di comando e successivamente stampa su `stderr` l'array restituito da `somme_distinte`. Infine il programma deve stampare su `stdout` la somma dei valori contenuti nell'array restituito da `somme_distinte`. (Nota: per stampare su `stdout` si può usare `fprintf(stdout,...)` oppure semplicemente `printf`). Il programma deve deallocare tutta la memoria utilizzata (verificare con valgrind). 
+
+
+-----
+
+Scrivere una funzione 
+```
+int mioa2toi(const char *s, int *n)
+```
+che data una stringa `s` la interpreta come intero decimale (allo stesso modo di `atoi`). Se la conversione avviene con successo il valore ottenuto deve essere scritto in `*n` e la funzione deve restituire il valore 0; se invece la conversione non ha successo la variabile *n* non deve essere modificata e la funzione deve restituire un intero positivo che indica l'errore che si è verificato secondo il seguente schema:
+
+1. se la stringa è vuota o contiene solamente spazi
+2. se viene incontrato un carattere che non sia uno fra `+-0123456789` (esempio, la stringa `"234s7"`)
+3. se il segno (`+` o `-`) compare più di una volta, o compare in posizione non corretta (esempio le stringhe `"+-34"`, `"-3-4"`, o `"-34+"`)
+4. se compare esattamente un segno, ma nessuna cifra (ad esempio la stringa `"-"`)
+
+La conversione deve ignorare eventuali spazi iniziali e deve terminare non appena viene incontrato uno spazio. Quindi l'input `"  +34 21"` deve restituire il valore `0` (conversione OK) e  scrivere in `*n` il valore 34, mentre l'input `"  + 34 21"`deve restituire il valore 4 (conversione fallita perché ha letto il segno e poi lo spazio ha fatto interrompere la conversione prima che incontrasse una qualsiasi cifra. 
+
+Per quanto riguarda la parte di calcolo, a parte la gestione del segno e degli errori, osservate che se l'input è `"XYZ"` e  la stringa `"XY"` è stata convertita nel valore `t` allora `"XYZ"`vale  $10 t + z$ dove $z$ è il valore tra 0 e 9 rappresentato dal carattere `Z`.  Ricordo che i codice ascii di caratteri tra `0` e `9` sono gli interi tra 48 e 57.
+
+La vostra funzione non può usare `atoi`, ma la potete usare nel `main` per verificare la correttezza della vostra funzione, Ad esempio scrivendo:
+```
+int main(int argc, char *argv[])
+{
+  for(int i=1;i<argc;i++) {
+    int n, e;
+    e = mioatoi(argv[i],&n);
+    if(e!=0) printf("Errore conversione: %d\n",e);
+    else printf("Mia funzione: %d, libreria: %d\n",n,atoi(argv[i]));
+  }
+  return 0;
+} 
+```
+Fate il test con valori sia positivi che negativi! La riga di comando di default non mette gli spzi dentro gli `argv[]` ma potete inserirli scrivendo la stringa tra doppie virgolette. Quindi scrivendo
+```
+mioprog + 123
+```
+ si ha `argv[1]="+"` e `argv[2]=123`, mentre scrivendo
+ ```
+mioprog "+ 123"
+ ```
+ si ha `argv[1]="+ 123"` e non ci sono altri argomenti. 
+ 
+
+---
+
+
