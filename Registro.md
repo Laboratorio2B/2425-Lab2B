@@ -57,4 +57,9 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 **Lezione 7** (8/10/24)
 
 
+* Equivalenza fra `*a` e `a[0]`
+* Equivalenza fra `a` e `&a[0]`, significato di `&a[i]`
+* Aritmetica dei puntatori: definizione di `a+i` come `&a[i]`
+* Esempio di uso dell'aritmetica dei puntatori nel *mergesort*
+* Array di stringhe. 
 * Terminazione in caso di errori: funzione perror() e variabile globale `errno`
