@@ -102,7 +102,9 @@ Si noti che non è necessario salvare gli interi in un array; il programma può 
 
 ----
 
-**4/10/24**
+## 4/10/24
+
+### Somme distinte
 
 
 Scrivere una funzione C
@@ -123,6 +125,9 @@ Si scriva poi un programma che invoca `somme_distinte` passandogli l'array otten
 
 
 -----
+
+
+### Conversione interi 
 
 Scrivere una funzione 
 ```
@@ -163,6 +168,71 @@ mioprog "+ 123"
  si ha `argv[1]="+ 123"` e non ci sono altri argomenti. 
  
 
+
 ---
+
+## 8/10/2
+
+### Ordina stringhe per lunghezza
+
+Scrivere una funzione 
+```
+void mergesort(char *a[], int n)
+```
+ch dato un array `a[]` di  `n` stringhe le ordina in ordine di lunghezza crescente. *Suggerimento* si modifichi le funzioni mergesort/merge viste a lezione in `mergeSort.c`, osservando che c'è un'unica istruzione nella quale gli elementi di `a[]` vengono confrontati. Dato che vogliamo ordinare le stringhe per lunghezza, per confrontare `a[i]` e `c[j]`  il confronto deve essere fatto tra i valori `strlen(a[i])` e `strlen(c[j])`  
+
+Scrivere poi un programma `ostringhe` che ordina per lunghezza crescente gli elementi di `argv` e stampa le stringhe ordinate sul terminale. Ad esempio, scrivendo
+```
+ostringhe due ricorsione dieci casa Po
+```
+deve essere visualizzato l'elenco
+```
+Po
+due
+casa
+dieci
+ricorsione
+```
+
+Verificate con valgrind il corretto uso e deallocazione della memoria 
+
+----
+
+
+### Somma mancanti
+ 
+Scrivere un programma C, che legge dalla linea di comando il nome di un file di testo contenente interi e stampa su *stdout* la somma degli interi compresi tra 1 e 1000 che **non** compaiono nell'array. Ad esempio, se il file di input contiene tutti gli interi tra 1 e 1000 tranne il 13, il 17, e il 49 il valore che deve essere stampato è 79 (la somma 13+17+49). Si noti che tutti i valori nel file non compresi tra 1 e 1000 non influenzano il risultato, e che il fatto che un valore compaia più volte non influenza il risultato: a noi interessa la somma dei valori tra 1 e 1000 che non sono nel file di input. (*Suggerimento*: per svolgere l'esercizio non è necessario salvare gli interi del file in un array, è invece necessario utilizzare un array di 1000 elementi per tenere conto di quali valori tra 1 e 1000 sono presenti nel file).  
+
+
+### Ribalta elenco
+
+Scrivere un programma che invocato dalla linea di comando scrivendo
+
+    main infile outfile
+
+legge tutte le stringhe dal file di testo *infile* e le riscrive su *outfile* **in ordine inverso**. Ad esempio, se *infile* contiene
+```
+Mattarella
+Napolitano
+Ciampi
+Scalfaro
+Cossiga
+Pertini
+```
+il file *outfile* deve contenere
+```
+Pertini
+Cossiga
+Scalfaro
+Ciampi
+Napolitano
+Mattarella
+```
+Potete assumere che le stringhe del file di input siano lunghe al max 40 caratteri. Dato però che non ci sono limitazioni al numero totale di stringhe, per poterle scrivere in ordine inverso dovete prima memorizzarle in un array di stringhe.  
+
+Verificate con valgrind il corretto uso e deallocazione della memoria 
+
+
+
 
 
