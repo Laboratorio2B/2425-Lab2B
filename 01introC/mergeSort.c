@@ -8,14 +8,13 @@
 #include <stdbool.h>  // gestisce tipo bool
 #include <assert.h>   // permette di usare la funzione assert
 #include <string.h>   // funzioni per stringhe
-#include <errno.h>    // rischiesto per usare errno
 
 // prototipi delle funzioni che appaiono dopo il main()
 void stampa_array(int *a, int n, FILE *f);
 void termina(char *messaggio);
 
 
-// funzione per il merge di due array in un terzo
+// funzione per il merge di due array in un terzo array già allocato
 // merge di a[0...n1-1] e c[0... n2-1] dentro b[]
 // Soluzione proposta da co-pilot apparentemente corretta
 void merge(int a[], int na, int c[], int nc, int b[])
@@ -62,7 +61,7 @@ void merge(int a[], int na, int c[], int nc, int b[])
 }
 
 // funzione mergesort ricorsiva
-void mergesort(int a[], int n)
+void mergesort(int *a, int n)
 {
   assert(a!=NULL);
   assert(n>0);
@@ -70,13 +69,16 @@ void mergesort(int a[], int n)
   // caso base
   if(n==1) return;
   
-  int n1 = n/2;     // dimebsione prima parte
-  int n2 = n - n1;  // dimensione seconda parte
+  int n1 = n/2;       // dimensione prima parte
+  int n2 = n - n1 ;   // dimensione seconda parte
+  assert(n1+n2==n);   // verifico che sto considerando tutti gli elementi
   
+  // ordino a[0...n1-1]
   mergesort(a,n1);
+  // ordino a[n1...n-1]
   mergesort(&a[n1],n2); // &a[n1] potevo scriverlo a+n1
   
-  // ho le due metà ordinate devo fare il merge
+  // ora ho le due metà ordinate devo fare il merge
   int *b = malloc(n*sizeof(*b));
   if(b==NULL) termina("malloc fallita nel merge");
   merge(a,n1,&a[n1],n2,b);  
@@ -84,9 +86,8 @@ void mergesort(int a[], int n)
   for(int i=0;i<n;i++)
     a[i] = b[i];
   
-  free(b);
+  free(b); // dealloco array temporaneao b[]
 }
-
 
 
 // ordina gli interi passati sulla linea di comando
@@ -103,20 +104,39 @@ int main(int argc, char *argv[])
   if (a == NULL) {
     termina("Non è possibile allocare lo spazio necessario per l'input.");
   }
-  // conversione argomenti da riga di comando in interi da inserire in a
+  // conversione argomenti da riga di comando in interi da inserire in a[]
   for (int i = 0; i < n; i++)
     a[i] = atoi(argv[i+1]);
     
   // -------------------------
-  // esperimenti con puntatori
-  // variabile puntatore p contenente l'indirizzo di n
-  int *q = &n; 
-  printf("Puntatore %p, valore %d\n", q, *q); // %p visualizza un puntatore in esadecimale
-  // -------------------------  
-    
-    
+  // Esempio di visualizzazione di un puntatore 
+  int *q = &n; // variabile puntatore p contenente l'indirizzo di n
+  // in printf i puntatori si indicano con %p  
+  printf("Puntatore %p, valore %d\n", q, *q); // %p visualizza il puntatore in esadecimale
 
-  // ordina array a[] in place 
+
+  // --- altre considerazioni sui puntatori ---------
+  // la variabile a è un puntatore a a[0]
+  // la variabile q è un puntatore a n
+  
+  // per vedere il valore a cui punta q scrivo *q
+  // per vedere il valore a cui punta a scrivo a[0]
+  //   ma posso scrivere anche *a che quindi è ==a[0]
+  // per leggere *q posso anche scrivere q[0]
+  // conclusione: 
+  //   è equivalente scrivere *a e a[0]
+  //   qualsiasi sia la variabile a
+  // Altra osservazione: l'indirizzo di a[0] è a 
+  //   quindi è equivalente scrivere &a[0] e a
+  //   e in generale è equivalente scrivere &a[i] e a+i
+  // La scrittura a+i è un esempio di "aritmentica dei puntatori"
+  //   in cui sommiamo un puntatore a un intero
+  // Il programma mergesort mostra l'uso di &a[i]
+  //   per creare un nuovo array che inizia dalla
+  //   posizione i-esima dell'array a[]   
+  // -----------------------------
+    
+  // ordina array a[] in place (cioè spostando gli elementi) 
   mergesort(a,n);
   
   // stampo array e chiudo il file
@@ -128,24 +148,16 @@ int main(int argc, char *argv[])
 }
 
 
-
-
-
 // stampa un messaggio d'errore su stderr e termina il programma
 void termina(char *messaggio)
 {
-  // se errno!=0 oltre al mio messaggio stampa il messaggio
-  // associato alla variabile globale errno 
-  // utilizzando la funzione di libreria perror()
-  if(errno!=0) perror(messaggio);
-  // altrimenti stampa solo il mio messaggio
-  else fprintf(stderr,"%s\n", messaggio);
+  perror(messaggio);
   exit(1);
 }
 
 
-// visualizza elementi array di un qualsiasi 
-// array di int sul terminale
+// scrive elementi di un qualsiasi 
+// array di int sul file f
 void stampa_array(int *a, int n, FILE *f)
 {
   assert(a!=NULL);
@@ -154,13 +166,3 @@ void stampa_array(int *a, int n, FILE *f)
     fprintf(f,"%8d",a[i]); // stampo gli elementi in un campo di 8 caratteri
   fprintf(f,"\nIn totale l'array contiene %d interi\n",n);
 }
-
-
-
-
-
-
-
-
-
-
