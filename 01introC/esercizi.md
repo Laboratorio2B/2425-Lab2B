@@ -106,7 +106,6 @@ Si noti che non è necessario salvare gli interi in un array; il programma può 
 
 ### Somme distinte
 
-
 Scrivere una funzione C
 
     int *somme_distinte(int a[], int n, int *size)

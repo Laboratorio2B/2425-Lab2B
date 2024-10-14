@@ -6,7 +6,7 @@
 #include <string.h>   // funzioni di confronto/copia/etc di stringhe
 
 // Scopo del programma:
-//   mostrare la costruzinoe e deallocazione di 
+//   mostrare la costruzione e deallocazione di 
 //   un array di stringhe
 
 
@@ -26,7 +26,7 @@ char *copia_ribalta(const char *s)
   // ribalta caratteri
   for(int i=0;i<strlen(s);i++) 
     t[i] = s[strlen(s)-i-1];
-  // retiruisce la nuova stringa  
+  // restituisce la nuova stringa  
   return t;  
 }
 

@@ -62,11 +62,21 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 * Aritmetica dei puntatori: definizione di `a+i` come `&a[i]`
 * Esempio di uso della notazione `&a[i]` nel *mergesort*
 * Creazione e deallocazione di un array di stringhe, programma `astringhe`
-* Lettura di stringhe con `scanf`
+* Lettura di stringhe con `scanf`:  problematica del [buffer overflow](https://en.wikipedia.org/wiki/Buffer_overflow)
 
 ----
 
 **Lezione 8** (15/10/24)
 
 
+* Lettura di stringhe con `scanf`: evitare il buffer overflow: modificatori `%Ns` (con N massimo numero di caratteri) e `%ms`
+* Costruzione/concatenazione di stringhe mediante `asprintf` 
+* definizione di tipi composti con `struct`
+* definizione di nuovi tipi con `typedef` e uso combinato con `struct`
+* operazioni sui tipi composti, notazioni `.` e  `->`
 * Terminazione in caso di errori: funzione perror() e variabile globale `errno`
+
+
+----
+
+**Lezione 9** (19/10/24)
