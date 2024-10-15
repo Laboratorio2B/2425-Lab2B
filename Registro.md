@@ -71,12 +71,16 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 * Lettura di stringhe con `scanf`: evitare il buffer overflow: modificatori `%Ns` (con N massimo numero di caratteri) e `%ms`
 * Costruzione/concatenazione di stringhe mediante `asprintf` 
-* definizione di tipi composti con `struct`
-* definizione di nuovi tipi con `typedef` e uso combinato con `struct`
-* operazioni sui tipi composti, notazioni `.` e  `->`
-* Terminazione in caso di errori: funzione perror() e variabile globale `errno`
+* Definizione di tipi composti con `struct`; definizione di nuovi tipi con `typedef` e uso combinato con `struct`
+* Operazioni sui tipi composti, notazioni `.` e  `->`; passaggio per valore e per riferimento di struct. 
+* Ordinamento di un array di struct mediante mergesort
+
 
 
 ----
 
 **Lezione 9** (19/10/24)
+
+* Array di puntatori a struct, esempio: array di capitali
+* Ordinamento array di puntatori a struct mediante mergesort
+* Terminazione in caso di errori: funzione perror() e variabile globale `errno`

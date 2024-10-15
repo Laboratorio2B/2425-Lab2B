@@ -41,10 +41,6 @@ int main(int argc, char *argv[])
 
   // libero memoria allocata da scanf
   free(z);
-
-  // lo stesso meccanismo di allocazione della memoria da parte della 
-  // funzione di libreria è usato da asprintf per creare/concatenate stringhe
-  
   
   return 0;
 }
