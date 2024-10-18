@@ -1,4 +1,7 @@
-**20/9/24**
+## Esercizi
+
+
+### Costruzione array dinamici (20/9/24)
 
 Scrivere un programma C che legge un intero N e costruisce i seguenti due array di interi:
 
@@ -33,11 +36,11 @@ HEAP SUMMARY:
  in use at exit: 0 bytes in 0 blocks
 ```
 
----
 
-**27/9/24**
 
-**1.** Scrivere un programma `reverse` che stampa sullo schermo gli argomenti passati sulla linea di comando (escluso il nome del programma) con i caratteri in ordine inverso. Ad esempio, scrivendo
+### Reverse di stringhe (27/9/24)
+
+Scrivere un programma `reverse` che stampa sullo schermo gli argomenti passati sulla linea di comando (escluso il nome del programma) con i caratteri in ordine inverso. Ad esempio, scrivendo
 ```
 reverse sole azzurro 123
 ```
@@ -49,7 +52,11 @@ orruzza
 ```
 Si noti che per stampare i caratteri in ordine inverso potete 1. creare la stringa ribaltata e poi stamparla con `printf` con modificatore `%s`, oppure  2.  stampare i caratteri da destra a sinistra uno alla volta con il modificatore `%c`. 
 
-**2.** Scrivere un programma `concatena` che costruisce la stringa ottenuta concatenando tra loro le stringhe  passate sulla linea di comando. Ad esempio, scrivendo
+
+
+### Concatena stringhe (27/9/24)
+
+Scrivere un programma `concatena` che costruisce la stringa ottenuta concatenando tra loro le stringhe  passate sulla linea di comando. Ad esempio, scrivendo
 ```
 concatena sole azzurro 123
 ```
@@ -70,9 +77,9 @@ HEAP SUMMARY:
  in use at exit: 0 bytes in 0 blocks
 ```
 
-----
 
-**1/10/24**
+
+### Pari e dispari (1/10/24)
 
 Scrivere un programma `paridispari` che legge gli interi dal file di testo `argv[1]` e copia quelli pari in un  file di nome `argv[2]` e quelli dispari in un file di nome `argv[3]`. In altre parole se il programma viene invocato scrivendo
 ```
@@ -100,11 +107,7 @@ e il file `dispari`
 Si noti che non è necessario salvare gli interi in un array; il programma può aprire i tre file contemporaneamente, leggere dal primo con `fscanf` e scrivere sul secondo o terzo file con `fprintf`. Quando non ci sono altri interi da leggere (cioè `fscanf` restituisce `EOF`) si devono chiudere tutti i file e terminare,
 
 
-----
-
-## 4/10/24
-
-### Somme distinte
+### Somme distinte (4/10/24)
 
 Scrivere una funzione C
 
@@ -123,10 +126,9 @@ Dato che non è possibile stabilire a priori quale sarà la lunghezza dell'array
 Si scriva poi un programma che invoca `somme_distinte` passandogli l'array ottenuto convertendo in interi i valori forniti sulla linea di comando e successivamente stampa su `stderr` l'array restituito da `somme_distinte`. Infine il programma deve stampare su `stdout` la somma dei valori contenuti nell'array restituito da `somme_distinte`. (Nota: per stampare su `stdout` si può usare `fprintf(stdout,...)` oppure semplicemente `printf`). Il programma deve deallocare tutta la memoria utilizzata (verificare con valgrind). 
 
 
------
 
 
-### Conversione interi 
+### Conversione da stringa a intero (4/10/24)
 
 Scrivere una funzione 
 ```
@@ -168,11 +170,8 @@ mioprog "+ 123"
  
 
 
----
 
-## 8/10/2
-
-### Ordina stringhe per lunghezza
+### Ordina stringhe per lunghezza (8/10/24)
 
 Scrivere una funzione 
 ```
@@ -195,15 +194,17 @@ ricorsione
 
 Verificate con valgrind il corretto uso e deallocazione della memoria 
 
-----
 
 
-### Somma mancanti
- 
+
+### Somma mancanti (8/10/24)
+
 Scrivere un programma C, che legge dalla linea di comando il nome di un file di testo contenente interi e stampa su *stdout* la somma degli interi compresi tra 1 e 1000 che **non** compaiono nell'array. Ad esempio, se il file di input contiene tutti gli interi tra 1 e 1000 tranne il 13, il 17, e il 49 il valore che deve essere stampato è 79 (la somma 13+17+49). Si noti che tutti i valori nel file non compresi tra 1 e 1000 non influenzano il risultato, e che il fatto che un valore compaia più volte non influenza il risultato: a noi interessa la somma dei valori tra 1 e 1000 che non sono nel file di input. (*Suggerimento*: per svolgere l'esercizio non è necessario salvare gli interi del file in un array, è invece necessario utilizzare un array di 1000 elementi per tenere conto di quali valori tra 1 e 1000 sono presenti nel file).  
 
 
-### Ribalta elenco
+
+
+### Ribalta elenco (8/10/24)
 
 Scrivere un programma che invocato dalla linea di comando scrivendo
 
@@ -234,10 +235,7 @@ Verificate con valgrind il corretto uso e deallocazione della memoria
 
 
 
-## 15/10/25
-
-
-### Conversione in esadecimale 
+### Conversione in esadecimale (15/10/24)
 
 Scrivere una funzione 
 ```c
@@ -261,7 +259,8 @@ si deve ottenere l'output
 Verificate con valgrind il corretto uso e deallocazione della memoria 
 
 
-### Smista primi 
+
+### Smista primi (15/10/24)
 
 Scrivere un programma `smista` che legge dalla linea di comando una stringa `nome` e un intero positivo `N` e crea i file `nome.d.primi` 
 contenenti tutti i primi minori di `N` che terminano con la cifra `d`. Ad esempio il comando
