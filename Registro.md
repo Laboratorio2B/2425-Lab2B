@@ -79,7 +79,7 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 ----
 
-**Lezione 9** (19/10/24)
+**Lezione 9** (18/10/24)
 
 * Array di puntatori a struct, esempio: array di capitali
 * Ordinamento array di puntatori a struct mediante mergesort

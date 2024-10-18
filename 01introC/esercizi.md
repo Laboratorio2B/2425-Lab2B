@@ -74,7 +74,7 @@ HEAP SUMMARY:
 
 **1/10/24**
 
-Scrivere un programma `paridispari` che legge gli interi dal un file di testo `argv[1]` e copia quelli pari in un  in file di nome `argv[2]` e quelli dispari in un file di nome `argv[3]`. In altre parole se il programma viene invocato scrivendo
+Scrivere un programma `paridispari` che legge gli interi dal file di testo `argv[1]` e copia quelli pari in un  file di nome `argv[2]` e quelli dispari in un file di nome `argv[3]`. In altre parole se il programma viene invocato scrivendo
 ```
 paridispari interi.txt pari dispari
 ```
@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
   return 0;
 } 
 ```
-Fate il test con valori sia positivi che negativi! La riga di comando di default non mette gli spzi dentro gli `argv[]` ma potete inserirli scrivendo la stringa tra doppie virgolette. Quindi scrivendo
+Fate il test con valori sia positivi che negativi! La riga di comando di default non mette gli spazi dentro gli `argv[]` ma potete inserirli scrivendo la stringa tra doppie virgolette. Quindi scrivendo
 ```
 mioprog + 123
 ```
@@ -234,4 +234,41 @@ Verificate con valgrind il corretto uso e deallocazione della memoria
 
 
 
+## 15/10/25
+
+
+### Conversione in esadecimale 
+
+Scrivere una funzione 
+```c
+char *converte16(int n)
+```
+che dato un intero positivo `n` alloca e restituisce una stringa contenente l'intero `n` scritto in base 16, utilizzando i caratteri da `a` a `f` per le cifre da 10 a 15.  (*Suggerimento:* non è difficile convertire un intero in esadecimale, ma questa funzione deve restituire una stringa che deve essere allocata. Per semplificare le cose potete usare funzione `asprintf` vista a lezione tenendo conto che nella `printf` come il modificatore `%d` visualizza un intero in decimale, il modificatore `%x` lo visualizza in base 16, vedere `man 3 printf` per i dettagli).
+
+Scrivere poi un programma `esad` che per ogni intero passato sulla linea di comando, convertito in `int` con `atoi`, invoca la funzione `converte16` e stampa la stringa ottenuta su `stdout`. 
+
+Ad esempio,  scrivendo
+```
+esad  26 73 1000 101
+```
+si deve ottenere l'output 
+```
+1a
+49
+3e8
+6f
+```
+Verificate con valgrind il corretto uso e deallocazione della memoria 
+
+
+### Smista primi 
+
+Scrivere un programma `smista` che legge dalla linea di comando una stringa `nome` e un intero positivo `N` e crea i file `nome.d.primi` 
+contenenti tutti i primi minori di `N` che terminano con la cifra `d`. Ad esempio il comando
+```
+smista elenco 35
+```
+deve creare il file `elenco.1.primi` contenente i valori `11` e `31`, il file  `elenco.2.primi` contenente il valore `2`,  il file  `elenco.3.primi` contenente i valori `3`, `13` e `23` e così via (all'interno dei file i valori potete scriverli uno per riga).
+
+E' particolarmente importante verificare con valgrind il corretto uso e deallocazione della memoria: se non chiudete un file che avete aperto, valgrind segnalerà un blocco di memoria che non è stato deallocato. 
 
