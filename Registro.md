@@ -75,8 +75,6 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 * Operazioni sui tipi composti, notazioni `.` e  `->`; passaggio per valore e per riferimento di struct. 
 * Ordinamento di un array di struct mediante mergesort
 
-
-
 ----
 
 **Lezione 9** (18/10/24)
@@ -84,3 +82,16 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 * Array di puntatori a struct, esempio: array di capitali. Confronto lessicografico di stringhe, funzione `strcmp`.
 * Ordinamento array di puntatori a struct mediante mergesort
 * Terminazione in caso di errori: funzione perror() e variabile globale `errno`
+
+
+----
+
+**Lezione 10** (22/10/24)
+
+* Introduzione all'uso delle funzioni come parametri di altre funzioni
+* Mergesort con funzione di confronto passata come argomento
+* Esercizi: ordinamento di file per dimensione e nome. funzione `fseek` e `ftell`.
+
+
+----
+

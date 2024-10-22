@@ -247,7 +247,7 @@ Scrivere poi un programma `esad` che per ogni intero passato sulla linea di coma
 
 Ad esempio,  scrivendo
 ```
-esad  26 73 1000 101
+esad  26 73 1000 111
 ```
 si deve ottenere l'output 
 ```

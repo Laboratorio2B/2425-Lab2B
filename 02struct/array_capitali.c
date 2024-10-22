@@ -23,7 +23,6 @@ typedef struct {
   double lon;
 } capitale;
 
-
 // crea oggetto capitale a partire dai suoi campi
 capitale *capitale_crea(char *s, double lat, double lon)
 {
@@ -37,16 +36,12 @@ capitale *capitale_crea(char *s, double lat, double lon)
   a->lon = lon;
   return a;
 }
-
 // distrugge (dealloca) un oggetto capitale 
 void capitale_distruggi(capitale *a)
 {
   free(a->nome);
   free(a);
 }
-
-
-
 
 
 #if 0
@@ -77,10 +72,9 @@ b[0]->lat = 43.2;    // useremo questa;
 #endif
 
 
-
-// stampa sul file *f i campi della capitale a
+// stampa sul file *f i campi della capitale *a
 void capitale_stampa(const capitale *a, FILE *f) {
-  fprintf(f,"%20s (%f,%f)\n",a->nome,(*a).lat,a->lon);
+  fprintf(f,"%20s (%f,%f)\n",a->nome,a->lat,a->lon);
 }
 
 
@@ -160,7 +154,9 @@ void merge(capitale *a[], int na,
   // scorro a[] e c[] e copio il minore in b[]
   while(i<na && j<nc) {
     // guardo se il nome di a[i] è minore del nome c[j]
-    if( strcmp(a[i]->nome,c[j]->nome) < 0 ) { // ordinamento lessicografico per nome 
+    // ordinamento lessicografico per nome
+    // if( strcmp(a[i]->nome,c[j]->nome)<0 ) { 
+    if( a[i]->lat  >=  c[j]->lat  ) { // ordinmento per lat decrescente 
       b[k] = a[i];
       i++;
     } else {
@@ -219,22 +215,6 @@ void mergesort(capitale *a[], int n)
 
 
 
-// -------------------------------------------------------------
-
-int confronta_nomi(capitale *a, capitale *b)
-{
-  return strcmp(a->nome,b->nome);
-}
-
-int confronta_longi(capitale *a, capitale *b)
-{
-  if (a->lon< b->lon) return -1;
-  else if (a->lon> b->lon) return 1;
-  return 0; 
-}
-
-
-
 int main(int argc, char *argv[])
 {
   if(argc!=2) {
@@ -266,11 +246,14 @@ int main(int argc, char *argv[])
 }
 
 
-// stampa su stderr il messaggio che gli passo e 
-// e il messaggio associato all'ultimo errore e ternina
 void termina(const char *messaggio)
 {
-  perror(messaggio);
+  // se errno!=0 oltre al mio messaggio stampa il messaggio
+  // associato alla variabile globale errno 
+  // utilizzando la funzione di libreria perror()
+  if(errno!=0) perror(messaggio);
+  // altrimenti stampa solo il mio messaggio
+  else fprintf(stderr,"%s\n", messaggio);
   exit(1);
 }
 
