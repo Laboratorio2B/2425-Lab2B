@@ -8,22 +8,21 @@ Facendo riferimento alla struct `coppia` vista nell'esempio `array_coppie.c`, sc
 coppie 2 2 3 4 7 0 2 1
 ```
 deve creare l'array di coppie `(2 2) (3 4) (7 0) (2 1)`, che ordinato per differenza crescente risulta 
-`(3 4) (2 2) (2 1) (7 0)``, essendo le differenze -1, 0, 1, 7.
-
+`(3 4) (2 2) (2 1) (7 0)`, essendo le differenze rispettivamente -1, 0, 1, 7. 
 
 
 ### Ordinamento di file (22/10/24)
 
-Scrivere un programma che legge dalla riga di comando un elenco di file e stampa 
-l'elenco di  questi file ordinati per dimensione decrescente, 
+Scrivere un programma che legge dalla riga di comando un elenco di nomi di file e stampa 
+l'elenco di questi file ordinati per dimensione decrescente, 
 i file con la stessa dimensione devono essere ordinati lessicograficamente.
 
-*Nota:* per eseguire dei test con molti file osserviamo che la linea di comando
+*Nota:* per eseguire dei test con molti nomi di file osserviamo che la linea di comando
 linux ha un meccanismo di espansione dei pattern che viene effettuato prima
 di invocare i comandi. Ad esempio, se scriviamo `ordina *.c *.txt` al programma 
-`ordina` in `argc` e `argv` vengono passati tutti i file che hanno estensione `.c` e `.txt`
+`ordina` attraverso `argc` e `argv` vengono passati tutti i file che hanno estensione `.c` e `.txt`
 
-Questo esercizio è stato svolto in aula nel file `array_file.c` esclusa la parte di ordinamento, che 
-potete svolgere modificando opportunaemnte il mergesort visto in `array_capitali_funz.c`
+Questo esercizio è stato svolto in aula nel file `array_file.c` esclusa la parte di ordinamento che 
+potete svolgere modificando opportunamente il mergesort visto in `array_capitali_funz.c`
 
 
