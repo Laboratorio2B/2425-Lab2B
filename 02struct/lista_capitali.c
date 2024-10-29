@@ -26,10 +26,9 @@ typedef struct capit {
 } capitale;
 
 
-void capitale_stampa(capitale *a, FILE *f) {
+void capitale_stampa(const capitale *a, FILE *f) {
   fprintf(f,"%20s (%f,%f)\n",a->nome,a->lat,a->lon);
 }
-
 
 capitale *capitale_crea(char *s, double lat, double lon)
 {
@@ -48,12 +47,12 @@ void capitale_distruggi(capitale *a)
 }
 
 // stampa tutti gli elementi della lista lis
-void lista_capitale_stampa(capitale *lis, FILE *f)
+void lista_capitale_stampa(const capitale *lis, FILE *f)
 {
-  capitale *p = lis;  // se ne puo' fare a meno
-  while(p!=NULL) {
-    capitale_stampa(p,f);
-    p = p->next;
+  // capitale *p = lis;  // se ne puo' fare a meno
+  while(lis!=NULL) {
+    capitale_stampa(lis,f);
+    lis = lis->next;
   }
   return;
 }
@@ -108,13 +107,12 @@ capitale *crea_lista_testa(FILE *f)
 // crea una lista con gli oggetti capitale letti da 
 // *f inserendoli ogni volta in coda alla lista
 capitale *crea_lista_coda(FILE *f) {
-  capitale *testa = NULL;
-  capitale *coda = NULL; // serve per l'inserimento in coda
+  capitale *testa = NULL; // serve per il return
+  capitale *coda = NULL;  // serve per l'inserimento in coda
   while(true) {
     capitale *b = capitale_leggi(f);
     if(b==NULL) break;
     // inserisco b in coda alla lista
-    assert(b->next==NULL);  
     if(coda==NULL) {
       // caso lista vuota
       testa = coda = b;
@@ -123,11 +121,13 @@ capitale *crea_lista_coda(FILE *f) {
       coda->next = b;
       coda = b;
     }
+    coda->next=NULL;  
   }
   return testa;
 }
 
 
+// questo lo vedremo nella prossima lezione 
 // cancella da una lista l'elemento con nome "s"
 capitale *cancella_nome(capitale *testa, char *s)
 {
@@ -143,7 +143,6 @@ capitale *cancella_nome(capitale *testa, char *s)
   // e che la lista non è vuota
   testa->next = cancella_nome(testa->next,s);
   return testa;
-
 }
 
 
@@ -166,18 +165,19 @@ int main(int argc, char *argv[])
 
   // costruzione lista inserendo in coda
   rewind(f); // riavvolge il file
-  testa=crea_lista_lat(f);
+  testa=crea_lista_coda(f);
   puts("--- inizio lista ---");
   // stampa lista capitali appena creata
   lista_capitale_stampa(testa,stdout);  
   puts("--- fine lista ---");
-  
+
+  #if 0 // prossima lezione 
   // elimina Londra dalla lista
   testa = cancella_nome(testa,"Londra");
   puts("--- inizio lista ---");
   lista_capitale_stampa(testa,stdout);  
   puts("--- fine lista ---");
-
+  #endif 
 
   if(fclose(f)==EOF)
     termina("Errore chiusura");

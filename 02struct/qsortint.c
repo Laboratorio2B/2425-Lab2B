@@ -61,14 +61,20 @@ int main(int argc, char *argv[])
 
   // eseguo il sorting degli interi con qsort()
   // come spiegato a lezione per l'ultimo argomento ci vuole il casting  
-  qsort(a,n,sizeof(*a), &confrontapd); 
-
+  qsort(a,n,sizeof(*a), (__compar_fn_t) &argc); 
 
   // stampo array
-  puts("--- qsort eseguito ---");
-  for(int i=0;i<n;i++)
-    printf("%d ",a[i]);
+  puts("--- qsort 1 eseguito ---");
+  for(int i=0;i<n;i++) printf("%d ",a[i]);
   puts(""); // a capo 
+
+  qsort(a,n,sizeof(*a), (__compar_fn_t) &confronta); 
+  // stampo array
+  puts("--- qsort 2 eseguito ---");
+  for(int i=0;i<n;i++) printf("%d ",a[i]);
+  puts(""); // a capo 
+
+
   
   // libero la memoria usata dall'array a[]
   free(a);

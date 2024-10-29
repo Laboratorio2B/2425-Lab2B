@@ -107,8 +107,12 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 12** (29/10/24)
 
-* Puntatori generici (`void *`). Tipo della dunzione di confronto in `qsort`, casting.
-* Introduzione alle *linked list*: creazione, stampa, distruzione di liste.
+* Puntatori generici (`void *`). Tipo della funzione di confronto in `qsort`, casting.
+* Introduzione alle *linked list*: creazione, stampa, distruzione di liste. Inserimento in testa e in coda. 
 
 
+----
 
+**Lezione 13** (4/11/24)
+
+* Cancellazione da linked list.
