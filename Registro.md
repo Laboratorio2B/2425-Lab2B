@@ -90,8 +90,25 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 * Introduzione all'uso delle funzioni come parametri di altre funzioni
 * Mergesort con funzione di confronto passata come argomento
-* Esercizi: ordinamento di file per dimensione e nome. funzione `fseek` e `ftell`.
+* Esercizi: ordinamento di file per dimensione e nome. Funzioni `fseek` e `ftell`. Uso del tipo `long`
 
 
 ----
+
+
+**Lezione 11** (25/10/24)
+
+
+* Introduzione alla funzione di libreria  `qsort`
+* Prova in itinere sugli argomenti delle lezioni 1-9. 
+
+
+----
+
+**Lezione 12** (29/10/24)
+
+* Puntatori generici (`void *`). Tipo della dunzione di confronto in `qsort`, casting.
+* Introduzione alle *linked list*: creazione, stampa, distruzione di liste.
+
+
 
