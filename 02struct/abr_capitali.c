@@ -87,12 +87,11 @@ capitale *capitale_leggi(FILE *f)
   return c;
 }
 
-// crea una lista con gli oggetti capitale letti da 
-// *f inserendoli ogni volta in testa alla lista
-capitale *crea_lista_testa(FILE *f)
+// crea un abr con gli oggetti capitale letti da 
+// *f inserendoli usando l'ordinamento dei nomi 
+capitale *crea_abr(FILE *f)
 {
-  // costruzione lista leggendo capitali dal file
-  capitale *testa=NULL;
+  capitale *radice=NULL;
   while(true) {
     capitale *b = capitale_leggi(f);
     if(b==NULL) break;
@@ -100,66 +99,8 @@ capitale *crea_lista_testa(FILE *f)
     b->next = testa;
     testa = b;
   }  
-  return testa;
+  return radice;
 }
-
-
-// crea una lista con gli oggetti capitale letti da 
-// *f inserendoli ogni volta in coda alla lista
-capitale *crea_lista_coda(FILE *f) {
-  capitale *testa = NULL; // serve per il return
-  capitale *coda = NULL;  // serve per l'inserimento in coda
-  while(true) {
-    capitale *b = capitale_leggi(f);
-    if(b==NULL) break;
-    // inserisco b in coda alla lista
-    if(coda==NULL) {
-      // caso lista vuota
-      testa = coda = b;
-    } else {
-      // caso lista non vuota
-      coda->next = b;
-      coda = b;
-    }
-    coda->next=NULL;  
-  }
-  return testa;
-}
-
-
-// questo lo vedremo nella prossima lezione 
-// cancella da una lista l'elemento con nome "s"
-capitale *cancella_nome(capitale *testa, char *s)
-{
-  assert(s!=NULL);
-  if(testa==NULL) return NULL; // lista vuota non c'è nulla da cancellare
-  // verifico se il primo elemento va cancellato
-  if(strcmp(testa->nome,s)==0) {
-    capitale *tmp = testa->next;
-    capitale_distruggi(testa);
-    return tmp;
-  }
-  // ora so che il primo elemento non va cancellato
-  // e che la lista non è vuota
-  testa->next = cancella_nome(testa->next,s);
-  return testa;
-}
-
-// inserisce capitale "c" in lista "testa" 
-// mantenendo ordinamento per latitudine decrescente
-capitale *inserisci_lat_ric(capitale *testa, capitale *c) {
-    // Se la lista è vuota o la latitudine del nuovo nodo
-    // è minore di quella del nodo corrente
-    if (testa == NULL || c->lat < testa->lat) {
-        c->next = testa;
-        return c;
-    }
-    // Ricorsione sulla lista
-    testa->next = inserisci_lat_ric(testa->next, c);
-    return testa;
-}
-
-
 
 
 

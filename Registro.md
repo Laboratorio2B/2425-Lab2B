@@ -116,3 +116,4 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 **Lezione 13** (4/11/24)
 
 * Cancellazione da linked list.
+* Alberi binari di ricerca
