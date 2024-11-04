@@ -115,5 +115,11 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 13** (4/11/24)
 
-* Cancellazione da linked list.
-* Alberi binari di ricerca
+* Linked list: procedure ricorsive per la cancellazione e l'inserimento ordinato. 
+* Alberi binari di ricerca: procedure ricorsive oer costruzione, visita e deallocazione.  
+
+--- 
+
+**Lezione 14** (5/11/24)
+
+* Alberi binari di ricerca: visita in preorder, ricerca di un elemento, calcolo altezza. 

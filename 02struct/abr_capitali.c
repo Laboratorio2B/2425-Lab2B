@@ -17,17 +17,17 @@ void termina(const char *messaggio);
 
 // definzione struct che rappresenta
 // una città con nome, e coordinate 
-// + campo next per formare la lista 
+// + campi left/right per costruire l'albero 
 typedef struct capit {
   char *nome;
   double lat;
   double lon;
-  struct capit *next;
+  struct capit *left, *right;
 } capitale;
 
 
 void capitale_stampa(const capitale *a, FILE *f) {
-  fprintf(f,"%20s (%f,%f)\n",a->nome,a->lat,a->lon);
+  fprintf(f,"%-16s (%f,%f)\n",a->nome,a->lat,a->lon);
 }
 
 capitale *capitale_crea(char *s, double lat, double lon)
@@ -36,7 +36,7 @@ capitale *capitale_crea(char *s, double lat, double lon)
   a->lat = lat;
   a->lon = lon;
   a->nome = strdup(s); // creo una copia di s e l'assegno al nome
-  a->next = NULL;
+  a->left = a->right = NULL;
   return a;
 }
 
@@ -46,26 +46,25 @@ void capitale_distruggi(capitale *a)
   free(a);
 }
 
-// stampa tutti gli elementi della lista lis
-void lista_capitale_stampa(const capitale *lis, FILE *f)
+// stampa tutti gli elementi dell'albero
+// che ha come radice root
+void abr_capitale_stampa(const capitale *root, FILE *f)
 {
-  // capitale *p = lis;  // se ne puo' fare a meno
-  while(lis!=NULL) {
-    capitale_stampa(lis,f);
-    lis = lis->next;
+  if(root!=NULL) {
+    abr_capitale_stampa(root->left,f);
+    capitale_stampa(root,f);
+    abr_capitale_stampa(root->right,f);
   }
-  return;
 }
 
 // distrugge tutti gli elementi della lista lis
-void lista_capitale_distruggi(capitale *lis)
+void abr_capitale_distruggi(capitale *root)
 {
-  while(lis!=NULL) {
-    capitale *tmp = lis->next; // necessario
-    capitale_distruggi(lis);
-    lis = tmp;
+  if(root!=NULL) {
+    abr_capitale_distruggi(root->left);
+    abr_capitale_distruggi(root->right);
+    capitale_distruggi(root);
   }
-  return;
 }
 
 
@@ -87,6 +86,30 @@ capitale *capitale_leggi(FILE *f)
   return c;
 }
 
+// inserisci il nuovo nodo "c" dentro l'albero 
+// con root "radice", non inserisce se c
+// è già presente, restituisce la root
+// del nouvo albero contenente anche "c"
+capitale *inserisci_abr(capitale *radice, capitale *c)
+{
+  c->left=c->right=NULL;
+  // caso base albero vuoto
+  if(radice==NULL) 
+    return c;
+  int ris = strcmp(c->nome,radice->nome);
+  if(ris==0) {// i nomi sono uguali
+    fprintf(stderr, "Nodo duplicato: ");
+    capitale_stampa(c,stderr);
+    capitale_distruggi(c);
+  }
+  else if(ris<0) // c->nome < radice->nome
+    radice->left = inserisci_abr(radice->left,c);
+  else // c->nome > radice->nome
+    radice->right = inserisci_abr(radice->right,c);
+  return radice;
+}    
+    
+
 // crea un abr con gli oggetti capitale letti da 
 // *f inserendoli usando l'ordinamento dei nomi 
 capitale *crea_abr(FILE *f)
@@ -96,8 +119,7 @@ capitale *crea_abr(FILE *f)
     capitale *b = capitale_leggi(f);
     if(b==NULL) break;
     // inserisco b in testa alla lista
-    b->next = testa;
-    testa = b;
+    radice = inserisci_abr(radice,b);
   }  
   return radice;
 }
@@ -113,34 +135,16 @@ int main(int argc, char *argv[])
   FILE *f = fopen(argv[1],"r");
   if(f==NULL) termina("Errore apertura file");
 
-  // costruzione lista leggendo capitali dal file
-  capitale *testa=crea_lista_testa(f);
+  // costruzione albero leggendo capitali dal file
+  capitale *radice=crea_abr(f);
   puts("--- inizio lista ---");
   // stampa lista capitali appena creata
-  lista_capitale_stampa(testa,stdout);  
+  abr_capitale_stampa(radice,stdout);  
   puts("--- fine lista ---");
-  lista_capitale_distruggi(testa);
-
-  // costruzione lista inserendo in coda
-  rewind(f); // riavvolge il file
-  testa=crea_lista_coda(f);
-  puts("--- inizio lista ---");
-  // stampa lista capitali appena creata
-  lista_capitale_stampa(testa,stdout);  
-  puts("--- fine lista ---");
-
-  #if 0 // prossima lezione 
-  // elimina Londra dalla lista
-  testa = cancella_nome(testa,"Londra");
-  puts("--- inizio lista ---");
-  lista_capitale_stampa(testa,stdout);  
-  puts("--- fine lista ---");
-  #endif 
+  abr_capitale_distruggi(radice);
 
   if(fclose(f)==EOF)
     termina("Errore chiusura");
-  // dealloca la memoria usata dalla lista 
-  lista_capitale_distruggi(testa);
   
   return 0;
 }

@@ -25,6 +25,9 @@ typedef struct capit {
   struct capit *next;
 } capitale;
 
+// prototipo
+capitale *inserisci_lat_ric(capitale *testa, capitale *c);
+
 
 void capitale_stampa(const capitale *a, FILE *f) {
   fprintf(f,"%20s (%f,%f)\n",a->nome,a->lat,a->lon);
@@ -103,6 +106,23 @@ capitale *crea_lista_testa(FILE *f)
   return testa;
 }
 
+// crea una lista con gli oggetti capitale letti da 
+// *f inserendoli per lattudini descrescente
+capitale *crea_lista_lat(FILE *f)
+{
+  // costruzione lista leggendo capitali dal file
+  capitale *testa=NULL;
+  while(true) {
+    capitale *b = capitale_leggi(f);
+    if(b==NULL) break;
+    // inserisco b in testa alla lista    
+    testa = inserisci_lat_ric(testa,b);
+  }  
+  return testa;
+}
+
+
+
 
 // crea una lista con gli oggetti capitale letti da 
 // *f inserendoli ogni volta in coda alla lista
@@ -127,7 +147,6 @@ capitale *crea_lista_coda(FILE *f) {
 }
 
 
-// questo lo vedremo nella prossima lezione 
 // cancella da una lista l'elemento con nome "s"
 capitale *cancella_nome(capitale *testa, char *s)
 {
@@ -148,9 +167,10 @@ capitale *cancella_nome(capitale *testa, char *s)
 // inserisce capitale "c" in lista "testa" 
 // mantenendo ordinamento per latitudine decrescente
 capitale *inserisci_lat_ric(capitale *testa, capitale *c) {
+    assert(c!=NULL);
     // Se la lista è vuota o la latitudine del nuovo nodo
     // è minore di quella del nodo corrente
-    if (testa == NULL || c->lat < testa->lat) {
+    if (testa == NULL || c->lat > testa->lat) {
         c->next = testa;
         return c;
     }
@@ -158,8 +178,6 @@ capitale *inserisci_lat_ric(capitale *testa, capitale *c) {
     testa->next = inserisci_lat_ric(testa->next, c);
     return testa;
 }
-
-
 
 
 
@@ -173,7 +191,7 @@ int main(int argc, char *argv[])
   if(f==NULL) termina("Errore apertura file");
 
   // costruzione lista leggendo capitali dal file
-  capitale *testa=crea_lista_testa(f);
+  capitale *testa=crea_lista_lat(f);
   puts("--- inizio lista ---");
   // stampa lista capitali appena creata
   lista_capitale_stampa(testa,stdout);  
@@ -188,13 +206,11 @@ int main(int argc, char *argv[])
   lista_capitale_stampa(testa,stdout);  
   puts("--- fine lista ---");
 
-  #if 0 // prossima lezione 
   // elimina Londra dalla lista
   testa = cancella_nome(testa,"Londra");
   puts("--- inizio lista ---");
   lista_capitale_stampa(testa,stdout);  
   puts("--- fine lista ---");
-  #endif 
 
   if(fclose(f)==EOF)
     termina("Errore chiusura");
