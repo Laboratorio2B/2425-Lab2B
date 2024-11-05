@@ -122,4 +122,16 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 14** (5/11/24)
 
-* Alberi binari di ricerca: visita in preorder, ricerca di un elemento, calcolo altezza. 
+* Alberi binari di ricerca: visita in preorder, ricerca di un elemento, calcolo altezza (file `abr_capitali.c`)
+* Lettura da file con getline(). Parsing di stringhe mediante strtok() (file `leggicitta.c`)
+
+
+--- 
+
+**Lezione 15** (8/11/24)
+
+* Variabili statiche. Funzionamento interno di strtok()
+* Accesso a sistemi remoti via ssh con X11 forwarding
+* Uso di gdbgui per debugging su sistemi remoti attraverso un browser.
+* Uso di un debugger: esecuzione passo/passo, accesso alle variabili breakpoint condizionali. Visualizzazione registri ARM e loro uso nei breakpoint condizionali. 
+

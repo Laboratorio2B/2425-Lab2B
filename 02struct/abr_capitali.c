@@ -15,7 +15,7 @@
 void termina(const char *messaggio);
 
 
-// definzione struct che rappresenta
+// definizione struct che rappresenta
 // una città con nome, e coordinate 
 // + campi left/right per costruire l'albero 
 typedef struct capit {
@@ -57,6 +57,24 @@ void abr_capitale_stampa(const capitale *root, FILE *f)
   }
 }
 
+// stampa tutti gli elementi dell'albero
+// che ha come radice root
+// facendo una visita in preorder
+// il parametro depth è la profondita di root
+void abr_capitale_stampa_preorder(const capitale *root, FILE *f, int depth)
+{
+  // stampa depth spazi per mostrare la profondità del nodo
+  for(int i=0;i<depth;i++) fprintf(f,". ");
+  if(root!=NULL) {
+    capitale_stampa(root,f);
+    abr_capitale_stampa_preorder(root->left,f,depth+1);
+    abr_capitale_stampa_preorder(root->right,f,depth+1);
+  }
+  else fprintf(f,"X\n");
+}
+
+
+
 // distrugge tutti gli elementi della lista lis
 void abr_capitale_distruggi(capitale *root)
 {
@@ -87,26 +105,26 @@ capitale *capitale_leggi(FILE *f)
 }
 
 // inserisci il nuovo nodo "c" dentro l'albero 
-// con root "radice", non inserisce se c
+// con radice "root", non inserisce se c
 // è già presente, restituisce la root
-// del nouvo albero contenente anche "c"
-capitale *inserisci_abr(capitale *radice, capitale *c)
+// del nuovo albero contenente anche "c"
+capitale *abr_inserisci(capitale *root, capitale *c)
 {
   c->left=c->right=NULL;
   // caso base albero vuoto
-  if(radice==NULL) 
+  if(root==NULL) 
     return c;
-  int ris = strcmp(c->nome,radice->nome);
+  int ris = strcmp(c->nome,root->nome);
   if(ris==0) {// i nomi sono uguali
     fprintf(stderr, "Nodo duplicato: ");
     capitale_stampa(c,stderr);
     capitale_distruggi(c);
   }
-  else if(ris<0) // c->nome < radice->nome
-    radice->left = inserisci_abr(radice->left,c);
-  else // c->nome > radice->nome
-    radice->right = inserisci_abr(radice->right,c);
-  return radice;
+  else if(ris<0) // c->nome < root->nome
+    root->left = abr_inserisci(root->left,c);
+  else // c->nome > root->nome
+    root->right = abr_inserisci(root->right,c);
+  return root;
 }    
     
 
@@ -114,38 +132,93 @@ capitale *inserisci_abr(capitale *radice, capitale *c)
 // *f inserendoli usando l'ordinamento dei nomi 
 capitale *crea_abr(FILE *f)
 {
-  capitale *radice=NULL;
+  capitale *root=NULL;
   while(true) {
     capitale *b = capitale_leggi(f);
     if(b==NULL) break;
     // inserisco b in testa alla lista
-    radice = inserisci_abr(radice,b);
+    root = abr_inserisci(root,b);
   }  
-  return radice;
+  return root;
 }
 
+// cerca la città nome dentro l'abr con radice root
+// restiuisce il puntatore alla città se trovata
+// altrimenti NULL
+capitale *abr_ricerca(capitale *root, char *nome)
+{
+  if(root==NULL) return NULL;
+  int cfr = strcmp(nome,root->nome);
+  if(cfr==0) return root;
+  else if(cfr<0) // ricerco a sinistra
+    return abr_ricerca(root->left,nome);
+  else // ricerca a destra
+    return abr_ricerca(root->right,nome);
+}
+
+// dato un abr di radice root restiuisce
+// la sua altezza = numero di livelli =
+// profondità massima di una foglia
+int abr_altezza(capitale *root)
+{
+  if(root==NULL) return 0;
+  int hl = abr_altezza(root->left);
+  int hr = abr_altezza(root->right);
+  return (hl>hr) ? hl+1 : hr+1;
+}
+
+// retituisce true se c ha latitudine tra 40 e 43
+bool latrange(capitale *c)
+{
+  assert(c!=NULL);
+  return (c->lat>=40.0) && (c->lat <= 43.0);
+}
+
+void abr_stampa_cond(capitale *r, FILE *f, 
+                     bool (*funz)(capitale *))
+{
+  if(r==NULL) return;
+  abr_stampa_cond(r->left,f,funz);
+  if(funz(r))
+    capitale_stampa(r,f);
+  abr_stampa_cond(r->right,f,funz);
+}
 
 
 int main(int argc, char *argv[])
 {
-  if(argc!=2) {
-    printf("Uso: %s nomefile\n",argv[0]);
+  if(argc<2) {
+    printf("Uso: %s nomefile [nome1 nome2 ...]\n",argv[0]);
     exit(1);
   } 
   FILE *f = fopen(argv[1],"r");
   if(f==NULL) termina("Errore apertura file");
 
   // costruzione albero leggendo capitali dal file
-  capitale *radice=crea_abr(f);
-  puts("--- inizio lista ---");
-  // stampa lista capitali appena creata
-  abr_capitale_stampa(radice,stdout);  
-  puts("--- fine lista ---");
-  abr_capitale_distruggi(radice);
-
+  capitale *root=crea_abr(f);
   if(fclose(f)==EOF)
     termina("Errore chiusura");
+  puts("--- inizio lista ---");
+  // stampa lista capitali appena creata
+  // abr_capitale_stampa(root,stdout);  
+  abr_capitale_stampa_preorder(root,stdout,0);  
+  puts("--- fine lista ---");
+  printf("Altezza albero: %d\n",abr_altezza(root));
+  for(int i=2;i<argc;i++) {
+    capitale *c = abr_ricerca(root,argv[i]);
+    if(c==NULL) 
+      printf("%s non trovata\n",argv[i]);
+    else {
+      printf("Trovata: ");
+      capitale_stampa(c,stdout);
+    }
+  }
+  // stampa condizionale
+  puts("--- elenco città con latitudine in [40,43] ---");
+  abr_stampa_cond(root,stdout,&latrange);
   
+  abr_capitale_distruggi(root);
+
   return 0;
 }
 
