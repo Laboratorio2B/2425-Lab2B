@@ -130,8 +130,18 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 15** (8/11/24)
 
-* Variabili statiche. Funzionamento interno di strtok()
+* Variabili statiche. Funzionamento interno di strtok(). Esempio di letura di stringhe mediante strtok() (file `legginomi.c`)
 * Accesso a sistemi remoti via ssh con X11 forwarding
-* Uso di gdbgui per debugging su sistemi remoti attraverso un browser.
-* Uso di un debugger: esecuzione passo/passo, accesso alle variabili breakpoint condizionali. Visualizzazione registri ARM e loro uso nei breakpoint condizionali. 
+* Test di primalità in assembler (file `primo.s`). Makefile e compilazione di programmi formati da più file. Concetto di target, prerequisiti e comandi. 
+* Uso di un debugger: esecuzione passo/passo, breakpoint, visualizzazione variabili locali. 
+Uso di gdbgui per debugging su sistemi remoti attraverso un browser.
+
+
+--- 
+
+**Lezione 16** (12/11/24)
+
+* File oggetto (`.o`), compilazione separata, makefile con target multipli. 
+* Implementazione `strcmp` in assembler ARM.
+* Breakpoint condizionali. Visualizzazione registri ARM e loro uso nei breakpoint condizionali.
 

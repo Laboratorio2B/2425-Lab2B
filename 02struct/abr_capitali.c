@@ -75,7 +75,7 @@ void abr_capitale_stampa_preorder(const capitale *root, FILE *f, int depth)
 
 
 
-// distrugge tutti gli elementi della lista lis
+// distrugge tutti gli elementi dell'ABR con radice root
 void abr_capitale_distruggi(capitale *root)
 {
   if(root!=NULL) {
@@ -136,14 +136,14 @@ capitale *crea_abr(FILE *f)
   while(true) {
     capitale *b = capitale_leggi(f);
     if(b==NULL) break;
-    // inserisco b in testa alla lista
+    // inserisco b dentro l'ABR
     root = abr_inserisci(root,b);
   }  
   return root;
 }
 
 // cerca la città nome dentro l'abr con radice root
-// restiuisce il puntatore alla città se trovata
+// restituisce il puntatore alla città se trovata
 // altrimenti NULL
 capitale *abr_ricerca(capitale *root, char *nome)
 {

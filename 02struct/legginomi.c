@@ -6,13 +6,32 @@
 #include <string.h>   // funzioni per stringhe
 #include <errno.h>    // richiesto per usare errno
 
+
+// Scopo del programma:
+// mostrare il funzionamento di getline() e strtok() 
+// Eseguire passando come argomento persone.txt
+
+
+// prototipo funzione dopo il main
 void termina(const char *messaggio);
 
 
+// "elimina" gli spazi in testa a una stringa
+// restituisce un puntatore alla prima posizione
+// che non è uno spazio
+char *elimina_spazi_testa(char s[])
+{
+  int i=0;
+  while(s[i]==' ')
+    i++;
+  assert(s[i]!=' ');
+  return &s[i];
+}
+
 
 // main che legge le linee e le spezza al ;
-// poi inserisce le stringhe in una lista ordinata
-// eseguire passando come argomento sudAmerica.txt
+// elimina eventuali spazi iniziali 
+// e stampa il risultato
 int main(int argc, char *argv[])
 {
 
@@ -23,26 +42,24 @@ int main(int argc, char *argv[])
   FILE *f = fopen(argv[1],"r");
   if(f==NULL) termina("Errore apertura file");
 
-  // ciclo di lettura dal file f
-  char *buffer=NULL;    // usate da getline()
-  size_t n=0;           // vengono riutilizzate ad ogni iterazione
-  // legge una linea del file alla volta 
+  // ciclo di lettura delle linee del file
+  char *buffer=NULL;    // usata da getline()
+  size_t n=0;           // usata da getline()
   while(true) {
-    //leggi linea dal file salvando contenuto in buffer
+    //leggi linea dal file
     ssize_t e = getline(&buffer,&n,f);
-    if(e<0) {        // segnala la fine del file
-      free(buffer);  // dealloco il buffer usato per contenere le linee 
-      break;         // esci dal ciclo di lettura 
+    if(e<0) {        // se e<0 assumiamo sia finito il file
+      free(buffer);  // dealloco il buffer usato per le linee 
+      break;
     }
-    // scommentare per vedere cosa ha letto getline()
-    // fprintf(stderr,"e=%ld n=%zd, buffer=%s",e, n,buffer);
-    // Legge i primi tre token di buffer
-    char *s = strtok(buffer,";");
-    printf("token 1: %s\n",s);
-    s = strtok(NULL,";");       // per leggere i token dopo il primo
-    printf("token 2: %s\n",s);  // si passa NULL a strtok 
-    s = strtok(NULL,";");
-    printf("token 3: %s\n",s);
+    // esegue la tokenizzazione di buffer: legge primo token 
+    char *s = strtok(buffer,";\n");
+    while(s!=NULL) {
+      s = elimina_spazi_testa(s); // elimina spai in testa
+      if(strlen(s)>0) printf("Letto: <%s>\n",s);
+      // legge il prossimo token
+      s = strtok(NULL,";\n");
+    }
   } // end while del getline
   fclose(f);
   return 0;
