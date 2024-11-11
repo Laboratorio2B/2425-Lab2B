@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
   if(n<2)
     termina("L'array che ti interesa è vuoto");
     
-  int *a;  // array che conterrà i primi
+  int *a;      // array che conterrà i primi
   int size=10; // dimensione attuale dell'array
-  int messi=0; // numero di eleemnti attulamente nell'array
+  int messi=0; // numero di elementi attualmente nell'array
   a = malloc(size*sizeof(int));
   if(a==NULL)
     termina("Memoria insufficiente");
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   for(int i=2;i<=n;i++) {
     // se i è primo lo aggiungo ad a[]
     if(primo(i)) {
-      // devo aggungere i all'array a[]
+      // devo aggiungere i all'array a[]
       if(messi==size) {
         // ingrandisco l'array
         size = size*2;

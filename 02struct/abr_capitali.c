@@ -8,7 +8,8 @@
 #include <math.h>
 
 // Scopo del programma:
-// imparare a costruire, visualizzare e distruggere le liste in C
+// imparare a costruire, visualizzare e distruggere 
+// gli alberi binari di ricerca in C 
 
 
 // prototipi delle funzioni che appaiono dopo il main()
@@ -156,7 +157,7 @@ capitale *abr_ricerca(capitale *root, char *nome)
     return abr_ricerca(root->right,nome);
 }
 
-// dato un abr di radice root restiuisce
+// dato un abr di radice root restituisce
 // la sua altezza = numero di livelli =
 // profondità massima di una foglia
 int abr_altezza(capitale *root)
@@ -167,7 +168,7 @@ int abr_altezza(capitale *root)
   return (hl>hr) ? hl+1 : hr+1;
 }
 
-// retituisce true se c ha latitudine tra 40 e 43
+// restituisce true se c ha latitudine tra 40 e 43
 bool latrange(capitale *c)
 {
   assert(c!=NULL);
@@ -199,7 +200,7 @@ int main(int argc, char *argv[])
   if(fclose(f)==EOF)
     termina("Errore chiusura");
   puts("--- inizio lista ---");
-  // stampa lista capitali appena creata
+  // stampa elenco capitali dall'abr creato
   // abr_capitale_stampa(root,stdout);  
   abr_capitale_stampa_preorder(root,stdout,0);  
   puts("--- fine lista ---");

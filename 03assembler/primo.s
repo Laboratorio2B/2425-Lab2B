@@ -29,7 +29,7 @@ resto1: cmp r3,r1
         b resto1
 resto2: cmp r3,#0      @; non primo 
         beq nonpr
-        add r1,r1,#2   @; r1 += 2 aggirna variabile del loop
+        add r1,r1,#2   @; r1 += 2 aggiorna variabile del loop
         b loop         @; prossima iterazione del loop 
 
 @; stampa messaggio errore         

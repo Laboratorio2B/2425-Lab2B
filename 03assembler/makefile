@@ -12,4 +12,10 @@ CFLAGS=-std=c11 -Wall -g
 primi: primi.c primo.s
 	$(CC) $(CFLAGS) primi.c primo.s -o primi
 	
+
+# conofronta le stringhe passate sulla linea di comando con strcmp e armcmp
+# $^ = insieme dei prerequisiti
+# $@ = il target della regola 
+strcmp: strcmp.c strcmp.s
+	$(CC) $(CFLAGS) $^ -o $@
 	
