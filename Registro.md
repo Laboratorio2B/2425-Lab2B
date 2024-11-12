@@ -140,7 +140,13 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 16** (12/11/24)
 
-* File oggetto (`.o`), compilazione separata, makefile con target multipli. 
+* File oggetto (`.o`) e compilazione separata; makefile con target multipli. 
 * Implementazione `strcmp` in assembler ARM.
-* Breakpoint condizionali. Visualizzazione registri ARM e loro uso nei breakpoint condizionali.
+* Breakpoint condizionali in gdb/gdbgui. Visualizzazione registri ARM e loro uso nei breakpoint condizionali.
+
+--- 
+
+**Lezione 17** (13/11/24)
+
+* Ancora sul makefile: lazy evaluation, variabili, variabili automatiche, e regole parametriche e implicite.
 

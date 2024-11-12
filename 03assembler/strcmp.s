@@ -13,17 +13,17 @@
 armcmp:	
 	cmp r0,#0
 	moveq r0,#11
-	beq exit			@; r0==NULL exit(11)
+	beq exit		@; r0==NULL exit(11)
 	cmp r1,#0
 	moveq r0,#12
-	beq exit			@; r1==NULL exit(12)
-	mov r2,#0			@; for(i=0 ....)
+	beq exit		@; r1==NULL exit(12)
+	mov r2,#0		@; for(i=0 ....)
 fori:	
 	ldrb r3,[r0,r2] 	@; r3 = r0[r2]
 	ldrb r12,[r1,r2]	@; r12 = r1[r2]
 	cmp r3,r12
 	subne r0,r3,r12
-	movne pc,lr			@; return r3-12=r0[r2]-r1[r2]
+	movne pc,lr		@; return r3-12=r0[r2]-r1[r2]
 	cmp r3,#0
 	moveq r0,#0
 	moveq pc,lr    		@; return 0
