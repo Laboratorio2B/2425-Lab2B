@@ -148,5 +148,13 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 17** (13/11/24)
 
-* Ancora sul makefile: lazy evaluation, variabili, variabili automatiche, e regole parametriche e implicite.
+* Ancora sul makefile: lazy evaluation, variabili, variabili automatiche, e regole implicite.
+* Operatori bitwise `&`, `|`, `^`, `~`, `<<`, `>>`. Esempio: `bitops.c`
+* Utilizzo di puntatori e costruzione di un array di numeri primi in assemler ARM (`array_primi.s`)
+
+-----
+
+**Lezione 18** (19/11/24)
+
+
 

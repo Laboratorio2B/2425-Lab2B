@@ -15,7 +15,7 @@
 // Scopo del programma:
 //  converte argv[1] nell'intero N
 //  crea un array *dinamico* con i primi <=N
-//  salva l'elnco dei primi nel file di nome argv[2]
+//  salva l'elenco dei primi nel file di nome argv[2]
 
 
 // prototipo della funzione termina()

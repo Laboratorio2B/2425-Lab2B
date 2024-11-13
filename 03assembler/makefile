@@ -12,7 +12,6 @@ CFLAGS=-std=c11 -Wall -g
 primi: primi.c primo.s
 	$(CC) $(CFLAGS) primi.c primo.s -o primi
 	
-
 # confronta le stringhe passate sulla linea di comando con strcmp e armcmp
 # $^ = insieme dei prerequisiti
 # $@ = il target della regola 
@@ -20,8 +19,12 @@ strcmp: strcmp.c strcmp.s
 	$(CC) $(CFLAGS) $^ -o $@
 	
 
-
-
+# costruisce array di numeri primi in assembler in array_primi.s
+# primo.s contiene la funzione con il test di primalità
+# array_primi.c contiene il main e la stampa
+# usiamo ancora le variabili automatiche $^ e $@
+array_primi: array_primi.c array_primi.s primo.s
+	$(CC) $(CFLAGS) $^ -o $@
 
 
 
