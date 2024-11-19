@@ -4,7 +4,7 @@
 #include <stdbool.h>  // gestisce tipo bool
 #include <assert.h>   // permette di usare la funzione ass
 #include <string.h>   // funzioni per stringhe
-#include <errno.h>    // rischiesto per usare errno
+#include <errno.h>    // richiesto per usare errno
 #include <math.h>
 #include "strint.h"
 
@@ -38,6 +38,35 @@ void abr_strint_stampa(const strint *root, FILE *f)
     abr_strint_stampa(root->right,f);
   }
 }
+
+// conta il numero di nodi dell'albero
+int abr_strint_totnodi(const strint *root)
+{ 
+  int tot=0;
+  if(root!=NULL) {
+    tot += abr_strint_totnodi(root->left);
+    tot +=1; // contributo di root
+    tot += abr_strint_totnodi(root->right);
+  }
+  return tot;
+}
+
+// calcola la somma dei valori nei nodi dell'albero
+int abr_strint_sommanodi(const strint *root)
+{ 
+  int tot=0;
+  if(root!=NULL) {
+    tot += abr_strint_sommanodi(root->left);
+    tot +=root->n; // contributo di root
+    tot += abr_strint_sommanodi(root->right);
+  }
+  return tot;
+}
+
+
+
+
+
 
 // stampa tutti gli elementi dell'albero
 // che ha come radice root

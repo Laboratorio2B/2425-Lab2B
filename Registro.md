@@ -156,5 +156,20 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 18** (19/11/24)
 
+* Esercizi su ABR.
+* Definizione e uso di matrici bidimensionali definite in modo statico (ad esempio `int a[3][5]`).
 
 
+---
+
+**Lezione 19** (22/11/24)
+
+* Definizione e uso di matrici bidimensionali definite in modo dinamico come array di righe.
+* Seconda prova in itinere.
+
+
+----
+
+**Lezione 20** (26/11/24)
+
+* Lettura e scrittura di file binari in C

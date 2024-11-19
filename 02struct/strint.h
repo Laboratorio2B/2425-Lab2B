@@ -49,3 +49,12 @@ strint *abr_ricerca(strint *root, char *w);
 // la sua altezza = numero di livelli =
 // profondità massima di una foglia
 int abr_altezza(strint *root);
+
+// conta il numero di nodi dell'albero
+int abr_strint_totnodi(const strint *root);
+
+// calcola la somma dei valori nei nodi dell'albero
+int abr_strint_sommanodi(const strint *root);
+
+
+

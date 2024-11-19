@@ -83,5 +83,16 @@ Si cancellino poi le funzioni `latrange` e `abr_stampa_cond` (e la relativa chia
 
 
 
+### ABR per calcolo frequenze di parole (19/11/24)
+
+
+Aggiungere al programma `frequenze.c` una funzione
+```c
+	int conta_parole(strint *root, int len)
+````
+che calcola e restituisce quante sono in totale le parole memorizzate in `root` la cui lunghezza è `len`. Si deve calcolare il numero totale di parole (utilizzando il campo `n`) non semplicemente il numero di parole distinte. 
+
+Si scriva poi una funzione che per ogni lunghezza `n`, da 1 alla lunghezza massima di una parola in `root`, visualizzi su `stderr` il numero di parole di lunghezza `n`
+
 
 
