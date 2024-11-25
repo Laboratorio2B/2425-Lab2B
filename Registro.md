@@ -172,4 +172,10 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 20** (26/11/24)
 
-* Lettura e scrittura di file binari in C
+* Lettura e scrittura di file binari in C: funzioni `fread` e `fwrite`; comando `od`.
+* System calls vs library functions.
+* Sezioni del system manual (comando man).
+* Significato e uso di `umask`
+* Esempi: open/read/write vs fopen/fread/fwrite/fprintf
+* Esempio prestazioni di `write` vs `fwrite`.
+
