@@ -11,7 +11,7 @@
 //  e come si legge da un file binario 
 
 
-static void termina(const char *messaggio);
+void termina(const char *messaggio);
 
 
 int main(int argc, char *argv[])
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 // stampa su stderr il messaggio che gli passo
 // se errno!=0 stampa anche il messaggio d'errore associato 
 // a errno. dopo queste stampe termina il programma
-static void termina(const char *messaggio)
+void termina(const char *messaggio)
 {
   if(errno==0) 
      fprintf(stderr,"%s\n",messaggio);

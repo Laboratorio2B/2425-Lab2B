@@ -5,6 +5,11 @@
 #include <assert.h>   // permette di usare la funzione assert
 #include <string.h>   // funzioni di confronto/copia/etc di stringhe
 #include <errno.h>    // richiesto per usare errno
+// richesti dalla open
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 // Scopo del programma:
 //  mostrare come si crea un file binario 
@@ -44,30 +49,32 @@ int main(int argc, char *argv[])
   // copia il puntatore nella variabile nome_file
   char *nome_file = argv[2];
   
-  // apro il file in scrittura
-  FILE *f = fopen(nome_file,"wb");
-  if(f==NULL) termina("Apertura file fallita");
+  // apro il file in scrittura usando open
+  //   i permessi specificati nell'ultimo argomento
+  //   valgono solo quando il file viene creato!
+  //   i permessi effettivi dipendono anche dalla umask 
+  int fd = open(nome_file,O_WRONLY|O_CREAT,0666);
+  if(fd<0) termina("Apertura file fallita");
 
   // cerca i primi da 2 a n e li scrive dentro il file
   for(int i=2;i<=n;i++)
     if(primo(i)) {
-      // scrittura dell'intero i in formato binario 
-      int e = fwrite(&i,sizeof(i),1,f);
-      if(e!=1) termina("Errore nella scrittura");
+      // scrittura dell'intero i in formato binario con write(2)
+      int e = write(fd,&i,sizeof(i));
+      if(e!=sizeof(int)) termina("Errore nella scrittura");
     }  
   // se io avessi messo i primi in un array a[0...k-1],
-  // li avrei potuti scrivere in f con l'istruzione
-  //   fwrite(a,sizeof(*a),k,f);
+  // li avrei potuti scrivere in fd con l'istruzione
+  // write(fd,a,sizeof(*a)*k);
 
   // chiudi il file e termina 
-  if(fclose(f)==EOF)
+  if(close(fd)<0)
     termina("Errore chiusura file");; 
-   
   return 0;
 }
 
 
-// stampa su stderr il messaggio che gli passo
+// stampa su stderr il  messaggio che gli passo
 // se errno!=0 stampa anche il messaggio d'errore associato 
 // a errno. dopo queste stampe termina il programma
 void termina(const char *messaggio)
