@@ -182,6 +182,18 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 21** (29/11/24)
 
+* Permessi dei file e notazione ottale in `open`. Significato e uso di `umask(1)` e `chmod(1)`
 * Esempio prestazioni di `write(2)` vs `fwrite(3)`.
-* Significato e uso di `umask(1)` e `chmod(`)`
-* Introduzione a Java
+* Introduzione a Java: la classe `Coppia`, overloading dei metodi `toString` e  `equals`, la classe `ArrayList<>`, metodi `sort` e `contains`
+
+
+----
+
+
+**Lezione 22** (3/12/24)
+
+* Java: la classe `TreeSet` e l'interfaccia `Comparable`, 
+lettura da file con `BufferedReader` e `FileReader` 
+* Classi astratte e interfaccie. 
+
+----
