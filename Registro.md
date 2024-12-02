@@ -192,8 +192,7 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 22** (3/12/24)
 
-* Java: la classe `TreeSet` e l'interfaccia `Comparable`, 
-lettura da file con `BufferedReader` e `FileReader` 
-* Classi astratte e interfaccie. 
+Java: la classe `HashSet` e il metodo `hashCode`. Lettura da file con `BufferedReader` e `FileReader` 
+Uso di eccezioni. La classe `TreeSet` e l'interfaccia `Comparable`, 
 
 ----
