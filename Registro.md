@@ -192,7 +192,23 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 **Lezione 22** (3/12/24)
 
-Java: la classe `HashSet` e il metodo `hashCode`. Lettura da file con `BufferedReader` e `FileReader` 
-Uso di eccezioni. La classe `TreeSet` e l'interfaccia `Comparable`, 
+Java: la classe `HashSet` e il metodo `hashCode`. Lettura da file con `BufferedReader` e `FileReader`.
+Uso di eccezioni (checked e unchecked).
+Cenni sulla gerarchia delle collezioni: `Set` vs `HashSet` cs 'LinkedHashSet', `List` vs `ArrayList` vs `LinkedList`.
+La classe `TreeSet` e l'interfaccia `Comparable`, 
 
 ----
+
+**Lezione 23** (6/12/24)
+
+Classi (astratte) e interfaccie: differenza fra `extends` e `implements`.
+Classe `Grafo`: cammini minimi e Minimuj Spanning Tree. 
+
+---
+
+
+
+
+
+
+

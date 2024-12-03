@@ -15,19 +15,41 @@ class Citta {
     this.popolazione = popolazione;
   }
 
+  // converte una stringa in una città se possibile
+  // altrimenti lancia un'eccezione
+  Citta(String s) {
+    String[] campi = s.split(",");
+    if(campi.length != 4)
+      throw new IncompleteRow("Riga con !=4 campi: " + s);
+    nome = campi[0].trim();
+    lat = Double.parseDouble(campi[1].trim());
+    lon = Double.parseDouble(campi[2].trim());
+    popolazione = Integer.parseInt(campi[3].trim());
+  }
+
+  @Override
   public String toString() {
     return String.format("%s (%.2f,%.2f) %d ",nome,lat,lon,popolazione);
   }
 
   @Override
   public boolean equals(Object obj) {
+    // verifica se obj==null oppure se obj non è una città
     if(obj == null || getClass() != obj.getClass())
       return false;
     Citta c = (Citta)obj;
     return nome.equals(c.nome) && lat == c.lat && lon == c.lon && popolazione == c.popolazione;
   }
 
-  // @Override
+  // override del metodo hashCode per garantire coerenza con equals
+  // se due oggetti sono uguali, devono avere lo stesso hashcode
+  // necessario altrimenti HashSet non funziona correttamente
+  // notare che la qualità del codice hash non è importante
+  // per la correttezza del programma, ma influisce sulle prestazioni
+  // ce ne accorgiamo quando abbiamo molti oggetti perché
+  // un buon hashcode garantisce operazioni in tempo costante
+  // uno cattivo può portare a operazioni in tempo lineare
+  @Override
   public int hashCode() {
     int hash = 7;
     hash = 31 * hash + nome.hashCode();
@@ -37,22 +59,7 @@ class Citta {
     return hash;
   }
 
-  // converte una stringa in una città se possibile
-  // altrimenti restituisce null
-  // se il primo carattere è # la stringa è un commento e ritorna null
-  static Citta leggiCitta(String s) {
-    if(s.charAt(0)=='#') 
-      return null;
-    String[] campi = s.split(",");
-    //if(campi.length != 4)
-    //  throw new IncompleteRow("Riga incompleta: " + s);
-    return new Citta(campi[0].trim(),Double.parseDouble(campi[1].trim()),
-                     Double.parseDouble(campi[2].trim()),
-                     Integer.parseInt(campi[3].trim()));
-  }
-
  
-
   public static void main(String[] args) {
     if(args.length !=1) {
       System.out.println("Uso: java Citta nomefile");
@@ -64,13 +71,22 @@ class Citta {
       BufferedReader br = new BufferedReader(new FileReader(args[0]));
       String linea;
       while((linea = br.readLine()) != null) {
-        Citta c = leggiCitta(linea);
-        if(c != null)
-          if(insieme.add(c)!=true)
-            System.out.println("Città duplicata: " + c);
+        // salta linee vuote o commenti
+        if(linea.length() == 0 || linea.charAt(0) == '#')
+          continue;
+        Citta c = new Citta(linea);
+        if(insieme.add(c)!=true)
+          System.out.println("Città duplicata: " + c);
       }
-      br.close();
-    } catch(Exception e) {
+      br.close(); // chiudo il file
+    }
+    // esempio di gestione di una eccezione separatamente
+    // dal caso generale: in questo caso invece di terminare
+    // il programma, stampo un messaggio e elaboro le città lette
+    catch (IncompleteRow e) {
+      System.err.println(e + "\nInterrompo la lettura ");
+    }
+    catch(Exception e) {
       System.err.println("Errore: " + e);
       e.printStackTrace();
       System.exit(2);

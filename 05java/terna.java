@@ -14,10 +14,21 @@ class Terna implements Comparable<Terna> {
   }
 
   // crea stringa che rappresenta la terna
+  @Override
   public String toString() {
     return String.format("%d %d %d",x,y,z);
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if(o == null || !(o instanceof Terna))
+      return false;
+    Terna t = (Terna)o;      // casting simile a quello del C
+    return x==t.x && y==t.y && z==t.z;
+  }
+
+  // metodo compareTo richiesto dall'interfaccia Comparable
+  // a sua volta richiesta da TreeSet
   // confronta due terne considerando le componenti z,y,x in questo ordine
   public int compareTo(Terna t) {
     if(z != t.z)
@@ -37,29 +48,10 @@ class Terna implements Comparable<Terna> {
   }
 
 
-  public static void main0(String[] args) {
-    // controlla che ci siano almeno tre argomenti e che siano multipli di tre
-    if(args.length < 3 || args.length% 3!=0) {
-      System.out.println("Uso: java Terna x1 y1 z1 x2 y2 z2 ...");
-      System.exit(1);
-    }
-
-    // crea una lista di terne di interi dalla linea di comando
-    Set<Terna> insieme = new TreeSet<Terna>();
-    for(int i=0; i<args.length; i+=3) {
-      int x = Integer.parseInt(args[i]);
-      int y = Integer.parseInt(args[i+1]);
-      int z = Integer.parseInt(args[i+2]);
-      insieme.add(new Terna(x,y,z));
-    }
-
-    // stampa la lista
-    for(Terna t: insieme)
-       System.out.println(t);
-    System.out.println("---- end ----");
-  }
-
-
+  // legge una terna da una stringa di :;- come specificato
+  // nel testo del compito. Sarebbe più semplice usare il metodo split
+  // della classe String, ma ho voluto mostrare una soluzione
+  // basata su semplici cicli for/while
   static Terna leggiTerna(String s) {
       // se ci sono caratteri estranei passa alla linea successiva
       boolean ok = true;
@@ -68,7 +60,7 @@ class Terna implements Comparable<Terna> {
         if(c != '-' && c != ':' && c != ';') {ok = false; break;}
       }
       if(!ok) return null;
-      s += "\n";  // mettiamo lo \n iun fondo come in C
+      s += "\n";  // mettiamo lo \n in fondo come in C
       // spezza la linea in sequenze di --- secondo i caratteri : e ;
       int i=0,j,x,y,z;
       // salta separatori iniziali
@@ -114,7 +106,6 @@ class Terna implements Comparable<Terna> {
       BufferedReader in = new BufferedReader(new FileReader(args[0]));
       while(in.ready()) {
         String line = in.readLine();
-        // fine del parsing
         Terna t = leggiTerna(line);
         if(t != null)
           insieme.add(t);
@@ -122,6 +113,7 @@ class Terna implements Comparable<Terna> {
       in.close();
     } catch(Exception e) {
       System.err.println("Errore: " + e);
+      // stampo la traccia dello stack per debug
       e.printStackTrace();
       System.exit(2);
     }
@@ -142,6 +134,5 @@ class Terna implements Comparable<Terna> {
       if (t.pitagorica())
         System.out.println(t);
     System.out.println("---- end ----");
-  }
-  
+  }  
 }
