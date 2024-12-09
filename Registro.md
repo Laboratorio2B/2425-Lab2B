@@ -199,10 +199,10 @@ La classe `TreeSet` e l'interfaccia `Comparable`,
 
 ----
 
-**Lezione 23** (6/12/24)
+**Lezione 23** (10/12/24)
 
 Classi (astratte) e interfaccie: differenza fra `extends` e `implements`.
-Classe `Grafo`: cammini minimi e Minimuj Spanning Tree. 
+Classe `Grafo`: cammini minimi con algoritmo di Dijkstra. 
 
 ---
 
