@@ -2,17 +2,17 @@
 /**
  Classe che rappresenta un arco pesato di un grafo
 */ 
-public class Arco implements Comparable<Arco> {
+class Arco implements Comparable<Arco> {
 	Nodo n1, n2;
 	double weight;
 
-	public Arco(Nodo n1,Nodo n2, double w){
+	Arco(Nodo n1,Nodo n2, double w){
 		this.n1=n1;
 		this.n2=n2;
 		this.weight=w;
 	}
 	
-	public boolean stessi_estremi(Arco a) {
+	boolean stessi_estremi(Arco a) {
 		if(n1.equals(a.n1) && n2.equals(a.n2))
 		  return true;
 		if(n1.equals(a.n2) && n2.equals(a.n1))
@@ -20,7 +20,7 @@ public class Arco implements Comparable<Arco> {
 		return false;
 	}
 
-	public Nodo altro_estremo(Nodo n) {
+	Nodo altro_estremo(Nodo n) {
 		if(n.equals(n1)) return n2;
 		if(n.equals(n2)) return n1;
 		throw new IllegalArgumentException("nodo non estremo dell'arco");

@@ -1,11 +1,15 @@
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 
 
 /**
 Interfaccia per rappresentare un grafo pesato non orientato
 */
-public interface Grafo {
+abstract class Grafo {
 	
 	/**
 	aggiunge un nodo al grafo
@@ -13,7 +17,7 @@ public interface Grafo {
 	@param n nodo da aggiungere
 	@throws IllegalArgumentException se n è già nel grafo
 	*/
-	public void aggiungi_nodo(Nodo n);
+	abstract void aggiungi_nodo(Nodo n);
 
 	/**
 	aggiunge un arco al grafo
@@ -22,19 +26,19 @@ public interface Grafo {
 	@throws IllegalArgumentException se uno degli estremi non è nel grafo
 	@throws IllegalArgumentException se un arco con gli stessi estremi è nel grafo
 	*/
-	public void aggiungi_arco(Arco a);
+	abstract void aggiungi_arco(Arco a);
 
   /**
 	Restituisce il numero totale di nodi nel grafo
 	@return numero dei nodi
 	*/
-	public int num_nodi();
+	abstract int num_nodi();
 
 	/**
 	Restituisce il numero totale di archi nel grafo
 	@return numero degli archi
 	*/
-	public int num_archi();
+	abstract int num_archi();
 
 	/**
 	 * Verifica se il grafo contiene un nodo
@@ -42,7 +46,7 @@ public interface Grafo {
 	 * @param n nodo da cercare
 	 * @return true se il nodo è presente, false altrimenti
 	 */
-	public boolean contiene_nodo(Nodo n);
+	abstract boolean contiene_nodo(Nodo n);
 
 	/**
 	Restituisce l'insieme degli archi uscenti da un nodo ordinati per peso crescente
@@ -50,22 +54,63 @@ public interface Grafo {
 	@return insieme degli archi uscenti da n
 	@throws IllegalArgumentException se n non è un nodo del grafo
 	*/
-  public SortedSet<Arco> uscenti(Nodo n);
+  abstract SortedSet<Arco> uscenti(Nodo n);
 
 	/**
 	Restituisce l'insieme di tutti gli archi del grafo ordinati per peso crescente
 
 	@return insieme di tutti gli archi del grafo
 	*/
-	public SortedSet<Arco> archi();
+	abstract SortedSet<Arco> archi();
 
   /**
 	Restituisce i cammini minimi da un nodo sorgente 
 
 	@parameter s sorgente per il calcolo dei cammini minimi
 	@return mappa che associa ad ogni nodo raggiungibile da s
-	        il costo del cammino minimo
+	        il costo del cammino minimo e il nodo precedente
 	*/
-  public Map<Nodo,Cammino> dijkstra(Nodo s);
+  Map<Nodo,Cammino> dijkstra(Nodo s) {
+				// verifica che la sorgente sia nel grafo!
+		assert this.contiene_nodo(s): 
+		       "La sorgente deve appartenere al grafo";
+
+    // nodi per i quali ho determinato la distanza minima da s
+		Map<Nodo,Cammino> risolti = new LinkedHashMap<Nodo,Cammino>();
+
+		// nodi per quali ho trovato almeno un cammino da s 
+		// per ogni nodo mantengo il segmento migliore trovato finora
+		Map<Nodo,Cammino> raggiunti = new HashMap<Nodo,Cammino>();
+
+		// inizializzo raggiunti con il nodo sorgente che ha
+		// distanza zero da se stesso
+		raggiunti.put(s,new Cammino(s,0.0));
+
+    // continuo fino a quando ci sono nodi raggiunti ma non risolti
+		while(raggiunti.size()>0) {
+			// cerca tra i nodi raggiunti quello con valore associato minimo (attualmente inefficiente)
+			Set<Nodo> attivi = raggiunti.keySet();
+			Nodo n = Collections.min(attivi, (n1,n2) -> Double.compare(
+			           raggiunti.get(n1).costo,raggiunti.get(n2).costo));
+			double n_minimo = raggiunti.get(n).costo;
+			// sposta n da raggiunti a risolti
+			risolti.put(n,raggiunti.remove(n)); 
+			// considera archi uscenti da n
+			for(Arco a : uscenti(n)) {
+				Nodo m = a.altro_estremo(n);
+				double m_dist = n_minimo + a.weight;
+				if(risolti.containsKey(m))
+				  continue;
+				if(!raggiunti.containsKey(m))
+				  raggiunti.put(m,new Cammino(n,m_dist));
+
+				else if(raggiunti.get(m).costo>m_dist) {
+					raggiunti.get(m).costo = m_dist;
+					raggiunti.get(m).precedente = n;
+				}
+			} // end for Arco
+		} // end while 
+		return risolti;
+	}
 
 }
