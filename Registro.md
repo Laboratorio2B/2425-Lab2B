@@ -201,9 +201,9 @@ La classe `TreeSet` e l'interfaccia `Comparable`. Uso dell'annotazione `@Overrid
 
 **Lezione 23** (10/12/24)
 
-Java: classi (astratte) e interfaccie; differenza di uso fra `extends` e `implements`.
+Java: classi (astratte) e interfacce; differenza di uso fra `extends` e `implements`.
 Classe `Grafo`, cammini minimi con algoritmo di Dijkstra. Classe `LogGrafo` 
-e implementazione di un grafo di città mediante l'interfaccia `Nodo`.
+e implementazione di un grafo di città mediante l'interfaccia `Nodo` (si veda il `main` della classe `GrafoCitta`)
 Cenni sull'uso di  [`javadoc`](https://en.wikipedia.org/wiki/Javadoc)
 
 
