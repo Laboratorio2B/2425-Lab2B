@@ -5,19 +5,29 @@ import java.util.List;
 import java.util.Map;
 
 
-// esmpio di grafo in cui i nodi sono città 
-// e gli archi sono coppie di città con 
-// distanza inferiore a un certo limite
 
+/**
+ * Classe contentente il metodo main per leggere un file di città
+ * e costruire un grafo in cui i nodi sono città e gli archi
+ * sono coppie di città con distanza inferiore a un certo limite
+ * 
+ * Dopo la costruzione del grafo, calcola i cammini minimi
+ * dalla prima città del file a tutte le altre città
+ */
 
-class GrafoCitta {
+public class GrafoCitta {
 
+  /**
+   * Metodo main per leggere un file di città e costruire un grafo
+   * legeg dalla linea di comando il nome di un file e un limite
+   * di distanza in chilometri 
+   * */
   public static void main(String[] args) {
     if(args.length !=2) {
       System.out.println("Uso: java GrafoCitta nomefile limiteKm");
       System.exit(1);
     }
-    // creazione insieme di città 
+    // creazione  lista di città 
     List<Citta> elenco = new ArrayList<Citta>();
     try {
       BufferedReader br = new BufferedReader(new FileReader(args[0]));
@@ -65,11 +75,15 @@ class GrafoCitta {
     System.out.println("Ci sono " + m.size() + " città raggiungibili da " + sorgente.etichetta()  ); 
   }
 
-  
-  // funzione che calcola la distanza fra due città
-  // utilizzando la formula di Haversine
-  // https://en.wikipedia.org/wiki/Haversine_formula
-  // la distanza è in chilometri
+  /** 
+   * Calcola la distanza fra due città
+   * 
+   * @param c1 prima città
+   * @param c2 seconda città
+   * @return distanza in chilometri
+   *
+  Per il calcolo viene utilizzata la formula di Haversine
+  https://en.wikipedia.org/wiki/Haversine_formula  */
   public static double distanza(Citta c1, Citta c2) {
     double lat1 = Math.toRadians(c1.lat);
     double lat2 = Math.toRadians(c2.lat);

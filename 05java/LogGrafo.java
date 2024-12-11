@@ -13,7 +13,7 @@ import java.util.SortedSet;
  * basata su HashMap per i nodi e TreeSet per gli archi pesati
  */
 
-class LogGrafo extends Grafo {
+public class LogGrafo extends Grafo {
 	// insieme di tutti gli archi del grafo
 	private SortedSet<Arco> archi;
   // nodi rappresentati come insiemi di archi uscenti
@@ -23,32 +23,32 @@ class LogGrafo extends Grafo {
 	/** costruttore: inizializza insiemi di archi e nodi 
 	 *  inizialmente vuoti
 	 * */ 
-	 LogGrafo() {
+	public LogGrafo() {
 		nodi = new HashMap<Nodo,SortedSet<Arco>>();
 		archi = new TreeSet<Arco>();
 	}
 
-	 int num_nodi() {
+	public int num_nodi() {
 		return nodi.size();
 	}
 
-	 int num_archi() {
+	public int num_archi() {
 		return archi.size();
 	}
 
 	// verifica se il grafo contiene un nodo
-	 boolean contiene_nodo(Nodo n) {
+	public boolean contiene_nodo(Nodo n) {
 		return nodi.containsKey(n);
 	}
 
 	// aggiunge nodo al grafo
-	 void aggiungi_nodo(Nodo n) {
+	public void aggiungi_nodo(Nodo n) {
 		if(nodi.containsKey(n))
 		  throw new IllegalArgumentException("Nodo duplicato");
 		nodi.put(n,new TreeSet<Arco>());
 	} 
 
-	 void aggiungi_arco(Arco a) {
+	public void aggiungi_arco(Arco a) {
 		if(!nodi.containsKey(a.n1))
 		  throw new IllegalArgumentException("Primo estremo mancante");
 		if(!nodi.containsKey(a.n2))
@@ -65,7 +65,7 @@ class LogGrafo extends Grafo {
 
 	// restituisce insieme di archi uscenti da un nodo
 	// ordinati per peso crescente
-   SortedSet<Arco> uscenti(Nodo n) {
+  public SortedSet<Arco> uscenti(Nodo n) {
 		if(!nodi.containsKey(n))
 		  throw new IllegalArgumentException("Nodo sconosciuto");
 		return nodi.get(n);
@@ -73,7 +73,7 @@ class LogGrafo extends Grafo {
 
 	// restituisce insieme di tutti gli archi del grafo
 	// ordinati per peso crescente
-	 SortedSet<Arco> archi() {
+	public SortedSet<Arco> archi() {
 		return this.archi;
 	}
 
@@ -84,12 +84,12 @@ class LogGrafo extends Grafo {
 	 * 
 	 * @param args non usato
 	 */
-	static void main(String[] args) {
+	public static void main(String[] args) {
 		// classe di prova per testare il grafo
 		class Stringa implements Nodo {
 			String nome;
-			 Stringa(String nome) {this.nome = nome;}
-			 public String etichetta() {return nome;}
+			Stringa(String nome) {this.nome = nome;}
+			public String etichetta() {return nome;}
 		}
 		
     // costruisco un grafo con 4 nodi e 4 archi

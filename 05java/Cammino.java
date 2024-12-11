@@ -1,13 +1,14 @@
 
-// Classe per memorizzare un cammino di costo minimo
-// da un nodo al nodo sorgente
-// per mantenere la rappresentazione compatta, 
-// memorizzo il nodo precedente e il costo del cammino
-class Cammino {
+/** 
+   Classe per memorizzare un cammino di costo minimo
+   da un nodo al nodo sorgente.
+   per mantenere la rappresentazione compatta, 
+   memorizzo il nodo precedente e il costo del cammino */
+public class Cammino {
 	Nodo precedente = null;
 	double costo = Double.NaN;
 
-	Cammino(Nodo p, double c) {
+	public Cammino(Nodo p, double c) {
 		precedente = p;
 		costo = c;
 	}

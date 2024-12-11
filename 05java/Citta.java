@@ -3,12 +3,12 @@ import java.io.FileReader;
 import java.util.HashSet;
 import java.util.Set;
 
-class Citta implements Nodo {
+public class Citta implements Nodo {
   String nome;
   double lat, lon; // latitudine e longitudine
   int popolazione; // popolazione in migliaia
   
-  Citta(String nome, double lat, double lon, int popolazione) {
+  public Citta(String nome, double lat, double lon, int popolazione) {
     this.nome = nome;
     this.lon = lon;
     this.lat = lat;
@@ -17,7 +17,7 @@ class Citta implements Nodo {
 
   // converte una stringa in una città se possibile
   // altrimenti lancia un'eccezione
-  Citta(String s) {
+  public Citta(String s) {
     String[] campi = s.split(",");
     if(campi.length != 4)
       throw new IncompleteRow("Riga con !=4 campi: " + s);

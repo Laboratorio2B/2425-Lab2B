@@ -5,11 +5,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
+// Nota: per costruire la documentazione delle classi
+// Grafo, Arco, Città etc. utilizzare il comando
+//    javadoc -d doc  *.java
+// Successivamente aprire il file doc/overview-tree.html
+
 
 /**
-Interfaccia per rappresentare un grafo pesato non orientato
+Classe astratta per rappresentare un grafo pesato non orientato
 */
-abstract class Grafo {
+public abstract class Grafo {
 	
 	/**
 	aggiunge un nodo al grafo
@@ -17,7 +22,7 @@ abstract class Grafo {
 	@param n nodo da aggiungere
 	@throws IllegalArgumentException se n è già nel grafo
 	*/
-	abstract void aggiungi_nodo(Nodo n);
+	abstract public void aggiungi_nodo(Nodo n);
 
 	/**
 	aggiunge un arco al grafo
@@ -26,19 +31,19 @@ abstract class Grafo {
 	@throws IllegalArgumentException se uno degli estremi non è nel grafo
 	@throws IllegalArgumentException se un arco con gli stessi estremi è nel grafo
 	*/
-	abstract void aggiungi_arco(Arco a);
+	abstract public void aggiungi_arco(Arco a);
 
   /**
 	Restituisce il numero totale di nodi nel grafo
 	@return numero dei nodi
 	*/
-	abstract int num_nodi();
+	abstract public int num_nodi();
 
 	/**
 	Restituisce il numero totale di archi nel grafo
 	@return numero degli archi
 	*/
-	abstract int num_archi();
+	abstract public int num_archi();
 
 	/**
 	 * Verifica se il grafo contiene un nodo
@@ -46,22 +51,22 @@ abstract class Grafo {
 	 * @param n nodo da cercare
 	 * @return true se il nodo è presente, false altrimenti
 	 */
-	abstract boolean contiene_nodo(Nodo n);
+	abstract public boolean contiene_nodo(Nodo n);
 
 	/**
 	Restituisce l'insieme degli archi uscenti da un nodo ordinati per peso crescente
-	@param n nodo del grafo
+	@pa	ram n nodo del grafo
 	@return insieme degli archi uscenti da n
 	@throws IllegalArgumentException se n non è un nodo del grafo
 	*/
-  abstract SortedSet<Arco> uscenti(Nodo n);
+  abstract public SortedSet<Arco> uscenti(Nodo n);
 
 	/**
 	Restituisce l'insieme di tutti gli archi del grafo ordinati per peso crescente
 
 	@return insieme di tutti gli archi del grafo
 	*/
-	abstract SortedSet<Arco> archi();
+	abstract public SortedSet<Arco> archi();
 
   /**
 	Restituisce i cammini minimi da un nodo sorgente 
@@ -70,7 +75,7 @@ abstract class Grafo {
 	@return mappa che associa ad ogni nodo raggiungibile da s
 	        il costo del cammino minimo e il nodo precedente
 	*/
-  Map<Nodo,Cammino> dijkstra(Nodo s) {
+  public Map<Nodo,Cammino> dijkstra(Nodo s) {
 				// verifica che la sorgente sia nel grafo!
 		assert this.contiene_nodo(s): 
 		       "La sorgente deve appartenere al grafo";
