@@ -75,7 +75,9 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 * Operazioni sui tipi composti, notazioni `.` e  `->`; passaggio per valore e per riferimento di struct. 
 * Ordinamento di un array di struct mediante mergesort
 
-----
+
+
+## Definizione di streuct: liste e alberi binari di ricerca (02struct)
 
 **Lezione 9** (18/10/24)
 
@@ -126,17 +128,19 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 * Lettura da file con getline(). Parsing di stringhe mediante strtok() (file `leggicitta.c`)
 
 
---- 
+
+## Assembler ARM (03assembler)
+
 
 **Lezione 15** (8/11/24)
 
 * Variabili statiche. Funzionamento interno di strtok(). Esempio di lettura di stringhe mediante strtok() (`legginomi.c`)
-* Test di primalità in assembler (`primo.s`). Makefile e compilazione di programmi formati da più file. Concetto di target, prerequisiti e comandi. 
+* Test di primalità in assembler ARM (`primo.s`). Makefile e compilazione di programmi formati da più file. Concetto di target, prerequisiti e comandi. 
 * Uso di un debugger: esecuzione passo/passo, breakpoint, visualizzazione variabili locali. 
 * Accesso a sistemi remoti via ssh con X11 forwarding. Uso di gdbgui per debugging su sistemi remoti attraverso un browser.
 
+---
 
---- 
 
 **Lezione 16** (12/11/24)
 
@@ -150,9 +154,12 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 * Ancora sul makefile: lazy evaluation, variabili, variabili automatiche, e regole implicite.
 * Operatori bitwise `&`, `|`, `^`, `~`, `<<`, `>>`. Esempio: `bitops.c`
-* Utilizzo di puntatori e costruzione di un array di numeri primi in assemler ARM (`array_primi.s`)
+* Utilizzo di puntatori e costruzione di un array di numeri primi in assembler ARM (`array_primi.s`)
 
------
+
+
+## Utilizzo di file binary (04fileBinary)
+
 
 **Lezione 18** (19/11/24)
 
@@ -160,7 +167,8 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 * Definizione e uso di matrici bidimensionali definite in modo statico (ad esempio `int a[3][5]`).
 
 
----
+---- 
+
 
 **Lezione 19** (22/11/24)
 
@@ -177,7 +185,10 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 * Sezioni del system manual (comando man).
 * Esempi: open/read/write vs fopen/fread/fwrite/fprintf
 
-----
+
+
+
+## Utilizzo di classi e collezioni in Java (05java)
 
 
 **Lezione 21** (29/11/24)
@@ -207,11 +218,23 @@ e implementazione di un grafo di città mediante l'interfaccia `Nodo` (si veda i
 Cenni sull'uso di  [`javadoc`](https://en.wikipedia.org/wiki/Javadoc)
 
 
+
+## Uso di Python per interagire con il file system 
+
+
+
+**Lezione 24** (28/1/25)
+
+Introduzione a Python, differenze e similarità con il C. 
+Sintassi, interprete, istruzioni `if`, `else`, `elif`, `for`, `while`. Definizione di funzioni. Liste.
+
+
 ---
 
+**Lezione 25** (30/1/25)
 
-
-
+Python: Dizionari, DocString ed esecuzione dalla linea di programma.  
+Esempio: costruzione classifica leggendo risultati da file. Uso di `import` e `sys.argv`. Apertura di file con `with` e `open`. Istruzione `raise` per segnalare gli errori. Sorting di liste utilizzando una key function. 
 
 
 
