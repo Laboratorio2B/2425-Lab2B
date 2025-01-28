@@ -23,6 +23,12 @@ print(s3)
 print(s4)
 print("---- fine stringhe----") 
 
+# esempio di funzione che restituisce due
+# valori
+def fun(a,b):
+  """restituisce somma e concatenazione"""
+  return a+b,str(a) +str(b)
+
 
 # esempio di ricorsione, asserzione, if/else/elsif  
 def fatt(n):
@@ -39,9 +45,9 @@ def fatt(n):
     return n*fatt(n-1)
   
 
-# esempio ciclo while con clausola else
 def primo(n):
-  assert n>1, "argomento deve essere >1"
+  """esempio ciclo while con clausola else"""
+  assert n>1, f"argomento {n} deve essere >1"
   d=2
   while d*d<=n:
     if n%d==0:
@@ -67,7 +73,7 @@ def fatt(n):
 # esempio di uso del ciclo for decrescente
 def contoallarovescia(n):
   """stampa i numeri da n a 0
-  adando indietro di 1 alla volta"""
+  andando indietro di 1 alla volta"""
   
   tot = 0 
   for i in range(n,-1,-1):

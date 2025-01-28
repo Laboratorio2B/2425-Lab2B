@@ -226,14 +226,14 @@ Cenni sull'uso di  [`javadoc`](https://en.wikipedia.org/wiki/Javadoc)
 **Lezione 24** (28/1/25)
 
 Introduzione a Python, differenze e similarità con il C. 
-Sintassi, interprete, istruzioni `if`, `else`, `elif`, `for`, `while`. Definizione di funzioni. Liste.
+Sintassi, interprete, istruzioni `if`, `else`, `elif`, `for`, `while`. Definizione di funzioni, DocString. Liste e tuple.
 
 
 ---
 
 **Lezione 25** (30/1/25)
 
-Python: Dizionari, DocString ed esecuzione dalla linea di programma.  
+Python: Dizionari, esecuzione dalla linea di programma.  
 Esempio: costruzione classifica leggendo risultati da file. Uso di `import` e `sys.argv`. Apertura di file con `with` e `open`. Istruzione `raise` per segnalare gli errori. Sorting di liste utilizzando una key function. 
 
 

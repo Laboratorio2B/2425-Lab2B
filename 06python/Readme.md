@@ -42,6 +42,25 @@ def fun(a,b):
 s,p = fun(3,5)
 print(s,p)
 ```
+
+## Docstring
+
+Una stringa delimitata da tre virgolette `"""` nella riga immediatamente successiva alla definizione di una funzione di chiama *docstring* e forma un commento che l'interprete associa alla funzione. Viene mostrata con il comando *help* e da alcuni editor specifici per python. Ad esempio
+
+```python
+def media(a,b):
+  """Calcola la media artimetica"""
+  return (a+b)/2
+
+help(media)
+Help on function media in module __main__:
+
+media(a, b)
+    Calcola la media aritmetica
+```
+
+
+
 ## Costruzione stampa e modifica di una lista
 ```python
 lista = [1,2,3,"ciao"]
@@ -51,6 +70,11 @@ lista = lista + [34,40]
 lista.append(35)
 print(lista)
 ```
+
+Si noti che le liste in python sono analoghe agli array del C in quanto possiamo accedere all'iesimo elemento in tempo costante scrivendo `a[i]` (ma non dobbiamo preoccuparci di allocazioni e deallocazioni). Malgrado il nome non sono analoghe alle *linked list* del C dove l'accesso agli elementi avviene seguendo i puntatori del campo *next*.
+
+
+
 
 ### Esempi di iterazione su una lista usando il ciclo for
 ```python
@@ -71,6 +95,21 @@ print(4 in [1,2,3])
 print(4 in [2,4,8])
 ```
 
+## Tuple 
+
+Le tuple sono sequenze di oggetti molto simili alle liste; vengono definite e stampate utilizzando le parentesi tonde invece che quadre. La differenza sostanziale è che le tuple sonn immutabili (come le stringhe): una volta creata non possiamo modificarle, in particolare non possiamo modificare i singoli elementi:
+```python
+a = [2, 3, 5, 7, 11]  # a è una lista
+a[1] = 13
+print(a)  # -->  [2, 13, 5, 7, 11]
+b = (2, 3, 5, 7, 11)  # b è una tupla
+b[1] = 13
+TypeError
+----> 1 b[1] = 13
+TypeError: 'tuple' object does not support item assignment
+```
+Vedremo nel seguito il motivo per cui è utile avere una versione immutabile delle liste.
+
 
 ## Dizionari
 
@@ -83,22 +122,6 @@ d["casa"] = 10
 print(d)
 for c in d:
     print("Alla chiave", c, "è associato il valore", d[c])
-```
-
-## Docstring
-
-Una stringa delimitata da tre virgolette `"""` nella riga immediatamente successiva alla definizione di una funzione di chiama *docstring* e forma un commento che l'interprete associa alla funzione. Viene mostrata con il comando *help* e da alcuni editor specifici per python. Ad esempio
-
-```python
-def media(a,b):
-  """Calcola la media artimetica"""
-  return (a+b)/2
-
-help(media)
-Help on function media in module __main__:
-
-media(a, b)
-    Calcola la media aritmetica
 ```
 
 ## Esecuzione di programmi
