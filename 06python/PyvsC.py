@@ -111,9 +111,10 @@ def esempio_for_lista():
 def main(n):
   print(f"Fattoriale di {n}: {fatt(n)}")
 
-  
+
+
 # ma per analogia con il C spesso la usiamo 
 # per far partire l'esecuzione del  programma
 # ma deve essere fatto esplicitamente come qui sotto
-main(100)  
+main(101)  
 

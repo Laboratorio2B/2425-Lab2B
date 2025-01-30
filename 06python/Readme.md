@@ -111,6 +111,26 @@ TypeError: 'tuple' object does not support item assignment
 Vedremo nel seguito il motivo per cui è utile avere una versione immutabile delle liste.
 
 
+## Esecuzione di programmi
+
+Inizialmente eseguiremo i programmi chiamando le funzioni all'interno dell'interprete python (prompt `>>>` oppure `[1]`). L'interprete ha il vantaggio di permettere di testare le singole istruzioni/funzioni e di vedere il contenuto delle variabili.
+
+Successivamente eseguiremo i programmi python dalla linea di comando del terminale (in questo caso vengono chiamati `script`). Per poterli eseguire dalla linea di comando è necessario che il file contenente il sorgente inizi con la linea
+```python
+#!/usr/bin/env python3
+```
+e che il file venga reso eseguibile con il comando `chmod(1)`
+
+
+## Lettura dei parametri sulla linea di comando
+
+Per poter accedere ai paramteri passati sulla linea di comando con nel C è necessario importare il modulo `sys` con l'istruzione (solitmanete messa all'inzio del file)
+```python
+import sys
+```
+A questo punto i parametri passati sulla linea di comando sono disponibili nella lista di stringhe `sys.argv`; quindi `sys.argv[0]` sarà il nome del programma python, `sys.argv[1]` il nome del primo parametro, e così via. Il numero totale di parametri si ottiene con `len(sys.argv)`.
+
+
 ## Dizionari
 
 Sono equivalenti alle `map` di Java ma più semplici da usare 
@@ -124,12 +144,3 @@ for c in d:
     print("Alla chiave", c, "è associato il valore", d[c])
 ```
 
-## Esecuzione di programmi
-
-Inizialmente eseguiremo i programmi chiamando le funzioni all'interno dell'interprete python (prompt `>>>`). L'interprete ha il vantaggio che permette di testare le singole istruzioni e di vedere il contenuto delle variabili.
-
-Successivamente eseguiremo i programmi python dalla linea di comando del terminale (in questo caso vengono chiamati `script`). Per poterli eseguire dalla linea di comando è necessario che il file contenente il sorgente inizi con la linea
-```python
-#!/usr/bin/env python3
-```
-e che il file venga reso eseguibile con il comando `chmod(1)`
