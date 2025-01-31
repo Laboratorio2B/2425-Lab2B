@@ -124,7 +124,7 @@ e che il file venga reso eseguibile con il comando `chmod(1)`
 
 ## Lettura dei parametri sulla linea di comando
 
-Per poter accedere ai paramteri passati sulla linea di comando con nel C è necessario importare il modulo `sys` con l'istruzione (solitmanete messa all'inzio del file)
+Per poter accedere ai parametri passati sulla linea di comando come nel C, è necessario importare il modulo `sys` con l'istruzione (solitamente messa all'inzio del file)
 ```python
 import sys
 ```
@@ -133,7 +133,7 @@ A questo punto i parametri passati sulla linea di comando sono disponibili nella
 
 ## Dizionari
 
-Sono equivalenti alle `map` di Java ma più semplici da usare 
+Sono equivalenti alle `HashMap` di Java ma più semplici da usare. Consistono in una collezione chiavi, dove ad ogni chiave è associato un valore.  
 
 ```python
 d = {"casa":3, "sole":4}
@@ -143,4 +143,94 @@ print(d)
 for c in d:
     print("Alla chiave", c, "è associato il valore", d[c])
 ```
+
+I valori possono esere qualsiasi, mentre le chiavi devono essere essere oggetti "immutabili", quindi che non possono (o che non devono) essere modificati. Per questo motivo gli array non possono essere usate come chiavi in un dizionario, per associare ad esempio un valore ad una coppia di interi è necessario usare una tupla:
+```python
+d[ [1,2] ] = "coppia"
+TypeError: unhashable type: 'list'
+d[ (1,2) ] = "coppia"
+print(d)
+{'casa': 10, 'sole': 4, "mare": 5, (1, 2): 'coppia'}
+```
+Per cancellare un elemento da un dizionario si utilizza il comando `del`:
+```python
+del d['casa']
+```
+
+
+## Insiemi 
+
+Sono equivalenti agli `HashSet` di Java, ma più semplici da usare. Consistono in una semplice collezione di chiavi senza nessun valore associato. Le operazioni che possiamo fare sono quindi di aggiunta di un elemento (`add`), cancellazione (`remove`), e verifica se un elemento è contenuto nell'insieme (`in`):
+```python
+s = set()   # crea un insieme vuoto
+s.add("rosso")
+s.add("verde")
+s.add("bianco")
+print(s)
+{'rosso', 'bianco', 'verde'}
+"rosso" in s
+True
+s.remove("rosso")
+"rosso" in s
+False
+``` 
+Mediante un ciclo `for` possiamo poi effettuare la scansione degli elementi di un insieme:
+```python
+for c in s:  print("  s contiene:", c)
+  s contiene: bianco
+  s contiene: verde
+```
+Insiemi e dizionari in python sono entrambi realizzati internamente con tabelle hash, quindi gli oggetti che possono essere memorizzati in un `set` sono gli stessi che si possono usare come chiavi nei dizionari (cioè quelli immutabili).
+
+
+
+## Esercizi python 
+
+### Ribalta file (30/1/25)
+
+Scrivere un programma python `reverse.py` che invocato dalla linea di comando scrivendo 
+```bash
+reverse.py nomefile
+```
+legge le linee del file di testo `nomefile` e le scrive in ordine inverso su un nuovo file chiamato `nomefile.rev`. Ad esempio se il file `test.txt` contiene le linee
+```
+prima riga
+
+questa è la terza riga
+la seconda era vuota
+```
+deve essere creato il file `test.txt.rev` contenente
+```
+la seconda era vuota
+questa è la terza riga
+
+prima riga
+```
+Nota: aprire il file e leggere le linee come nell'esempio `serieA.py`. Per aprire il file `nome` in scrittura usare
+```python
+with open(nome,"w") as g:
+```
+e per scrivere una stringa nel file `g` usare la funzione `print` con la keyword `file` nel seguente modo 
+```python
+print("ciao", file=g)
+```
+
+### Ordina file (30/1/25)
+
+Scrivere un programma python `ordina.py` che invocato dalla linea di comando scrivendo 
+```bash
+reverse.py nomefile
+```
+legge le linee del file di testo `nomefile` e le scrive in ordine di lunghezza decrescente 
+su un nuovo file chiamato `nomefile.dec`. Ad esempio per il file `test.txt` dell'esercizio precedente dovrebbe essere creato un file `test.txt.dec` contente le linee:
+```
+questa è la terza riga
+la seconda era vuota
+prima riga
+
+
+```
+Nota: dopo aver letto le linee in una array, ordinarlo mendiante il metodo `sort` utilizando come chiave la lunghezza della stringa.
+
+
 

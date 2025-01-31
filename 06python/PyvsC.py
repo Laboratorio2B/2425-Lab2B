@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 
+import sys
+
 # esempi fatti a lezione: premere Run per leggere il file
 # dentro l'interprete (tab Console) e sperimentare
 
@@ -116,5 +118,11 @@ def main(n):
 # ma per analogia con il C spesso la usiamo 
 # per far partire l'esecuzione del  programma
 # ma deve essere fatto esplicitamente come qui sotto
-main(101)  
+
+# il contenuto della linea di comando si trova
+# in sys.argv, perché ho fatto import sys
+if len(sys.argv)==2:
+  main(int(sys.argv[1]))
+else:
+  print(f"Uso: {sys.argv[0]} intero_positivo")
 

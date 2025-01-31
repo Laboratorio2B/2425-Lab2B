@@ -236,6 +236,13 @@ Sintassi, interprete, istruzioni `if`, `else`, `elif`, `for`, `while`. Definizio
 Python: interprete ed esecuzione dalla linea di programma. 
 Dizionari: funzionamento interno e vincoli sulle chiavi.  
 Esempio: costruzione classifica leggendo risultati da file. Uso di `import` e `sys.argv`. Apertura di file con `with` e `open`. Istruzione `raise` per segnalare gli errori. Sorting di liste utilizzando una key function. 
+Esercizi per casa: *Ribalta file* e *Ordina file*
 
+---
+
+**Lezione 26** (4/2/25)
+
+Definizione e uso di classi in python. I metodi speciali `__init__`,  `__eq__`,  `__hash__`,  ` __str__`, 
+Esplorazione del filesystem in Python: metodi dei moduli `os` e `os.path`.  Concetti di [link symbolici](https://linuxize.com/post/how-to-create-symbolic-links-in-linux-using-the-ln-command/) e di [permessi](https://linuxcommand.org/lc3_lts0090.php). 
 
 
