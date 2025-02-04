@@ -242,7 +242,16 @@ Esercizi per casa: *Ribalta file* e *Ordina file*
 
 **Lezione 26** (4/2/25)
 
-Definizione e uso di classi in python. I metodi speciali `__init__`,  `__eq__`,  `__hash__`,  ` __str__`, 
-Esplorazione del filesystem in Python: metodi dei moduli `os` e `os.path`.  Concetti di [link symbolici](https://linuxize.com/post/how-to-create-symbolic-links-in-linux-using-the-ln-command/) e di [permessi](https://linuxcommand.org/lc3_lts0090.php). 
+Definizione e uso di classi in python. I metodi speciali `__init__`,  ` __str__`, `__repr__` e ,  `__lt__`.
+Esplorazione del filesystem in Python: metodi dei moduli `os` e `os.path`.  Concetto di [link symbolici](https://linuxize.com/post/how-to-create-symbolic-links-in-linux-using-the-ln-command/). 
 
+
+---
+
+**Lezione 27** (6/2/25)
+
+Sottoclassi in python. Metodi speciali per operatori aritmetici (`__add__`, `__mul__`, etc.). Metodi `__eq__` e `__hash__`. 
+Ancora sull'esplorazione del filesystem in Python, [permessi](https://linuxcommand.org/lc3_lts0090.php) associati alle directory.  
+
+---
 

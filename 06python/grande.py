@@ -5,7 +5,6 @@ Legge sulla riga di comando il nome di una directory
 e restituisce il file più grande in essa contenuto
 incluse tutte le sottodirectory
 
-
 Funzioni di libreria per la gestione di file e directory
 
 os.getcwd()       # restituisce directory corrente
@@ -105,8 +104,9 @@ else:
     print("Uso:", sys.argv[0], "nome_directory")
 
 
-# semplice funzione di porva che stampa i file
+# semplice funzione di prova che stampa i file
 # della directory corrente e la loro dimensione
+# non usata da main()
 def elenco():
   for nome in os.listdir():
     print(nome, os.path.getsize(nome))

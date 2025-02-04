@@ -14,14 +14,14 @@ import math, functools
 class Articolo:
     articoli_totali = 0  # attributo/variabile di classe, condiviso tra tutte le istanze
 
-    # invocato scrivedo ad esempio:
+    # invocato scrivendo ad esempio:
     #   libro = Articolo("Lo Hobbit",10.50)
-    def __init__(self, nome, prezzo, commenti=None): # commenti è un parametro opzionale
+    def __init__(self, n, prezzo, commenti=None): # commenti è un parametro opzionale
         """
         Metodo che viene chiamato durante la costruzione di una istanza di
         Articolo per impostarne lo stato iniziale.
         """
-        self.nome = nome
+        self.nome = n
         self.prezzo = prezzo
         if commenti is None:
             self.commenti = []
@@ -48,13 +48,15 @@ class Articolo:
             tot += stelline
 
         # oppure le tre righe qui sopra si possono semplificare con la seguente espressione
-        # tot = sum(s for _, s in self.commenti)
+        # tot = sum(  s for _,s in self.commenti  )
         return tot / len(self.commenti)
 
+    # si invoca scrivendo libro.sconta(30)
     def sconta(self, percentuale):
         assert 0 <= percentuale <= 100, "Percentuale non valida"
         self.prezzo = self.prezzo - (self.prezzo * percentuale / 100)
 
+    # metodo statico (chiamati anche di classe in Java) 
     @staticmethod
     def prezzo_99_cent(prezzo):
         """
