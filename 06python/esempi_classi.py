@@ -91,27 +91,28 @@ class Articolo:
     # decidere se due oggetti sono uguali dipende dall'applicazione
     # non dalle proprietà del linguaggio python 
 
-    # def __eq__(self, altro):
-    #    """Metodo chiamato dall'espressione oggetto == altro.
-    #       Se non è definito usa la definizione di Object basata sull'indirizzo in memoria"""
-    #    return self.nome == altro.nome and self.prezzo == altro.prezzo and self.commenti == altro.commenti
+    def __eq__(self, altro):
+       """Metodo chiamato dall'espressione oggetto == altro.
+          Se non è definito usa la definizione di Object basata sull'indirizzo in memoria"""
+       return self.nome == altro.nome and self.prezzo == altro.prezzo and self.commenti == altro.commenti
 
-    # def __hash__(self):
-    #     """
-    #     Metodo chiamato da hash(oggetto). È necessario implementarlo,
-    #     insieme a __eq__, se si vogliono inserire istanze di Articolo in
-    #     collezioni basate su funzioni hash, come i dizionari e gli insiemi
-    #     Python.
-    #     L'implementazione deve garantire: a == b implica hash(a) == hash(b).
-    #     """
-    #     tupla_commenti = tuple(self.commenti) # trasformo la lista dei commenti in una tupla per poterla usare con hash()
-    #     return hash((self.nome, self.prezzo, tupla_commenti))
+    def __hash__(self):
+        """
+        Metodo chiamato da hash(oggetto). È necessario implementarlo,
+        insieme a __eq__, se si vogliono inserire istanze di Articolo in
+        collezioni basate su funzioni hash, come i dizionari e gli insiemi
+        Python.
+        L'implementazione deve garantire: a == b implica hash(a) == hash(b).
+        """
+        tupla_commenti = tuple(self.commenti) # trasformo la lista dei commenti in una tupla per poterla usare con hash()
+        return hash((self.nome, self.prezzo, tupla_commenti))
 
     def __lt__(self, altro):
         """
-        Metodo chiamato dall'espressione oggetto < altro. 
+        Metodo chiamato dall'espressione oggetto < altro_oggetto. 
         Viene usato ad esempio da sorted(lista_di_oggetti_Articolo).
         """
+        # assert type(altro) == Articolo, "Si possono confrontare solo 2 articoli"
         if self.nome < altro.nome:
           return True
         if self.nome > altro.nome:
@@ -126,9 +127,7 @@ print(f"prezzo di {latte.nome}: {latte.prezzo}") # accedere a un attributo di is
 latte.valuta("Mario", 5)                         # chiamare un metodo di istanza
 latte.valuta("Roberta", 2)
 Articolo.prezzo_99_cent(6.55)   # chiamare un metodo statico
-print("Totale articoli creati:", Articolo.articoli_totali) # accedere a un attributo di classe
-latteUHT = Articolo("Latte 1LT", 1.10)
-latteUHT2 = Articolo("Latte 1LT", 1.10)
+latte1 = Articolo("Latte 1LT", 1.10)
 print("Totale articoli creati:", Articolo.articoli_totali) # accedere a un attributo di classe
 
 
@@ -153,6 +152,8 @@ pc = Articolo("PC portatile", 1200)
 da_scontare = [cuffie, pc]
 black_friday(da_scontare)
 # ora cuffie e pc sono scontati del 30%
+# questo dimstra che la lista contiene 
+# dei puntatori agli oggetti
 
 
 # ------------
@@ -163,7 +164,7 @@ class Film(Articolo):
         super().__init__(nome, prezzo, commenti)
         self.durata = durata
 
-    # Per esercitarsi: sovrascrivere __str__, __eq__, __hash__ per includere anche la durata
+    # Per esercitarsi: sovrascrivere  __repr__, __str__, __eq__ per includere anche la durata
 
 
 class Videogioco(Articolo):
@@ -171,7 +172,7 @@ class Videogioco(Articolo):
         super().__init__(nome, prezzo, commenti)
         self.piattaforma = piattaforma
         
-    # Per esercitarsi: sovrascrivere __str__, __eq__, __hash__ per includere anche la piattaforma
+    # Per esercitarsi: sovrascrivere  __repr__, __str__, __eq__ per includere anche la durata
 
 
 cod = Videogioco("Call of Duty", 59.99, "PC")
@@ -179,9 +180,9 @@ avatar = Film("Avatar 2", 15.99, 120)
 black_friday([cod, avatar])
 
 
-# --------------------
-# OPERATORI ARITMETICI
-# --------------------
+# -------------------------------------------
+# ESEMPIO DEFINIZIONE OPERATORI ARITMETICI
+# -------------------------------------------
 
 class Razionale:
     """
@@ -192,7 +193,7 @@ class Razionale:
     def __init__(self, numeratore, denominatore):
         if denominatore==0:
             raise RuntimeError("Il denominatore non può essere nullo")
-        # forziamo il numeratore ad essere positivoo
+        # forziamo il numeratore ad essere positivo
         if denominatore<0:
           denominatore = -denominatore
           numeratore = - nomeratore    
@@ -216,8 +217,12 @@ class Razionale:
 
     def __str__(self):
         return f"{self.numeratore}/{self.denominatore}"
+
+    def __repr__(self):
+        return f"Razionale({self.numeratore},{self.denominatore})"
     
      # Per esercitarsi: implementare __sub__ e __lt__
+
 
 print("Definisco due numeri razionali e calcolo la loro somma e prodotto")
 r1 = Razionale(2, 3)

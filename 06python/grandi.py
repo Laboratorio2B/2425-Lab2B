@@ -42,24 +42,30 @@ def main(nomedir):
   if not os.path.isdir(nomedir):
     print("Il nome che mi hai passato esiste, ma non è una directory")
     sys.exit(1)
+  # invocazione funzione ricorsiva per creare l'elenco  
   nomeabs = os.path.abspath(nomedir)
-  dim, nomeg = cerca_grande(nomeabs,set())
-  print("-----------------------");
-  print(f"Il file più grande è\n    {nomeg}\ne ha {dim} bytes")
+  elenco = elenco_file(nomedir,set())
+  # ordino l'elenco dei file per dimensione decrescente
+  elenco.sort(key=lambda f: (f[1], f[0]),reverse=True )
+  # stampo intestazione elenco
+  print(f"{'-- dim --':>10}  {'-- nome '+30*'-'}")
+  # stampo elenco
+  for f in elenco:
+    print(f"{f[1]:>10}  {f[0]}")
   return
     
 
 # funzione ricorsiva per cercare il file più grande
 # nella directory corrente e in tutte le sue sottodirectory
-def cerca_grande(nome,dir_esplorate):
-  """restituisce la coppia (dim,nome) che identifica il file
- più grande tra quelli nella directory nome e sottodirectory """
-  
+def elenco_file(nome,dir_esplorate):
+  """restituisce una coppia (nome,file) per ogni 
+     file dentro la directory nome e le sue
+     sottodirectory"""
+
   assert os.path.isdir(nome), "Argomento deve essere una directory"
   print(f"Begin: {nome}",file=sys.stderr)
-  # inizializzo i due parametri di output
-  dim_max = -1
-  nome_max = None
+  # inizializzo la lsita di file trovati
+  lista = []
   # ottiene il contenuto della directory 
   listafile = os.listdir(nome)
   for f in listafile:
@@ -72,6 +78,11 @@ def cerca_grande(nome,dir_esplorate):
     if not os.path.isdir(nomecompleto):
       nuovadim = os.path.getsize(nomecompleto)
       nuovonome = nomecompleto
+      # aggiungo alla lista risultato
+      # il file appena incontrato
+      # il file è rappresentato dalla tupla
+      #  (nome,dimensione)
+      lista.append((nuovonome,nuovadim))
     else:
       # nomecompleto è una directory: possibile chiamata ricorsiva
       # verifico che la directory sia esplorabile 
@@ -87,14 +98,11 @@ def cerca_grande(nome,dir_esplorate):
         continue
       dir_esplorate.add(nomereal)
       # directory nuova e accessibile: esegui ricorsione
-      nuovadim, nuovonome = cerca_grande(nomecompleto,dir_esplorate)
-    # aggiorno dim se ho trovato file più grande
-    if nuovadim > dim_max:
-      dim_max = nuovadim
-      nome_max = nuovonome
+      lista_dir = elenco_file(nomecompleto,dir_esplorate)
+      lista += lista_dir
   # fine ciclo for su i file di questa directory     
   print(f"End: {nome}",file=sys.stderr)
-  return (dim_max, nome_max)
+  return lista
   
   
 # verifico argomenti sulla linea di comando
@@ -104,10 +112,3 @@ if len(sys.argv) == 2:
 else:
     print("Uso:", sys.argv[0], "nome_directory")
 
-
-# semplice funzione di prova che stampa i file
-# della directory corrente e la loro dimensione
-# non usata da main()
-def elenco():
-  for nome in os.listdir():
-    print(nome, os.path.getsize(nome))

@@ -243,6 +243,7 @@ Esercizi per casa: *Ribalta file* e *Ordina file*
 **Lezione 26** (4/2/25)
 
 Definizione e uso di classi in python. I metodi speciali `__init__`,  ` __str__`, `__repr__` e ,  `__lt__`.
+Uso del decorator `@functools.total_ordering`.
 Esplorazione del filesystem in Python: metodi dei moduli `os` e `os.path`.  Concetto di [link symbolici](https://linuxize.com/post/how-to-create-symbolic-links-in-linux-using-the-ln-command/). 
 
 
@@ -251,7 +252,18 @@ Esplorazione del filesystem in Python: metodi dei moduli `os` e `os.path`.  Conc
 **Lezione 27** (6/2/25)
 
 Sottoclassi in python. Metodi speciali per operatori aritmetici (`__add__`, `__mul__`, etc.). Metodi `__eq__` e `__hash__`. 
-Ancora sull'esplorazione del filesystem in Python, [permessi](https://linuxcommand.org/lc3_lts0090.php) associati alle directory.  
+Ancora sull'esplorazione del filesystem in Python, [permessi](https://linuxcommand.org/lc3_lts0090.php) associati alle directory.
+Creazione di elenco dei file ordinato per dimensione decrescente
+
 
 ---
+
+**Lezione 28** (11/2/25)
+
+
+---
+
+** Lezione XX** (20/2/25)
+
+Prova in itinere su python 
 
