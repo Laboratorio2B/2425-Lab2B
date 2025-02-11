@@ -260,10 +260,29 @@ Creazione di elenco dei file ordinato per dimensione decrescente
 
 **Lezione 28** (11/2/25)
 
+Invocazione comandi della shell da python con `subprocess.run`.
+Ricerca di file duplicati in python utilizzando il comando `cmp`. 
+Utilizzo della classe `Miofile` per memorizzare le informazioni relative a un singolo file.
+
 
 ---
 
-** Lezione XX** (20/2/25)
+**Lezione 29** (13/2/25)
+
+Ancora su esplorazione del filesystem. 
+
+
+
+---
+
+**Lezione 30** (18/2/25)
+
+Esercitazione in aula su python 
+
+
+---
+
+** Lezione 31** (20/2/25)
 
 Prova in itinere su python 
 

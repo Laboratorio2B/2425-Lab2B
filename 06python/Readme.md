@@ -230,7 +230,43 @@ prima riga
 
 
 ```
-Nota: dopo aver letto le linee in una array, ordinarlo mendiante il metodo `sort` utilizando come chiave la lunghezza della stringa.
+Nota: dopo aver letto le linee in un array, ordinarlo mediante il metodo `sort` utilizzando come chiave la lunghezza della stringa.
+
+
+
+### File profondi (11/2/25)
+
+Scrivere un programma `profondi.py` che invocato dalla linea di comando scrivendo 
+```bash
+profondi.py nomedir
+```
+esplora la directory `nomedir` e le sue sottodirectory  e visualizza l'elenco dei file che si trovano a maggiore profondità nell'albero con radice `nomedir` ordinando l'elenco per dimensione di file crescente.
+Ad esempio, se la directory `nomedir` ha la seguente struttura:
+```
+nomedir
+├── dir0_d1
+│   ├── dir0_d0
+│   │   ├── filea0.txt
+│   │   └── filea1.txt
+│   ├── file0.txt
+│   └── file1.txt
+├── dir1_d1
+│   ├── dir1_d0
+│   │   ├── fileb0.txt
+│   │   └── fileb1.txt
+│   ├── file0.txt
+│   └── file1.txt
+├── file0.txt
+└── file1.txt
+
+```
+l'output deve consistere dei 4 file `filea0.txt`, `filea1.txt`, `fileb0.txt`, `fileb1.txt` ordinati per dimensione di file crescente. 
+
+*Suggerimento:* partire dall'esempio `duplicati.py` e modificare la classe `Miofile` in modo che memorizzi anche la profondità a cui il file e stato trovato, e modificare il metodo `__lt__` in modo da poter ordinare una lista di file per profondità e dimensione. 
+
+
+
+
 
 
 

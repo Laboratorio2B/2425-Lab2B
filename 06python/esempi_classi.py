@@ -94,6 +94,8 @@ class Articolo:
     def __eq__(self, altro):
        """Metodo chiamato dall'espressione oggetto == altro.
           Se non è definito usa la definizione di Object basata sull'indirizzo in memoria"""
+       if type(self) != type(altro):
+         return False   # se il tipo non corriponde i due oggetti non sono uguali 
        return self.nome == altro.nome and self.prezzo == altro.prezzo and self.commenti == altro.commenti
 
     def __hash__(self):
@@ -126,18 +128,34 @@ latte = Articolo("Latte 1LT", 1.20)
 print(f"prezzo di {latte.nome}: {latte.prezzo}") # accedere a un attributo di istanza
 latte.valuta("Mario", 5)                         # chiamare un metodo di istanza
 latte.valuta("Roberta", 2)
-Articolo.prezzo_99_cent(6.55)   # chiamare un metodo statico
-latte1 = Articolo("Latte 1LT", 1.10)
+Articolo.prezzo_99_cent(6.55)           # chiamare un metodo statico
+latte1 = Articolo("Latte 1LT", 1.10)    # creare un articolo distinto anche se con lo stesso nome 
 print("Totale articoli creati:", Articolo.articoli_totali) # accedere a un attributo di classe
 
+
+# -----------------------------------------------------
+# esempio uso di articoli come chiave in un dizionario
+# possibile errore perchè le chiavi devono essere immutabili!
+# -----------------------------------------------------
+uova = Articolo("Uova bio", 2.80)
+# memorizzo le scorte in un dizionario
+scorte = {latte:5, uova:8}
+#leggo disponbilità
+print(f"Sono disponibili {scorte[uova]} confezioni di {uova}")
+# se cambiamo il prezzo delle uova 
+# l'articolo non viene più trovato 
+uova.prezzo = 2.70
+print(f"Ci sono uova disponibili? {uova in scorte}")
+# se visualizziamo scorte otteniamo un errore 
+# provate a scrivere nell'interprete: scorte<invio>
 
 # ---------------------
 # ESEMPIO DI ALIASING 1
 # ---------------------
-latte2 = latte 
-# latte e latte2 ora fanno riferimento allo stesso oggetto, ossia id(latte2) == id(latte)
+latte2 = latte1
+# latte1 e latte2 ora fanno riferimento allo stesso oggetto
 latte2.prezzo = 1.50 
-# ... quindi qui anche latte.prezzo == 1.50
+# ... quindi qui anche latte1.prezzo == 1.50
 
 
 # ---------------------
@@ -152,7 +170,7 @@ pc = Articolo("PC portatile", 1200)
 da_scontare = [cuffie, pc]
 black_friday(da_scontare)
 # ora cuffie e pc sono scontati del 30%
-# questo dimstra che la lista contiene 
+# questo dimostra che la lista contiene 
 # dei puntatori agli oggetti
 
 
