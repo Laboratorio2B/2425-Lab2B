@@ -272,14 +272,12 @@ Utilizzo della classe `Miofile` per memorizzare le informazioni relative a un si
 
 Parametri posizionali e keyword. Uso di `*` e `**` per funzioni con numero arbitrario di parametri.
 Ancora su esplorazione del filesystem: ricerca basata sul tempo di ultima modifica e uso di espressioni regolari.
-Introduzione ai thread in C. 
-
 
 ---
 
 **Lezione 30** (18/2/25)
 
-Esempio di thread in C. 
+Introduzione ai thread in C. 
 Esercitazione in aula su python 
 
 
@@ -287,5 +285,6 @@ Esercitazione in aula su python
 
 ** Lezione 31** (20/2/25)
 
+Esempi di thread in C. 
 Prova in itinere su python 
 

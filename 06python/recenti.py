@@ -3,7 +3,10 @@
 Esempio di script per la navigazione del filesystem
 
 Visualizza l'elenco dei file più recenti di un dato numero di 
-giorni ordinati per dimensione decrescente 
+giorni ordinati per dimensione decrescente
+Prende come parametro opzionale una espressione
+regolare, e in tal caso considera solo i file
+il cui nome la soddisfano 
 
 
 Comandi per la gestione dei tempi
@@ -34,7 +37,7 @@ Lista completa dei comandi su:
   https://docs.python.org/3/library/os.html
   https://docs.python.org/3/library/os.path.html
   
-Intruduzione alle regular expression:
+Introduzione alle regular expression:
   https://realpython.com/regex-python/  
 """
 import os, os.path, sys, time, re
@@ -70,7 +73,7 @@ class Miofile:
     return f"Miofile({self.path})"
 
 
-def main(nomedir,g):
+def main(nomedir,g,regex=None):
   """Lancia ricerca ricorsiva su nomedir"""
   if not os.path.exists(nomedir):
     print("Il nome che mi hai passato non esiste")
@@ -81,7 +84,7 @@ def main(nomedir,g):
   nomeabs = os.path.abspath(nomedir)
   # pone il limite dei file in elenco a g giorni prima di ora
   limite  = time.mktime(time.localtime()) - g*24*3600
-  elenco = cerca_recenti(nomeabs,limite,set())
+  elenco = cerca_recenti(nomeabs,limite,set(),regex)
   print("------------------------") 
   print(f"Ci sono {len(elenco)} file più recenti di {g} giorni");
   elenco.sort(reverse=True) 
@@ -92,7 +95,7 @@ def main(nomedir,g):
   
 
 # funzione ricorsiva per cercare i file modificati dopo limite
-def cerca_recenti(nome,datalimite,giaesplorati):
+def cerca_recenti(nome,datalimite,giaesplorati,regex):
   """restituisce la lista dei file modificati dopo datalimite
  tra quelli nella directory nome e sue sottodirectory"""
   
@@ -111,8 +114,19 @@ def cerca_recenti(nome,datalimite,giaesplorati):
     # distinguo tra file normali e directory
     if not os.path.isdir(nomecompleto):
       miof = Miofile(nomecompleto)
+      # aggiungo miof alla lista solo se
+      # è stato modificato dopo datalimite
       if not miof.precedente_a(datalimite):
-        recenti.append(miof)
+        if regex:
+          # se è stata data una espressione regolare
+          # aggiunge il file a elenco solo
+          # se nomecompleta ha un match con regex
+          if re.search(regex,nomecompleto):
+            recenti.append(miof)
+        else:
+          # se non è stata passata una espressione
+          # regolare il file viene aggiunto a elenco
+          recenti.append(miof)
     else:
       # nomecompleto è una directory: possibile chiamata ricorsiva
       if not os.access(nomecompleto, os.R_OK | os.X_OK):
@@ -124,7 +138,7 @@ def cerca_recenti(nome,datalimite,giaesplorati):
         continue
       giaesplorati.add(nomereal)
       # directory nuova e accessibile: esegui ricorsione
-      recenti_subdir = cerca_recenti(nomecompleto,datalimite, giaesplorati)
+      recenti_subdir = cerca_recenti(nomecompleto,datalimite, giaesplorati,regex)
       # concateno al risultato
       recenti += recenti_subdir
   # ciclo for su i file di questa directory terminato     
@@ -133,9 +147,15 @@ def cerca_recenti(nome,datalimite,giaesplorati):
 
 # invoca main passando il nome di una directory e un numero di giorni
 # (anche frazionario)
+# se viene passata anche un espressione regolare
+# considera solamente i file il cui nome 
+# soddisfa tale espressione
 if len(sys.argv) == 3:
     main(sys.argv[1], float(sys.argv[2]))
     sys.exit(0)
+elif len(sys.argv) == 4:
+    main(sys.argv[1], float(sys.argv[2]), sys.argv[3])
+    sys.exit(0)    
 else:
-    print("Uso:", sys.argv[0], "nome_directory numero_giorni")
+    print("Uso:", sys.argv[0], "nome_directory numero_giorni [regex]")
     sys.exit(2)
