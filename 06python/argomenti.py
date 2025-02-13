@@ -5,7 +5,6 @@ Esempi che mostrano l'uso di argomenti posizionali e keyword
 Vedere la documentazione delle principali funzioni
 https://docs.python.org/3/library/functions.html
 """
-import os, os.path, sys, subprocess
 
 
 # esempio di funzione che esegue una somma o un prodotto
@@ -15,6 +14,7 @@ def somma(a,b):
 # generalizzazione che accetta un numero
 # qualsiasi di argomenti posizionali
 def multi_somma(a,*altri):
+  print("altri:", altri)
   for b in altri:
     a += b
   return a
@@ -49,6 +49,7 @@ def multi_xsomma(a,*altri,segno = 1, potenza = 0):
 
 # accetta un numero qualsiasi di argomenti keywords
 def multi_xsomma2(a,*altri,segno = 1, **kwargs):
+  print("diz:", kwargs)
   for b in altri:
     a += b
   a = segno*a
@@ -60,7 +61,7 @@ def multi_xsomma2(a,*altri,segno = 1, **kwargs):
   return a
   
 # per finire: uso di * e ** per scompattare liste e dizionari
-lista = [2,3]
+lista = [2,3,5,7]
 diz = {"segno":-1, "potenza":3}
 # esempio: 
 #   multi_xsomma(*lista,**diz) 
