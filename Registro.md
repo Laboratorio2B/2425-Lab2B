@@ -260,8 +260,9 @@ Creazione di elenco dei file ordinato per dimensione decrescente
 
 **Lezione 28** (11/2/25)
 
+Istruzione `type` all'interno del metodo `__eq__`
 Invocazione comandi della shell da python con `subprocess.run`.
-Ricerca di file duplicati in python utilizzando il comando `cmp`. 
+Ricerca di file duplicati in python utilizzando il comando della shell  `cmp`. 
 Utilizzo della classe `Miofile` per memorizzare le informazioni relative a un singolo file.
 
 
@@ -269,14 +270,16 @@ Utilizzo della classe `Miofile` per memorizzare le informazioni relative a un si
 
 **Lezione 29** (13/2/25)
 
-Ancora su esplorazione del filesystem. 
-
+Parametri posizionali e keyword. Uso di `*` e `**` per funzioni con numero arbitrario di parametri.
+Ancora su esplorazione del filesystem: ricerca basata sul tempo di ultima modifica e uso di espressioni regolari.
+Introduzione ai thread in C. 
 
 
 ---
 
 **Lezione 30** (18/2/25)
 
+Esempio di thread in C. 
 Esercitazione in aula su python 
 
 
