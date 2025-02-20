@@ -1,34 +1,39 @@
 #include "xerrori.h"
 
-// primo esempio di utilizzo di thread
-// conteggio dei primi con thread multipli
+// costruzione di una tabella di primi con thread multipli
 
-// mostra come usare una struct per condividere dei parametri 
-// di input e output tra thread principale e ausiliari
-
-// si tratta della situazione piu semplice in cui il lavoro 
-// può essere soddiviso in più parti indipendenti;
+// questo programma è stato ottenuto partendo da
+// contaprimi.c aggiungendo la gestione di una tabella
+// e l'uso di un mutex per garantire l'accesso
+// esclusivo alla tabella da parte dei thread ausiliari
 
 
-//Prototipo test di primalità
+//Prototipi
 bool primo(int n);
 
-// struct usata per passare argomenti ai thread
+// struct che uso per passare argomenti ai thread
 typedef struct {
   int start;            // intervallo dove cercare i primo 
   int end;              // parametri di input
   int somma_parziale;   // parametro di output
+  int *tabella;         // tabella dei numeri primi da riempire
+  int *pmessi;          // puntatore a indice in tabella
+  pthread_mutex_t *pmutex; // mutex condiviso
 } dati;
 
 // funzione passata a pthred_create
 void *tbody(void *v) {
   dati *d = (dati *) v;
   int primi = 0;
-  fprintf(stderr, "Conto i primi fra %d e %d\n", d->start, d->end);
   // cerco i primi nell'intervallo assegnato
-  for(int j=d->start;j<d->end;j++) {
-      if(primo(j)) primi++; 
-  }
+  for(int j=d->start;j<d->end;j++)
+      if(primo(j)) {
+        primi++;
+        xpthread_mutex_lock(d->pmutex,__LINE__, __FILE__);
+        d->tabella[*(d->pmessi)] = j;
+        *(d->pmessi) += 1; 
+        xpthread_mutex_unlock(d->pmutex,__LINE__, __FILE__);
+      }
   fprintf(stderr, "Il thread che partiva da %d ha terminato\n", d->start);
   d->somma_parziale = primi;
   pthread_exit(NULL);
@@ -46,13 +51,22 @@ int main(int argc,char *argv[])
   int p= atoi(argv[2]);
   if(p<=0) termina("numero di thread non valido");
 
+  // definizione mutex
+  pthread_mutex_t mtabella;
+  xpthread_mutex_init(&mtabella,NULL,__LINE__, __FILE__);
   // creazione thread ausiliari
   pthread_t t[p];   // array di p indentificatori di thread 
-  dati d[p];        // array di p struct che passerò ai p thread
+  dati d[p];        // array di p struct che passerò allle p thread
+  int *tabella = malloc(m*sizeof(int));
+  if(tabella==NULL) xtermina("Allocazione fallita", __LINE__, __FILE__);
+  int messi = 0;
   for(int i=0; i<p; i++) {
-    int n = m/p;  // quanti numeri verifica ogni thread + o - 
-    d[i].start = n*i; // inizio range thread i
+    int n = m/p;  // quanti numeri verifica ogni figlio + o - 
+    d[i].start = n*i; // inizio range figlio i
     d[i].end = (i==p-1) ? m : n*(i+1);
+    d[i].tabella = tabella;
+    d[i].pmessi = &messi;
+    d[i].pmutex = &mtabella;
     xpthread_create(&t[i], NULL, &tbody, &d[i],__LINE__, __FILE__); 
   }
   // attendo che i thread abbiano finito
@@ -61,10 +75,19 @@ int main(int argc,char *argv[])
     xpthread_join(t[i],NULL,__LINE__, __FILE__);
     somma += d[i].somma_parziale;
   }
-  // restituisce il risultato 
+  xpthread_mutex_destroy(&mtabella,__LINE__, __FILE__);
+  // stampa tabella
+  int somma_tabella = 0;
+  for(int i=0;i<messi;i++) { 
+    somma_tabella += tabella[i];
+    // printf("%8d",tabella[i]);
+  }
+  printf("\nPrimi in tabella: %d\n",messi);
+  // restituisce il numero di primi
   printf("Numero primi tra 1 e %d (escluso): %d\n",m,somma);
   return 0;
 }
+
 
 
 

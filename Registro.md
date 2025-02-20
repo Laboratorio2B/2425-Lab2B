@@ -278,13 +278,19 @@ Ancora su esplorazione del filesystem: ricerca basata sul tempo di ultima modifi
 **Lezione 30** (18/2/25)
 
 Introduzione ai thread in C. 
-Esercitazione in aula su python (il testo sarà disponibile su moodle). 
+Esercitazione in aula su python (il testo sè disponibile su moodle). 
+
 
 
 ---
 
 **Lezione 31** (20/2/25)
 
-Esempi di thread in C. 
-Prova in itinere su python 
+Ancora sui thread in C. Uso di mutex.  
+Prova in itinere su python (il testo è disponibile su moodle).
 
+
+
+---
+
+**Lezione 32** (15/2/25)
