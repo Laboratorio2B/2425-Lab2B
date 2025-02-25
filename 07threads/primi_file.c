@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     printf("Uso\n\t%s file\n", argv[0]);
     exit(1);
   }
-  int p = 3;
+  int p = 3;  // numero thread ausiliari (consumatori)
   assert(p>=0);
   int tot_primi = 0;
   long tot_somma = 0;

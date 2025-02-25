@@ -5,7 +5,10 @@
 // questo programma è stato ottenuto partendo da
 // contaprimi.c aggiungendo la gestione di una tabella
 // e l'uso di un mutex per garantire l'accesso
-// esclusivo alla tabella da parte dei thread ausiliari
+// esclusivo alla tabella da parte dei thread consumatori
+
+// usare lo script numeri.py per generare un file di testo
+// di cui sapete il numero e la somma dei primi
 
 
 //Prototipi
