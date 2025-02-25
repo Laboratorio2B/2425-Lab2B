@@ -132,6 +132,95 @@ int xpthread_mutex_unlock(pthread_mutex_t *mutex, int linea, char *file) {
   return e;
 }
 
+
+// ---- semafori POSIX
+
+// IMPORTANTE: i semafori posix sono usati sia da processi che da threads
+// Nel caso dei threads, non è opportuno eseguire in caso di errore exit(1)
+// in quanto questo fa terminare tutti i thread del processo: bisognerebbe
+// chiamare pthread_exit() che fa terminare solo il thread corrente
+// (usare pthread_exit per i processi ugualmente non è accettabile 
+// perché poi invoca exit(0)). 
+// Si potrebbe distinguere thread da processi con gettid(2)
+
+
+// semafori NAMED
+sem_t *xsem_open(const char *name, int oflag, mode_t mode, 
+              unsigned int value,  int linea, char *file) {
+  sem_t *s = sem_open(name,oflag,mode,value);
+  if (s==SEM_FAILED) {
+    perror("Errore sem_open");
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file); 
+    exit(1);
+  }
+  return s;
+}
+
+int xsem_close(sem_t *s, int linea, char *file)
+{
+  int e = sem_close(s);
+  if(e!=0) {
+    perror("Errore sem_close"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
+  }
+  return e;  
+}
+
+int xsem_unlink(const char *name, int linea, char *file)
+{
+  int e = sem_unlink(name);
+  if(e!=0) {
+    perror("Errore sem_unlink"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
+  }
+  return e;  
+}
+
+// semafori UNNAMED
+int xsem_init(sem_t *sem, int pshared, unsigned int value, int linea, char *file) {
+  int e = sem_init(sem,pshared,value);
+  if(e !=0) {
+    perror("Errore sem_init"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
+  }
+  return e;
+}
+
+int xsem_destroy(sem_t *sem, int linea, char *file) {
+  int e = sem_destroy(sem);
+  if(e !=0) {
+    perror("Errore sem_destroy"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
+  }
+  return e;
+}
+
+// comuni NAMED e UNNAMED
+int xsem_post(sem_t *sem, int linea, char *file) {
+  int e = sem_post(sem);
+  if(e !=0) {
+    perror("Errore sem_post"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
+  }
+  return e;
+}
+
+int xsem_wait(sem_t *sem, int linea, char *file) {
+  int e = sem_wait(sem);
+  if(e !=0) {
+    perror("Errore sem_wait"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
+  }
+  return e;
+}
+
+
 // condition variables
 int xpthread_cond_init(pthread_cond_t *restrict cond, const pthread_condattr_t *restrict attr, int linea, char *file) {
   int e = pthread_cond_init(cond,attr);

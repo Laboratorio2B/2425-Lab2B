@@ -39,6 +39,16 @@ int xpthread_mutex_destroy(pthread_mutex_t *mutex, int linea, char *file);
 int xpthread_mutex_lock(pthread_mutex_t *mutex, int linea, char *file);
 int xpthread_mutex_unlock(pthread_mutex_t *mutex, int linea, char *file);
 
+// semafori named e unnamed POSIX
+sem_t *xsem_open(const char *name, int oflag, mode_t mode, unsigned int value, int linea, char *file);
+int xsem_unlink(const char *name, int linea, char *file);
+int xsem_close(sem_t *sem, int linea, char *file);
+int xsem_init(sem_t *sem, int pshared, unsigned int value, int linea, char *file);
+int xsem_destroy(sem_t *sem, int linea, char *file);
+int xsem_post(sem_t *sem, int linea, char *file);
+int xsem_wait(sem_t *sem, int linea, char *file);
+
+
 // condition variables
 int xpthread_cond_init(pthread_cond_t *restrict cond, const pthread_condattr_t *restrict attr, int linea, char *file);
 int xpthread_cond_destroy(pthread_cond_t *cond, int linea, char *file);
