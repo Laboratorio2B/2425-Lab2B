@@ -307,3 +307,11 @@ Semafori  e loro uso per implementare la tecnica produttori e consumatori.
 **Lezione 33** (27/2/25)
 
 Altri esempi di uso dei semafori. Esercitazione in aula sull'uso dei thread.  
+
+
+----
+
+**Lezione 34** (4/4/25)
+
+???
+
