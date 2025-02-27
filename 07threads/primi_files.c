@@ -1,15 +1,13 @@
 /*
  * Esempio semplice paradigma produttore consumatori
- * Il produttore legge interi da un file e i consumatori calcolano 
- * la somma dei primi
+ * Il produttore legge interi dai file sulla linea di
+ * comando e li nette sul buffer. i consumatori calcolano 
+ * il numero e la somma dei primi che hanno visto
  * 
- * Usare il numeri.py per generare lunghi elenchi di interi positivi su cui testare il programma
+ * E' necessario usare 2 semafori per sincronizzare
+ * produttori e consumatori all'inizio e alla fine
+ * di ogni file
  * 
- * Programma di esempio del paradigma 1 producer 1 consumer
- * i dati letti dal file vengono messi su un buffer in cui il producer scrive 
- * e i consumer leggono. In principio il buffer va bene di qualsiasi dimensione: 
- * piu' e' grande maggiore e' il lavoro pronto da svolgere nel caso
- * il produttore rimanga bloccato (ad esempio a leggere dal disco)
  * 
  * */
 #include "xerrori.h"
@@ -50,6 +48,8 @@ void *tbody(void *arg)
   int n;
   puts("consumatore partito");
   for(int j=0;j<a->numfiles;j++) {
+    // attende che il produttore segnali che si può
+    // iniziare con questo file con una post su sem_contatore2 
     xsem_wait(a->sem_contatore2,__LINE__,__FILE__);
     a->quanti = 0;
     a->somma = 0;  
@@ -65,8 +65,8 @@ void *tbody(void *arg)
         a->somma += n;
       }
     } while(n!= -1);
-    // segnala al produttore che questo thread
-    // ha finito con questo file
+    // segnala al produttore con una post 
+    // che questo thread ha finito con questo file
     xsem_post(a->sem_contatore,__LINE__,__FILE__);
   } 
   puts("Consumatore sta per finire");
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
   int tot_primi = 0;
   long tot_somma = 0;
   int e,n,cindex=0;    
-  // threads related
+  // inizializzazione dei thread e dei loro argomenti
   int buffer[Buf_size];
   int pindex=0;
   pthread_mutex_t mu = PTHREAD_MUTEX_INITIALIZER;
@@ -116,8 +116,11 @@ int main(int argc, char *argv[])
     fprintf(stderr,"Lavoro su %s\n", argv[j]);    
     FILE *f = fopen(argv[j],"r");
     if(f==NULL) {perror("Errore apertura file"); return 1;}
+    // uso sem_contatore2 per segnalare che i produttori
+    // possono inziare su questo file 
     for(int i=0;i<p;i++)
       xsem_post(&sem_contatore2,__LINE__,__FILE__);
+    // leggo i dati del file  
     while(true) {
       e = fscanf(f,"%d", &n);
       if(e!=1) break; // se il valore e' letto correttamente e==1
@@ -127,15 +130,18 @@ int main(int argc, char *argv[])
       xsem_post(&sem_data_items,__LINE__,__FILE__);
     }
     fprintf(stderr,"Dati del file %s scritti\n",argv[j]);
-    // terminazione threads
+    // scrivo p copie del valore di terminazione file
     for(int i=0;i<p;i++) {
       xsem_wait(&sem_free_slots,__LINE__,__FILE__);
       buffer[pindex++ % Buf_size]= -1;
       xsem_post(&sem_data_items,__LINE__,__FILE__);
     }
     puts("Valori di terminazione scritti");
+    // attendo che tutti i consumatori abbiano terminato
+    // con il file corrente
     for(int i=0;i<p;i++)
       xsem_wait(&sem_contatore,__LINE__,__FILE__);
+    // calcolo a visualizzo il risutlato per il file  
     tot_primi = tot_somma = 0;  
     for(int i=0;i<p;i++) {
       tot_primi += a[i].quanti;
@@ -143,7 +149,7 @@ int main(int argc, char *argv[])
     }
     fprintf(stderr,"%s: %d primi, somma %ld\n",argv[j],tot_primi,tot_somma);
   }
-  // join dei thread e calcolo risulato
+  // file terminati: join dei thread e uscita
   for(int i=0;i<p;i++) {
     xpthread_join(t[i],NULL,__LINE__,__FILE__);
   }

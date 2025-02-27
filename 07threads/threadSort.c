@@ -21,7 +21,6 @@ int intcmp(const void *a, const void *b);
 // ordina gli interi passati sulla linea di comando
 int main(int argc, char *argv[])
 {
-
   if(argc!=3) {
     fprintf(stderr, "Uso:\n\t   %s num_interi seed\n", argv[0]);
     exit(1);
