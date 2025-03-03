@@ -313,5 +313,5 @@ Altri esempi di uso dei semafori. Esercitazione in aula sull'uso dei thread.
 
 **Lezione 34** (4/4/25)
 
-???
+Soluzione esercitazione sull'uso dei thread. Uso di `pthread_barrier`
 

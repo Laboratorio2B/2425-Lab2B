@@ -1,17 +1,29 @@
 /*
- * Esempio semplice paradigma produttore consumatori
+ * Esempio paradigma 1 produttore - p consumatori
  * Il produttore legge interi dai file sulla linea di
- * comando e li nette sul buffer. i consumatori calcolano 
+ * comando e li mette sul buffer. i consumatori calcolano 
  * il numero e la somma dei primi che hanno visto
+ * 
+ * Il produttore uanto tutti i consumatori hanno
+ * finito su di un certo file calcola e stampa
+ * il numero totale e la somma totale dei primi 
+ * nel file.
  * 
  * E' necessario usare 2 semafori per sincronizzare
  * produttori e consumatori all'inizio e alla fine
- * di ogni file
+ * di ogni file.
  * 
+ * Lo stesso risultato (la sincronizzazione) può essere
+ * ottenuta in maniera più semplice usando una barriera
+ * (argomento che di solito non vediamo) vedere le 
+ * pagine man di: 
+ *    pthread_barrier_init
+ *    pthread_barrier_wait
  * 
  * */
 #include "xerrori.h"
 
+#define USE_BARRIER
 #define Buf_size 10
 
 
@@ -108,7 +120,7 @@ int main(int argc, char *argv[])
     a[i].sem_free_slots = &sem_free_slots;
     a[i].sem_contatore = &sem_contatore;
     a[i].sem_contatore2 = &sem_contatore2;
-    xpthread_create(&t[i],NULL,tbody,a+i,__LINE__,__FILE__);
+    xpthread_create(&t[i],NULL,tbody,&a[i],__LINE__,__FILE__);
   }
   puts("Thread ausiliari creati");
   // considero tutti i file sulla linea di comando
