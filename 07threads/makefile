@@ -16,7 +16,7 @@ LDLIBS=-lm -pthread
 #  $^ viene sostituito con tutti i prerequisiti
 
 # elenco degli eseguibili da creare
-EXECS=contaprimi.out tabella_primi.out primi_file.out threadSort.out
+EXECS=contaprimi.out tabella_primi.out primi_file.out primi_barrier.out threadSort.out
 
 # primo target: gli eseguibili sono precondizioni
 # quindi verranno tutti creati
@@ -31,6 +31,9 @@ all: $(EXECS)
 %.o: %.c xerrori.h
 	$(CC) $(CFLAGS) -c $<
 
+primi_barrier.o:  primi_files.c xerrori.h  
+	$(CC) $(CFLAGS) -o $@ -c $< -D USE_BARRIER
+ 
  
 # esempio di target che non corrisponde a una compilazione
 # ma esegue la cancellazione dei file oggetto e degli eseguibili
