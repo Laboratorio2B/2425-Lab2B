@@ -16,11 +16,16 @@ LDLIBS=-lm -pthread
 #  $^ viene sostituito con tutti i prerequisiti
 
 # elenco degli eseguibili da creare
-EXECS=contaprimi.out tabella_primi.out primi_file.out primi_barrier.out threadSort.out
+EXECS=contaprimi.out tabella_primi.out primi_file.out threadSort.out
 
 # primo target: gli eseguibili sono precondizioni
 # quindi verranno tutti creati
 all: $(EXECS) 
+
+# secondo target che genera gli eseguibili primi_files e primi_barrier
+# viene invocato invece di all se si scrive 
+# "make primi" sulla linea di comando
+primi: primi_barrier.out primi_files.out
 
 
 # regola per la creazione degli eseguibili utilizzando xerrori.o

@@ -306,16 +306,20 @@ Semafori  e loro uso per implementare la tecnica produttori e consumatori.
 
 **Lezione 33** (27/2/25)
 
-Altri esempi di uso dei semafori. Esercitazione in aula sull'uso dei thread.  
+Altri esempi di uso dei semafori. Esercitazione in aula sul sorting parallelo
 
 
 ----
 
 **Lezione 34** (4/4/25)
 
-Soluzione esercitazione sull'uso dei thread. 
-Uso di `pthread_barrier`, compilazione condizionale con `#if/#else/#endif`.
 
+Uso di `pthread_barrier`, compilazione condizionale con `#if/#else/#endif`.
+Uso di target multipli nel makefile, e definizione di costanti dalla linea di comandi 
+(vedi uso di `-D USE_BARRIER` per ottenere `primi_barrier.o`)
+Soluzione esercitazione del 27/2 sul sorting parallelo.
 
 ---
 
+
+**Lezione 35** (6/4/25)

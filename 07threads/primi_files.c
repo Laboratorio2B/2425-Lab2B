@@ -4,21 +4,23 @@
  * comando e li mette sul buffer. i consumatori calcolano 
  * il numero e la somma dei primi che hanno visto
  * 
- * Il produttore uanto tutti i consumatori hanno
+ * Il produttore quando tutti i consumatori hanno
  * finito su di un certo file calcola e stampa
  * il numero totale e la somma totale dei primi 
  * nel file.
  * 
- * E' necessario usare 2 semafori per sincronizzare
+ * Vengono usati 2 semafori per sincronizzare
  * produttori e consumatori all'inizio e alla fine
  * di ogni file.
  * 
- * Lo stesso risultato (la sincronizzazione) può essere
- * ottenuta in maniera più semplice usando una barriera
- * (argomento che di solito non vediamo) vedere le 
- * pagine man di: 
+ * Se viene definita la variabile USE_BARRIER 
+ * la sincronizzazione viene effettuata usando
+ * una barriera; vedere le pagine man di: 
  *    pthread_barrier_init
  *    pthread_barrier_wait
+ * 
+ * Vedere nel makefile come vengono generati gli eseguibili
+ * per entrambe le versioni (semafori o barriera)
  * 
  * */
 #include "xerrori.h"
@@ -29,6 +31,11 @@
 // costante usata per compilazione condizionale
 // #define USE_BARRIER 1
 
+#ifdef USE_BARRIER
+#warning "Sincronizzazione con barriere"
+#else 
+#warning "Sincronizzazione con semafori"
+#endif
 
 // funzione per stabilire se n e' primo  
 bool primo(int n)
@@ -106,7 +113,7 @@ int main(int argc, char *argv[])
     printf("Uso\n\t%s file1 [file2 file3 ....]\n", argv[0]);
     exit(1);
   }
-  int p = 4;  // numero thread ausiliari (consumatori)
+  int p = 3;  // numero thread ausiliari (consumatori)
   assert(p>=0);
   int tot_primi = 0;
   long tot_somma = 0;
@@ -164,7 +171,6 @@ int main(int argc, char *argv[])
       buffer[pindex++ % Buf_size]= n;
       xsem_post(&sem_data_items,__LINE__,__FILE__);
     }
-    fclose(f);
     fclose(f);
     fprintf(stderr,"[P] Dati del file %s scritti\n",argv[j]);
     // scrivo p copie del valore di terminazione file
