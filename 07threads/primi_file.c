@@ -119,7 +119,9 @@ int main(int argc, char *argv[])
     tot_primi += a[i].quanti;
     tot_somma += a[i].somma;
   }
-  pthread_mutex_destroy(&mu);
+  xpthread_mutex_destroy(&mu,__LINE__,__FILE__);
+  xsem_destroy(&sem_data_items,__LINE__,__FILE__);
+  xsem_destroy(&sem_free_slots,__LINE__,__FILE__);
   fprintf(stderr,"Trovati %d primi con somma %ld\n",tot_primi,tot_somma);
   return 0;
 }

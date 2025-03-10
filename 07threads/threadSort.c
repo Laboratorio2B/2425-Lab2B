@@ -1,3 +1,7 @@
+// esempio di sorting parallelo dove le due metà dell'array di input
+// vengono ordinate da thread diversi. Il merge finale
+// viene effettuato dal thread principale usando la funzione merge()
+
 #define _GNU_SOURCE   // avverte che usiamo le estensioni GNU 
 #include <stdio.h>    // permette di usare scanf printf etc ...
 #include <stdlib.h>   // conversioni stringa/numero exit() etc ...
@@ -6,28 +10,24 @@
 #include <string.h>   // funzioni per stringhe
 #include "xerrori.h"
 
-
-
 // prototipi delle funzioni che appaiono dopo il main()
 void merge(int a[], int na, int c[], int nc, int b[]);
 int *random_array(int n, int seed);
 int intcmp(const void *a, const void *b);
 
-// struct contenente i parametri di input e output di ogni thread 
+// struct contenente la descrizione di un array
 typedef struct {
   int *a;  // indirizzo array
   int m;   // dimensione array 
-} dati;
-
+} array;
 
 // funzione eseguita dal thread ausiliario
 void *tbody(void *arg)
 {  
-  dati *d = (dati *)arg; 
+  array *d = (array *)arg; 
   qsort(d->a, d->m, sizeof(int), &intcmp);
   pthread_exit(NULL);
 } 
-
 
 // ordina gli interi passati sulla linea di comando
 int main(int argc, char *argv[])
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     for(int i=0;i<n2;i++) 
       a2[i] = a[i+n1];   // seconda metà 
     // preparo il lancio per il thread ausiliario     
-    dati d;
+    array d;
     d.a = a2; d.m = n2;
     pthread_t t;
     // eseguo il lancio dell'ordinamento della seconda metà
@@ -93,18 +93,12 @@ int main(int argc, char *argv[])
 }
 
 
-
-
 // funzione per il merge di due array in un terzo array già allocato
 // merge di a[0...n1-1] e c[0... n2-1] dentro b[]
-// Soluzione proposta da co-pilot apparentemente corretta
 void merge(int a[], int na, int c[], int nc, int b[])
 {
-  assert(a!=NULL);
-  assert(c!=NULL);
-  assert(b!=NULL);
-  assert(na>0);
-  assert(nc>0);
+  assert(a!=NULL && c!=NULL && b!=NULL);
+  assert(na>0 && nc>0);
   
   int i=0; // indice per a[]
   int j=0; // indice per c[]

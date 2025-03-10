@@ -311,15 +311,32 @@ Altri esempi di uso dei semafori. Esercitazione in aula sul sorting parallelo
 
 ----
 
-**Lezione 34** (4/4/25)
+**Lezione 34** (4/3/25)
 
 
 Uso di `pthread_barrier`, compilazione condizionale con `#if/#else/#endif`.
-Uso di target multipli nel makefile, e definizione di costanti dalla linea di comandi 
+Uso di target multipli nel makefile, e definizione di costanti dalla linea di comando 
 (vedi uso di `-D USE_BARRIER` per ottenere `primi_barrier.o`)
 Soluzione esercitazione del 27/2 sul sorting parallelo.
 
+
 ---
 
+**Lezione 35** (6/3/25)
 
-**Lezione 35** (6/4/25)
+Paradigma produttori-consumatori con produttori e consumatori multipli.
+Mergesort parallelo (`pmergesort.c`).
+
+
+----
+
+**Lezione 36** (11/3/25)
+
+
+Introduzione alle Condition Variables. Esempi per la gestione della memoria condivisa (`heap.c`), e la gestione di readers e writers (`rw.c`).
+
+
+
+
+
+

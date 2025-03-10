@@ -94,7 +94,7 @@ void *tbody(void *arg)
     // copia i valori dove il produttore li puo leggere
     a->quanti = quanti; a->somma=somma;
     #ifdef USE_BARRIER
-    int e = pthread_barrier_wait(a->fine_file);
+    int e = xpthread_barrier_wait(a->fine_file,__LINE__,__FILE__);
     fprintf(stderr,"[C] barrier_wait() restituisce %d\n",e);
     #else
     // segnala al produttore con una post 
@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
   xsem_init(&sem_data_items,0,0,__LINE__,__FILE__);
   #ifdef USE_BARRIER
   pthread_barrier_t bar_fine_file;
-  pthread_barrier_init(&bar_fine_file, NULL, p+1);
+  xpthread_barrier_init(&bar_fine_file, NULL, p+1,__LINE__,__FILE__);
   #else
   sem_t sem_contatore,sem_contatore2;
   xsem_init(&sem_contatore,0,0,__LINE__,__FILE__);
@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
     // attendo che tutti i consumatori abbiano terminato
     // con il file corrente
     #ifdef USE_BARRIER
-    e = pthread_barrier_wait(&bar_fine_file);
+    e = xpthread_barrier_wait(&bar_fine_file,__LINE__,__FILE__);
     fprintf(stderr,"[P] barrier_wait() restituisce: %d\n",e);
     #else
     for(int i=0;i<p;i++)
@@ -201,6 +201,14 @@ int main(int argc, char *argv[])
     xpthread_join(t[i],NULL,__LINE__,__FILE__);
   }
   pthread_mutex_destroy(&mu);
+  xsem_destroy(&sem_data_items,__LINE__,__FILE__);
+  xsem_destroy(&sem_free_slots,__LINE__,__FILE__);
+  #ifdef USE_BARRIER
+  xpthread_barrier_destroy(&bar_fine_file,__LINE__,__FILE__);
+  #else
+  xsem_destroy(&sem_contatore,__LINE__,__FILE__);
+  xsem_destroy(&sem_contatore2,__LINE__,__FILE__);
+  #endif  
   return 0;
 }
 
