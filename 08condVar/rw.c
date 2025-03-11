@@ -3,8 +3,8 @@
 
 
 // Possibile soluzione al problema lettori/scrittori
-// Questa soluzione è unfair per gli scrittori che 
-// potrebbero essere messi in attesa indefinita
+// Questa soluzione senza l'uso di wpending è unfair per gli scrittori 
+// che potrebbero essere messi in attesa indefinita
 // se continuano ad arrivare lettori
 
 typedef struct {
@@ -31,7 +31,7 @@ void read_lock(rw *z)
   fprintf(stderr,"%2d read request\n", gettid()%100);
   pthread_mutex_lock(&z->mutex);
   // se si elimina il test su z->wpending si ha la soluzione unfair per gli scrittori 
-  while(z->writing==true|| z->wpending>0)
+  while(z->writing==true)
     pthread_cond_wait(&z->cond, &z->mutex);   // attende fine scrittura
   z->readers++;
   pthread_mutex_unlock(&z->mutex);
@@ -42,9 +42,9 @@ void read_unlock(rw *z)
 {
   fprintf(stderr,"%2d read completed\n", gettid()%100);
   pthread_mutex_lock(&z->mutex);
-  assert(z->readers>0);  // ci deve essere almeno un reader (me stesso)
-  assert(!z->writing);   // non ci devono essere writer 
-  z->readers--;                  // cambio di stato       
+  assert(z->readers>0);     // ci deve essere almeno un reader (me stesso)
+  assert(!z->writing);      // non ci devono essere writer 
+  z->readers--;             // cambio di stato       
   if(z->readers==0) 
     pthread_cond_signal(&z->cond); // da segnalare ad un solo writer
   pthread_mutex_unlock(&z->mutex);
