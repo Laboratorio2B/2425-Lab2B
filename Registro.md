@@ -337,6 +337,14 @@ Introduzione alle Condition Variables. Esempi per la gestione della memoria cond
 
 
 
+-----
+
+**Lezione 37** (13/3/25)
+
+Ancora su gestione readers e writers. Uso di condition variables per schemi produttori consumatori (`somma_primi_files.c`), confronto con l'uso dei semafori (`pctest.c` con relative istruzioni nel `makefile`). Uso di condition variables per emulazione dei semafori (`zem.c`).
+
+
+-----
 
 
 

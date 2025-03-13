@@ -15,7 +15,6 @@
 
 #define Buf_size 10
 
-
 // funzione per stabilire se n e' primo  
 bool primo(int n)
 {
@@ -136,7 +135,7 @@ int main(int argc, char *argv[])
     ac[i].sem_free_slots = &sem_free_slots;
     xpthread_create(&tc[i],NULL,cbody,&ac[i],__LINE__,__FILE__);
   }
-  puts("Thread consumatori creati");
+  fprintf(stderr,"Thread consumatori creati");
   pthread_t tp[prod];
   datip ap[prod];
   for(int i=0;i<prod;i++) {
@@ -149,7 +148,7 @@ int main(int argc, char *argv[])
     ap[i].nomefile = argv[i+1];
     xpthread_create(&tp[i],NULL,pbody,&ap[i],__LINE__,__FILE__);
   }
-  puts("Thread produttori creati");
+  fprintf(stderr,"Thread produttori creati");
   // join dei thread produttori
   for(int i=0;i<prod;i++) {
     xpthread_join(tp[i],NULL,__LINE__,__FILE__);
@@ -161,7 +160,7 @@ int main(int argc, char *argv[])
     xsem_post(&sem_data_items,__LINE__,__FILE__);
   }
   puts("Valori di terminazione scritti");
-  // join dei thread consuamtori e calcolo risulato
+  // join dei thread consumatori e calcolo risulato
   for(int i=0;i<cons;i++) {
     xpthread_join(tc[i],NULL,__LINE__,__FILE__);
     tot_primi += ac[i].quanti;

@@ -31,7 +31,7 @@ void read_lock(rw *z)
   fprintf(stderr,"%2d read request\n", gettid()%100);
   pthread_mutex_lock(&z->mutex);
   // se si elimina il test su z->wpending si ha la soluzione unfair per gli scrittori 
-  while(z->writing==true)
+  while(z->writing==true || z->wpending>0)
     pthread_cond_wait(&z->cond, &z->mutex);   // attende fine scrittura
   z->readers++;
   pthread_mutex_unlock(&z->mutex);
