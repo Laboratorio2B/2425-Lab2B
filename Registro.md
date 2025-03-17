@@ -341,10 +341,17 @@ Introduzione alle Condition Variables. Esempi per la gestione della memoria cond
 
 **Lezione 37** (13/3/25)
 
-Ancora su gestione readers e writers. Uso di condition variables per schemi produttori consumatori (`somma_primi_files.c`), confronto con l'uso dei semafori (`pctest.c` con relative istruzioni nel `makefile`). Uso di condition variables per emulazione dei semafori (`zem.c`).
+Ancora su gestione readers e writers. Uso di condition variables per schemi produttori consumatori (`somma_primi_files.c`), confronto con l'uso dei semafori (`pctest.c` con relative istruzioni nel `makefile`). Uso di condition variables per emulazione dei semafori (`zem.c`). Cenni all'uso della threads library (`thrd_create`, `thrd_join`, etc) in alternativa ai POSIX threads (pthread). Consiglio di consultare [questo libro](https://gustedt.gitlabpages.inria.fr/modern-c/) come riferimento avanzato al C,  e in particolare (Capitolo 20) alle funzioni della threads library.  
 
 
 -----
 
 
+**Lezione 38** (18/3/25)
 
+
+Creazione di processi in C: comando `fork`.
+Comandi del terminale `ps`, `htop`, e `kill`
+Processi in background con `&`
+Comandi `wait` e `sleep`, processi zombie. 
+Concetto di pipe per la comunicazione fra processi. 

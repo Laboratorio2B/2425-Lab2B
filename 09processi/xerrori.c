@@ -26,6 +26,21 @@ void xtermina(const char *messaggio, int linea, char *file) {
   exit(1);
 }
 
+// stampa su stderr il messaggio d'errore associato al codice en 
+// in maniera simile a perror, quindi senza terminare
+#define Buflen 100
+void xperror(int en, char *msg) {
+  char buf[Buflen];
+  
+  char *errmsg = strerror_r(en, buf, Buflen);
+  if(msg!=NULL)
+    fprintf(stderr,"%s: %s\n",msg, errmsg);
+  else
+    fprintf(stderr,"%s\n",errmsg);
+}
+
+
+
 // ---------- operazioni su FILE *
 FILE *xfopen(const char *path, const char *mode, int linea, char *file) {
   FILE *f = fopen(path,mode);
@@ -52,25 +67,11 @@ void xclose(int fd, int linea, char *file) {
 // ----- funzioni per thread: in caso di errore non scrivono 
 // il codice d'errore in errno ma lo restituiscono
 // come return value. Un return value==0 indica nessun errore
-// errno viene evitato perché in certe implementazioni 
-// non è thread-safe (nei linux recenti lo è)
-
-// stampa il messaggio d'errore associato al codice en 
-// in maniera simile a perror
-#define Buflen 100
-void xperror(int en, char *msg) {
-  char buf[Buflen];
-  
-  char *errmsg = strerror_r(en, buf, Buflen);
-  if(msg!=NULL)
-    fprintf(stderr,"%s: %s\n",msg, errmsg);
-  else
-    fprintf(stderr,"%s\n",errmsg);
-}
+// la variabile errno viene evitata perché in certe implementazioni 
+// non è thread-safe (nei linux recenti lo è perché è thread local)
 
 
 // threads: creazione e join
-
 int xpthread_create(pthread_t *thread, const pthread_attr_t *attr,
                           void *(*start_routine) (void *), void *arg, int linea, char *file) {
   int e = pthread_create(thread, attr, start_routine, arg);
@@ -91,8 +92,6 @@ int xpthread_join(pthread_t thread, void **retval, int linea, char *file) {
   }
   return e;
 }
-
-
 
 
 // ----- mutex 
@@ -168,10 +167,63 @@ int xpthread_barrier_wait(pthread_barrier_t *barrier, int linea, char *file) {
   return e;
 }
 
+// condition variables
+int xpthread_cond_init(pthread_cond_t *restrict cond, const pthread_condattr_t *restrict attr, int linea, char *file) {
+  int e = pthread_cond_init(cond,attr);
+  if (e!=0) {
+    xperror(e, "Errore pthread_cond_init");
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    pthread_exit(NULL);
+  }
+  return e;
+}
+
+int xpthread_cond_destroy(pthread_cond_t *cond, int linea, char *file) {
+  int e = pthread_cond_destroy(cond);
+  if (e!=0) {
+    xperror(e, "Errore pthread_cond_destroy");
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    pthread_exit(NULL);
+  }
+  return e;
+}
+
+int xpthread_cond_wait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex, int linea, char *file) {
+  int e = pthread_cond_wait(cond,mutex);
+  if (e!=0) {
+    xperror(e, "Errore pthread_cond_wait");
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    pthread_exit(NULL);
+  }
+  return e;
+}
+
+int xpthread_cond_signal(pthread_cond_t *cond, int linea, char *file) {
+  int e = pthread_cond_signal(cond);
+  if (e!=0) {
+    xperror(e, "Errore pthread_cond_signal");
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    pthread_exit(NULL);
+  }
+  return e;
+}
+
+int xpthread_cond_broadcast(pthread_cond_t *cond, int linea, char *file) {
+  int e = pthread_cond_broadcast(cond);
+  if (e!=0) {
+    xperror(e, "Errore pthread_cond_broadcast");
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    pthread_exit(NULL);
+  }
+  return e;
+}
+
+
+
 
 // ---- semafori POSIX
 
-// IMPORTANTE: i semafori posix sono usati sia da processi che da threads
+// IMPORTANTE: i semafori POSIX sono usati sia da processi che da threads
 // Nel caso dei threads, non è opportuno eseguire in caso di errore exit(1)
 // in quanto questo fa terminare tutti i thread del processo: bisognerebbe
 // chiamare pthread_exit() che fa terminare solo il thread corrente
@@ -257,53 +309,94 @@ int xsem_wait(sem_t *sem, int linea, char *file) {
 }
 
 
-// condition variables
-int xpthread_cond_init(pthread_cond_t *restrict cond, const pthread_condattr_t *restrict attr, int linea, char *file) {
-  int e = pthread_cond_init(cond,attr);
-  if (e!=0) {
-    xperror(e, "Errore pthread_cond_init");
+// -------------- operazioni su processi
+pid_t xfork(int linea, char *file)
+{
+  pid_t p = fork();
+  if(p<0) {
+    perror("Errore fork");
     fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
-    pthread_exit(NULL);
+    exit(1);
+  }
+  return p;
+}
+
+pid_t xwait(int *status, int linea, char *file)
+{
+  pid_t p = wait(status);
+  if(p<0) {
+    perror("Errore wait");
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
+  }
+  return p;
+}
+
+
+int xpipe(int pipefd[2], int linea, char *file) {
+  int e = pipe(pipefd);
+  if(e!=0) {
+    perror("Errore creazione pipe"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
   }
   return e;
 }
 
-int xpthread_cond_destroy(pthread_cond_t *cond, int linea, char *file) {
-  int e = pthread_cond_destroy(cond);
-  if (e!=0) {
-    xperror(e, "Errore pthread_cond_destroy");
+// ---------------- memoria condivisa POSIX
+int xshm_open(const char *name, int oflag, mode_t mode, int linea, char *file)
+{
+  int e = shm_open(name, oflag, mode);
+  if(e== -1) {
+    perror("Errore shm_open"); 
     fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
-    pthread_exit(NULL);
+    exit(1);
+  }
+  return e;  
+}
+
+int xshm_unlink(const char *name, int linea, char *file)
+{
+  int e = shm_unlink(name);
+  if(e== -1) {
+    perror("Errore shm_unlink"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
+  }
+  return e;  
+}
+
+int xftruncate(int fd, off_t length, int linea, char *file)
+{
+  int e = ftruncate(fd,length);
+  if(e== -1) {
+    perror("Errore ftruncate"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
+  }
+  return e;  
+}
+
+void *simple_mmap(size_t length, int fd, int linea, char *file)
+{
+  void *a =  mmap(NULL, length ,PROT_READ|PROT_WRITE,MAP_SHARED,fd,0);
+  if(a == (void *) -1) {
+    perror("Errore mmap"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
+  }
+  return a;
+}
+
+int xmunmap(void *addr, size_t length, int linea, char *file)
+{
+  int e = munmap(addr, length);
+  if(e== -1) {  
+    perror("Errore munmap"); 
+    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
+    exit(1);
   }
   return e;
 }
 
-int xpthread_cond_wait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex, int linea, char *file) {
-  int e = pthread_cond_wait(cond,mutex);
-  if (e!=0) {
-    xperror(e, "Errore pthread_cond_wait");
-    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
-    pthread_exit(NULL);
-  }
-  return e;
-}
 
-int xpthread_cond_signal(pthread_cond_t *cond, int linea, char *file) {
-  int e = pthread_cond_signal(cond);
-  if (e!=0) {
-    xperror(e, "Errore pthread_cond_signal");
-    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
-    pthread_exit(NULL);
-  }
-  return e;
-}
-
-int xpthread_cond_broadcast(pthread_cond_t *cond, int linea, char *file) {
-  int e = pthread_cond_broadcast(cond);
-  if (e!=0) {
-    xperror(e, "Errore pthread_cond_broadcast");
-    fprintf(stderr,"== %d == Linea: %d, File: %s\n",getpid(),linea,file);
-    pthread_exit(NULL);
-  }
-  return e;
-}
