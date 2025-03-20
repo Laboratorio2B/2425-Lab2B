@@ -2,6 +2,9 @@
 
 #define QUI __LINE__,__FILE__
 
+// definire questa costante per far eseguire 
+// il lettore con execl() 
+#define USA_EXEC
 
 int main(int argc, char *argv[])
 { 
@@ -11,7 +14,7 @@ int main(int argc, char *argv[])
   }
 
   // crea la named pipe da usare per le comunicazioni
-  int e = mkfifo(argv[1],0666);
+  int e = mkfifo(argv[1],0660);
   if(e==0) 
     puts("Named pipe creata");
   else if(errno== EEXIST)
@@ -23,7 +26,7 @@ int main(int argc, char *argv[])
 #ifdef USA_EXEC
   // faccio partire il lettore, eventualmente anche un programma python
   if(xfork(QUI)==0) {
-   if(execl("lettore.out", "lettore.out", argv[1], (char *) NULL)==-1)
+   if(execl("lettore.py", "lettore.???", argv[1], (char *) NULL)==-1)
      xtermina("execl fallita",QUI);
   }
 #endif
@@ -41,6 +44,7 @@ int main(int argc, char *argv[])
     if(val%10000==0)
       fprintf(stderr,"%d: scritti %d interi\n",getpid(),val);
   }
+  xclose(fd,QUI);
   printf("Io %d ho finito.\n",getpid());
   return 0;
 }

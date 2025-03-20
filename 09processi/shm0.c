@@ -18,13 +18,13 @@ int main(int argc,char *argv[])
   if(n<1) termina("limite non valido");
 
   // ---- creazione array memoria condivisa
-  int shm_size = n*sizeof(int);
+  int shm_size = n*sizeof(int); // numero byte nella memoria condivisa
   int fd = xshm_open(argv[1],O_RDWR | O_CREAT, 0660,QUI);
   xftruncate(fd, shm_size, QUI);
   int *a = simple_mmap(shm_size,fd, QUI);
   close(fd); // dopo mmap e' possibile chiudere il file descriptor
   // scommentare per prenotare la cancellazione dell'oggetto nella shared memory 
-  // xshm_unlink(Nome,QUI); // distrugge shm quando finito
+  xshm_unlink(argv[1],QUI); // distrugge shm quando finito
   
   // riempio array
   for(int i=0; i<n; i++) {
