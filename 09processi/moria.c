@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     pid_t p = xwait(&status,__LINE__,__FILE__);
     printf("E' terminata la missione del figlio %d\n",p);
     if(WIFEXITED(status)) { 
-      tot_draghi += WEXITSTATUS(status); 
+      tot_draghi += WEXITSTATUS(status); // vengono letti solo 8 bit
       printf("Draghi uccisi da questo figlio: %d\n",
              WEXITSTATUS(status));
     }

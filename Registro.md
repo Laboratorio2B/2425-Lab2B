@@ -351,7 +351,20 @@ Ancora su gestione readers e writers. Uso di condition variables per schemi prod
 
 
 Creazione di processi in C: comando `fork`.
-Comandi del terminale `ps`, `htop`, e `kill`
-Processi in background con `&`
 Comandi `wait` e `sleep`, processi zombie. 
-Concetto di pipe per la comunicazione fra processi. 
+Comandi del terminale per monitare i processi: `ps`, `htop`, e `kill`
+Esecuzione di processi in background con `&` 
+Concetto di pipe per la comunicazione fra processi, esempio `contaprimi.c` 
+Documentazione sulle pipe, pagine: `pipe(2)` e `pipe(7)`.
+
+-----
+
+
+**Lezione 39** (20/3/25)
+
+Comandi `mkfifo(1)` e `mkfifo(3)`.  
+Comunicazione tra processi mediante named pipe (anche in Python) con riferimento a `pipe(7)`, `fifo(7)`. 
+Lancio di un nuovo eseguibile mediante `fork` seguito da `execl`.
+Introduzione all'uso della memoria condivisa con riferimento a `shm_overview(7)`
+Uso e significato di `shm_open`, `ftruncate`, `mmap`, `munmap`, `shm_unlink`.
+

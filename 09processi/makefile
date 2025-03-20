@@ -1,8 +1,8 @@
 # definizione del compilatore e dei flag di compilazione
 # che vengono usate dalle regole implicite
 CC=gcc
-CFLAGS=-std=c11 -Wall -g -O
-LDLIBS=-lm -pthread
+CFLAGS=-std=c11 -Wall -g -O -pthread
+LDLIBS=-lm -pthread -lrt
 
 
 # su https://www.gnu.org/software/make/manual/make.html#Implicit-Rules
@@ -16,7 +16,7 @@ LDLIBS=-lm -pthread
 #  $^ viene sostituito con tutti i prerequisiti
 
 # elenco degli eseguibili da creare
-EXECS=moria.out contaprimi.out
+EXECS=moria.out contaprimi.out scrittore.out lettore.out shm0.out
 
 # primo target: gli eseguibili sono precondizioni
 # quindi verranno tutti creati
