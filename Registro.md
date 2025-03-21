@@ -368,3 +368,19 @@ Lancio di un nuovo eseguibile mediante `fork` seguito da `execl`.
 Introduzione all'uso della memoria condivisa con riferimento a `shm_overview(7)`
 Uso e significato di `shm_open`, `ftruncate`, `mmap`, `munmap`, `shm_unlink`.
 
+
+-----
+
+
+**Lezione 40** (25/3/25)
+
+Utilizzo dei named semaphore per la sincronizzazione di processi, con ricerimento a `sem_overview(7)`. Esempio schema produttori consumatori tra processi, sorgenti `shm_prod.c` e `shm_cons.c`.
+
+Introduzione ai segnali con riferimento a `signal(7)`. Comando `kill(1)`. 
+Utilizzo di `sigaction` per definire un handler. 
+
+
+
+---- 
+
+**Lezione 41** (27/3/25)

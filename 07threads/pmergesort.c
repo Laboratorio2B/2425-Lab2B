@@ -30,8 +30,8 @@ typedef struct {
 
 
 // funzione eseguita dai thread ausiliari
-// ordina con qsort oppure usa divide array 
-// e oridna in parallelo con un thread ausiliario 
+// ordina con qsort oppure divide array 
+// e ordina in parallelo con un thread ausiliario 
 void *tbody(void *arg)
 {  
   array *d = (array *)arg;
