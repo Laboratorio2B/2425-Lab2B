@@ -374,7 +374,7 @@ Uso e significato di `shm_open`, `ftruncate`, `mmap`, `munmap`, `shm_unlink`.
 
 **Lezione 40** (25/3/25)
 
-Utilizzo dei named semaphore per la sincronizzazione di processi, con ricerimento a `sem_overview(7)`. Esempio schema produttori consumatori tra processi, sorgenti `shm_prod.c` e `shm_cons.c`.
+Utilizzo dei named semaphore per la sincronizzazione di processi, con riferimento a `sem_overview(7)`. Esempio schema produttori consumatori tra processi, sorgenti `shm_prod.c` e `shm_cons.c`.
 
 Introduzione ai segnali con riferimento a `signal(7)`. Comando `kill(1)`. 
 Utilizzo di `sigaction` per definire un handler. 
@@ -384,3 +384,61 @@ Utilizzo di `sigaction` per definire un handler.
 ---- 
 
 **Lezione 41** (27/3/25)
+
+Segnali più esercitazione?
+
+
+
+
+-----
+
+
+**Lezione 42** (1/4/25)
+
+
+Inviare segnali ad uno specifico thread: `pthread_kill`. 
+Inviare informazione con i segnali: `sigqueue` e `pthread_sigqueue`. 
+Segnali real time. Esempio: `segnaliRT.c`
+Concetti di multithread safety: MT-safe e async-signal-safe.
+
+---- 
+
+**Lezione 43** (3/4/25)
+
+
+-----
+
+
+**Lezione 44** (8/4/25)
+
+
+
+---- 
+
+**Lezione 45** (10/4/25)
+
+
+Prova in itinere. 
+
+
+-----
+
+
+**Lezione 46** (15/4/25)
+
+
+
+---- 
+
+**Lezione 47** (17/4/25)
+
+
+
+---- 
+
+**Lezione 48** (24/4/25)
+
+
+Prova di recupero? 
+
+
