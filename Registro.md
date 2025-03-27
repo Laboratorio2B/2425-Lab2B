@@ -385,8 +385,12 @@ Utilizzo di `sigaction` per definire un handler.
 
 **Lezione 41** (27/3/25)
 
-Segnali più esercitazione?
+Signal disposition. Segnali `quit`, `stop`, `cont`. comandi `pgrep` e `pkill`
+Maschere di segnali: tipo `sigset_t`, funzioni `sigfillset` e `sigdelset`. Blocco dei segnali durante l'esecuzione di un handler, concetto di segnali pending. 
+Uso modificatore `volatile sig_atomic_t`. Comandi `sleep(3)` e `pause(2)` per evitare il busy waiting. 
 
+
+Esercitazione su [produttori e consumatori](https://elearning.di.unipi.it/mod/page/view.php?id=20542).
 
 
 
@@ -395,21 +399,27 @@ Segnali più esercitazione?
 
 **Lezione 42** (1/4/25)
 
-
+Concetti di multithread safety: MT-safe e async-signal-safe.
+Segnali in programmi multithread. Uso di `pthread_sigmask` per bloccare i segnali di un thread. 
+Utilizzo di un thread dedicato alla gestione dei segnali mediante `sigwait`.
 Inviare segnali ad uno specifico thread: `pthread_kill`. 
 Inviare informazione con i segnali: `sigqueue` e `pthread_sigqueue`. 
 Segnali real time. Esempio: `segnaliRT.c`
-Concetti di multithread safety: MT-safe e async-signal-safe.
+
 
 ---- 
 
 **Lezione 43** (3/4/25)
 
 
+Threads in Python: il [Global Interpreter Lock](https://realpython.com/python-gil/) e i suoi effetti. [Creazione e join di thread](https://realpython.com/intro-to-python-threading/). Utilizzo di pool di thread e processi. 
+
+
+
 -----
 
-
 **Lezione 44** (8/4/25)
+
 
 
 

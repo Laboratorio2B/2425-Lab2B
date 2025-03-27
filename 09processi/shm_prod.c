@@ -32,11 +32,6 @@ int main(int argc,char *argv[])
   // non devo usare unlink qui altrimenti il consumatore non
   // non vede memoria condivisa e semafori
 
-  // prenota cancellazione di shm e sem
-  xsem_unlink(Sem_items,QUI); 
-  xsem_unlink(Sem_slots,QUI); 
-  xshm_unlink(Shm,QUI);     
-
 
   // loop produttore 
   int pindex = 0;
@@ -54,6 +49,10 @@ int main(int argc,char *argv[])
   xsem_post(data_items,QUI);
   printf("Item %d written\n",-1);
   
+  // prenota cancellazione di shm e sem
+  xsem_unlink(Sem_items,QUI); 
+  xsem_unlink(Sem_slots,QUI); 
+  xshm_unlink(Shm,QUI);     
 
   // unmap memoria condivisa e chiude i semafori
   xmunmap(b,shm_size,QUI);
