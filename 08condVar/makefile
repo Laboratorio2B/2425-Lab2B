@@ -16,7 +16,7 @@ LDLIBS=-lm -lrt -pthread
 #  $^ viene sostituito con tutti i prerequisiti
 
 # elenco degli eseguibili da creare
-EXECS=heap.out rw.out somma_primi_files.out
+EXECS=heap.out rw.out somma_primi_files.out stack.out
 
 # primo target: gli eseguibili sono precondizioni del target
 # quindi verranno tutti creati
