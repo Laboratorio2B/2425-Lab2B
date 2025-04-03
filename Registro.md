@@ -414,12 +414,14 @@ Inviare segnali ad uno specifico thread: `pthread_kill`.
 Inviare informazione con i segnali: `sigqueue` e `pthread_sigqueue`. 
 Esempio: `segnaliRT.c`
 
+Threads in Python: il [Global Interpreter Lock](https://realpython.com/python-gil/) e i suoi effetti. [Creazione e join di thread](https://realpython.com/intro-to-python-threading/). 
+
 
 -----
 
 **Lezione 44** (8/4/25)
 
-Threads in Python: il [Global Interpreter Lock](https://realpython.com/python-gil/) e i suoi effetti. [Creazione e join di thread](https://realpython.com/intro-to-python-threading/). Utilizzo di pool di thread e processi. 
+Uso di `ThreadPoolExecutor` e `ProcessPoolExecutor`, i metodi [`map` e `submit`](https://superfastpython.com/threadpoolexecutor-quick-start-guide/).  Mutex in Python (classe Lock), esempio: sommaprimi.py. Modulo [logging](https://realpython.com/python-logging/).
 
 
 

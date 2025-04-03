@@ -4,7 +4,8 @@
 // i prototipi sono in xerrori.h
 
 
-// termina un processo con eventuale messaggio d'errore
+// termina un processo l'eventuale messaggio d'errore
+// associato alla variabile errno
 // si noti che la variabile errno è "thread local"
 // quindi ne esiste una diversa per ogni thread  
 void termina(const char *messaggio) {
@@ -15,6 +16,7 @@ void termina(const char *messaggio) {
 }
 
 // termina un processo con eventuale messaggio d'errore + linea e file
+// il messaggio è quello condificato da errno che non tutte le funzioni usano
 // si noti che la variabile errno è "thread local"
 // quindi ne esiste una diversa per ogni thread  
 void xtermina(const char *messaggio, int linea, char *file) {
@@ -69,6 +71,8 @@ void xclose(int fd, int linea, char *file) {
 // come return value. Un return value==0 indica nessun errore
 // la variabile errno viene evitata perché in certe implementazioni 
 // non è thread-safe (nei linux recenti lo è perché è thread local)
+// Uso xperror per stampare il messaggio d'errore 
+// perché perror stampa il msg associato a errno
 
 
 // threads: creazione e join

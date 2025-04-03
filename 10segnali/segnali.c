@@ -1,8 +1,9 @@
 #include "xerrori.h"
 #define QUI __LINE__,__FILE__
 
+
 // esempio base di gestione asincrona dei segnali 
-// cioè utilizzando un handler
+// cioè utilizzando un handler definito con sigaction 
 
 
 // variabili globali utilizzate da main e dal signal handler 
@@ -15,7 +16,6 @@ volatile sig_atomic_t continua = 1;
 // un segnale USR1 USR2 o INT (Control-C)
 void handler(int s)
 {
-  
   tot_segnali++;
   if(s!=SIGUSR1) {
     kill(getpid(),SIGUSR1); // manda SIGUSR1 a se stesso  

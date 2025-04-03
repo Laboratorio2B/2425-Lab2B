@@ -18,12 +18,11 @@
 // se si definisce SIGWAITINFO si usa sigwaitinfo()
 // per attendere il segnale: questo permette ad esempio di
 // sapere chi ha inviato il segnale (pid del processo)
-// #define SIGWAITINFO 1
+#define SIGWAITINFO 1 
 
 
 int main(int argc, char *argv[])
 {
- 
   // definisco l'insieme dei segnali da gestire con sigwait()
   sigset_t set;
   sigemptyset(&set);
@@ -43,13 +42,15 @@ int main(int argc, char *argv[])
   int tot_segnali = 0;
   int continua = 1;
 
-
   do {   // loop di attesa dei segnali
     int s; // segnale ricevuto
     #ifndef SIGWAITINFO 
     // sigwait() restituisce il segnale ricevuto in s
     e = sigwait(&set, &s); 
     if (e != 0) xtermina("Errore sigwait", QUI);
+    if(s!=SIGUSR1) {
+      kill(getpid(),SIGUSR1); // manda SIGUSR1 a se stesso  
+    }
     // qui è safe usare la printf, non siamo in un handler
     printf("Segnale %d ricevuto dal processo %d\n", s, getpid());
     #else
