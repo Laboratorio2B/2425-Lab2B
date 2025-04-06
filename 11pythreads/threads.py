@@ -7,7 +7,7 @@ import sys, threading, time
 def countdown(a,pausa):
   for i in range (a,-1,-1):
     print(f"{threading.current_thread().name}" ,"-->", i)  
-    time.sleep(pausa)        # attende pausa secondi
+    time.sleep(0.5)        # attende pausa secondi
 
 
 def main(lista):
@@ -15,9 +15,11 @@ def main(lista):
   th = []
   # crea e avvia un thread per ogni elemento in lista
   for s in lista:
-    x = threading.Thread(target=countdown, args=(int(s), 0.5))
+    # passo in target la funzione da eseguire 
+    # e in args gli argomenti della funzione (in una tupla)
+    x = threading.Thread(target=countdown, args=(int(s),0.5))
     x.start()
-    th.append(x) # salva il thread nella lista
+    th.append(x) # salva il thread nella lista  
   # attende terminazione dei thread 
   for y in th:
     y.join()
