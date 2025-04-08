@@ -77,7 +77,7 @@ Introduzione al linguaggio C. Esempio di lettura e scrittura di interi dal termi
 
 
 
-## Definizione di streuct: liste e alberi binari di ricerca (02struct)
+## Definizione di struct: liste e alberi binari di ricerca (02struct)
 
 **Lezione 9** (18/10/24)
 
@@ -219,7 +219,7 @@ Cenni sull'uso di  [`javadoc`](https://en.wikipedia.org/wiki/Javadoc)
 
 
 
-## Uso di Python per interagire con il file system 
+## Uso di Python per interagire con il file system (06python)
 
 
 
@@ -273,7 +273,11 @@ Utilizzo della classe `Miofile` per memorizzare le informazioni relative a un si
 Parametri posizionali e keyword. Uso di `*` e `**` per funzioni con numero arbitrario di parametri.
 Ancora su esplorazione del filesystem: ricerca basata sul tempo di ultima modifica e uso di espressioni regolari.
 
----
+
+
+## Introduzione ai thread in C (07threads)
+
+
 
 **Lezione 30** (18/2/25)
 
@@ -328,7 +332,10 @@ Paradigma produttori-consumatori con produttori e consumatori multipli.
 Mergesort parallelo (`pmergesort.c`).
 
 
-----
+
+## Condition Variables (08condVars)
+
+
 
 **Lezione 36** (11/3/25)
 
@@ -345,6 +352,11 @@ Ancora su gestione readers e writers. Uso di condition variables per schemi prod
 
 
 -----
+
+
+
+## Introduzione ai processi (09processi)
+
 
 
 **Lezione 38** (18/3/25)
@@ -381,7 +393,9 @@ Utilizzo di `sigaction` per definire un handler.
 
 
 
----- 
+## Gestione di segnali (10signali)
+
+
 
 **Lezione 41** (27/3/25)
 
@@ -417,12 +431,16 @@ Esempio: `segnaliRT.c`
 Threads in Python: il [Global Interpreter Lock](https://realpython.com/python-gil/) e i suoi effetti. [Creazione e join di thread](https://realpython.com/intro-to-python-threading/). 
 
 
------
+
+
+## Introduzione ai thread in Python (11pythreads)
+
+
 
 **Lezione 44** (8/4/25)
 
 Modulo [argparse](https://docs.python.org/3/howto/argparse.html) e il suo uso. 
-Modulo [logging](https://realpython.com/python-logging/) e il suo uso
+Modulo [logging](https://realpython.com/python-logging/) e il suo uso.
 Uso di `ThreadPoolExecutor` e `ProcessPoolExecutor`, i metodi [`map` e `submit`](https://superfastpython.com/threadpoolexecutor-in-python/), esempio: `contaprimi.py`.  
 Mutex in Python (classe Lock), esempio: `sommaprimi.py`. 
 
@@ -453,6 +471,6 @@ Prova in itinere.
 **Lezione 48** (24/4/25)
 
 
-Prova di recupero? 
+Prova di recupero
 
 
