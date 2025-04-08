@@ -1,10 +1,7 @@
 ## Esercizi
 
 
-
-
-
-### Alice, Bob e i segnali real-time (3/4/25)
+### Alice, Bob con segnali real-time (8/4/25)
 
 
 Si consideri il seguente gioco tra Alice e Bob: si parte da un intero *N*, a turno ogni giocatore può: 
@@ -12,7 +9,7 @@ Si consideri il seguente gioco tra Alice e Bob: si parte da un intero *N*, a tur
 * se *N* pari sottrarre 1 da *N* oppure dimezzarlo
 * se *N* è dispari può solo sottrarre 1 (la mossa è forzata)
 
-vince che raggiunge il valore zero. Ad esempio, se il valore iniziale è 10 una possibile sequenza di gioco è: 
+vince che raggiunge il valore zero. Ad esempio, se il valore iniziale è 12 una possibile sequenza di gioco è: 
 
 * Bob: 12 -> 6
 * Alice: 6 -> 5
@@ -39,4 +36,9 @@ Idealmente i due programmi devono fare sempre mosse valide, accorgersi che la pa
 
 Dovete scrivere due sorgenti diversi `alice.c` e `bob.c`; l'utente deve eseguire dalla di comando `alice` che deve far partire `bob` con una `fork` + `exec`; questo è necessario perchè ogni programma deve poter conoscere il `pid` dell'altro per inviare i segnali. Usate i segnali real-time con la funzione `sigqueue(3)` per inviare un intero, e `sigwaitinfo(2)` per la ricezione dei segnali.
 
+
+
+### heap e ctrl-C (8/4/25)
+
+Modificare il programma `08condVar/heap.c` aggiungendo un thread gestore di segnali tale che quando viene premuto il tasto `ctrl-C` viene fatta un'allocazione di un blocco di 7 unità di memoria che deve essere mantenuto allocato per 5 secondi. Il programma deve essere fatto in modo che successivi invii di `ctrl-C` effettuino successive allocazioni di 7 unità di memoria anche se i precedenti blocchi da 7 non sono ancora stati deallocati (naturalmente l'allocazione può avvenire solo se la memoria è disponibile altrimenti il thread deve rimanere in attesa).
 
