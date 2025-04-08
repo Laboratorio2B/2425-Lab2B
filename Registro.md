@@ -423,7 +423,7 @@ Threads in Python: il [Global Interpreter Lock](https://realpython.com/python-gi
 
 Modulo [argparse](https://docs.python.org/3/howto/argparse.html) e il suo uso. 
 Modulo [logging](https://realpython.com/python-logging/) e il suo uso
-Uso di `ThreadPoolExecutor` e `ProcessPoolExecutor`, i metodi [`map` e `submit`](https://superfastpython.com/threadpoolexecutor-quick-start-guide/), esempio: `contaprimi.py`.  
+Uso di `ThreadPoolExecutor` e `ProcessPoolExecutor`, i metodi [`map` e `submit`](https://superfastpython.com/threadpoolexecutor-in-python/), esempio: `contaprimi.py`.  
 Mutex in Python (classe Lock), esempio: `sommaprimi.py`. 
 
 

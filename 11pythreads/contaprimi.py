@@ -1,10 +1,11 @@
 #! /usr/bin/env python3
-import sys, threading, logging, time, os, argparse
+import sys, threading, time, os, argparse, logging
 import concurrent.futures
 
-# descrizion usata dal modulo argparse
-Description = """Esempio elementare di uso di thread in python
-main() calcola i primi in un intervallo usando due thread "semplici",
+# descrizione usata dal modulo argparse
+Description = """Esempi elementari di uso di thread in python:
+main() calcola i primi in un intervallo usando due thread 
+       "semplici",
 main_pool() usa un pool di thread e il metodo executor.map, 
 main_submit() usa un pool di 2 thread e il metodo executor.submit 
 """
@@ -36,7 +37,7 @@ def tbody(dati):
 
 # crea due thread in maniera C-like
 def main(a,b):
-  logging.debug("Inizia esecuzione del main")
+  logging.info("Inizia esecuzione del main")
   # crea 2 thread passando ad ognuno i suoi dati
   c = (a+b)//2
   d1 = Dati(a,c)
@@ -51,12 +52,12 @@ def main(a,b):
   t2.join()
   end = time.time()
   print(f"Tra {a} e {b} ci sono {d1.risultato+d2.risultato} primi e ci ho messo {end-start:.2f} secondi")
-  logging.info("Termina esecuzione del main")
+  logging.info(f"Termina esecuzione del main, secondi={end-start}")
 
 
-# usa un pool di thread ed esecutor.map
+# usa un pool di thread ed executor.map
 def main_pool(a,b,p):
-  logging.debug("Inizia esecuzione di main_pool")
+  logging.info("Inizia esecuzione di main_pool")
   assert p>0, "Il numero di thread deve essere maggiore di 0"
   # crea l'intervallo per ognuno dei p thread
   dati = []
@@ -66,7 +67,7 @@ def main_pool(a,b,p):
   start = time.time() 
   # se nella riga seguente uso ProcessPoolExecutor invece di ThreadPoolExecutor
   # vengono lanciati processi invece che thread
-  with concurrent.futures.ProcessPoolExecutor(max_workers=p) as executor:
+  with concurrent.futures.ThreadPoolExecutor(max_workers=p) as executor:
     # il return value di ogni singola chiamata a tbody viene messo in risultati
     risultati = executor.map(tbody, dati)
     print("executor è terminato")
@@ -76,19 +77,19 @@ def main_pool(a,b,p):
   end = time.time()
   tot = sum(risultati)
   print(f"Tra {a} e {b} ci sono {tot} primi e ci ho messo {end-start:.2f} secondi")
-  logging.debug("Termina esecuzione di main_pool")
+  logging.info("Termina esecuzione di main_pool")
   return
 
 
 # usa un pool di thread ed executor.submit
 def main_submit(a,b):
-  logging.debug("Inizia esecuzione del main_submit")
+  logging.info("Inizia esecuzione del main_submit")
   # crea 2 thread passando ad ognuno i suoi dati
   c = (a+b)//2
   d1 = Dati(a,c)
   d2 = Dati(c,b)
   start = time.time()
-  with concurrent.futures.ProcessPoolExecutor() as executor:
+  with concurrent.futures.ThreadPoolExecutor() as executor:
     print(f"Posso usare {executor._max_workers} workers");
     r1 = executor.submit(tbody, d1)
     r2 = executor.submit(tbody, d2)
@@ -141,7 +142,7 @@ if __name__ == '__main__':
   parser.add_argument('min', help='minimo', type = int)  
   parser.add_argument('max', help='massimo', type = int)   
   parser.add_argument('-p', help='Usa un pool di P thread', type = int, default=-1) 
-  parser.add_argument('-s', help='Usa submit con due thread', action="store_true") 
+  parser.add_argument('-s', help='Usa un pool di due thread con submit', action="store_true") 
   args = parser.parse_args()
   if args.s:
     main_submit(args.min,args.max)
