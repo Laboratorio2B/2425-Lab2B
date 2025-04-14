@@ -221,13 +221,10 @@ Cenni sull'uso di  [`javadoc`](https://en.wikipedia.org/wiki/Javadoc)
 
 ## Uso di Python per interagire con il file system (06python)
 
-
-
 **Lezione 24** (28/1/25)
 
 Introduzione a Python, differenze e similarità con il C. 
 Sintassi, interprete, istruzioni `if`, `else`, `elif`, `for`, `while`. Definizione di funzioni e Docstring. Liste e tuple.
-
 
 ---
 

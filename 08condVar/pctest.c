@@ -8,7 +8,7 @@
  * 
  * */
 #include "xerrori.h"
-
+#include <sys/times.h>
 
 #define QUI __LINE__,__FILE__
 #define Buf_size 10
@@ -16,6 +16,13 @@
 
 #ifdef USACV
 #warning "Usa Condition Variables"
+#define Metodo " (CV) "
+// se Mutexe!=0 allora vengono usati due mutex distinti:
+// uno per la CV empty e l'altro per la CV full, ma il programma
+// si blocca, forse per l'accesso simultaneo a p->dati 
+#define Mutexe 1
+#else
+#define Metodo " (Sem) "
 #endif
 
 // funzione per trovare il più piccolo divisore>1 
@@ -35,8 +42,9 @@ typedef struct {
   int *buffer; 
   int *pcindex;
 #ifdef USACV
-  int *pdati;
+  int *pdati;   // puntatore a # tot dati disponibili  
   pthread_mutex_t *mutex;
+  pthread_mutex_t *mutexe;
   pthread_cond_t *empty;
   pthread_cond_t *full;
 #else  
@@ -55,6 +63,7 @@ typedef struct {
 #ifdef USACV
   int *pdati;
   pthread_mutex_t *mutex;
+  pthread_mutex_t *mutexe;
   pthread_cond_t *empty;
   pthread_cond_t *full;
 #else
@@ -76,19 +85,26 @@ void *cbody(void *arg)
   int n;
   do {
 #ifdef USACV
-    xpthread_mutex_lock(a->mutex,QUI);
+    xpthread_mutex_lock(a->mutexe,QUI);
     while(*(a->pdati)==0) {
       // attende fino a quando il buffer è vuoto
-      xpthread_cond_wait(a->empty,a->mutex,QUI);
+      xpthread_cond_wait(a->empty,a->mutexe,QUI);
     }
     *(a->pdati) -= 1;    
 #else
     xsem_wait(a->sem_data_items,QUI);
     xpthread_mutex_lock(a->pmutex_buf,QUI);
 #endif
+    // parte comune a CV e semafori: lettura dal buffer
     n = a->buffer[*(a->pcindex) % Buf_size];
     *(a->pcindex) +=1;
+
 #ifdef USACV
+    #if Mutexe
+    // se mutexe!=mutex allora unlock(mutexe)+lock(mutex)
+    xpthread_mutex_unlock(a->mutexe,QUI);
+    xpthread_mutex_lock(a->mutex,QUI);
+    #endif  
     // segnala che il buffer non è più pieno
     xpthread_cond_signal(a->full,QUI);
     xpthread_mutex_unlock(a->mutex,QUI);
@@ -123,8 +139,13 @@ void *pbody(void *arg)
     *(a->ppindex) +=1;
 #ifdef USACV
     // segnala che il buffer non è più vuoto
-    xpthread_cond_signal(a->empty,QUI);
+    #if Mutexe
+    // se mutexe!=mutex allora unlock(mutex)+lock(mutexe)
     xpthread_mutex_unlock(a->mutex,QUI);
+    xpthread_mutex_lock(a->mutexe,QUI);
+    #endif  
+    xpthread_cond_signal(a->empty,QUI);
+    xpthread_mutex_unlock(a->mutexe,QUI);
 #else
     xpthread_mutex_unlock(a->pmutex_buf,QUI);
     xsem_post(a->sem_data_items,QUI);
@@ -147,6 +168,8 @@ int main(int argc, char *argv[])
   int tc = atoi(argv[argc-1]);
   assert(tp>0);
   assert(tc>0);
+  clock_t start = times(NULL);
+
 
   // buffer produttori-consumatori
   int buffer[Buf_size];
@@ -154,6 +177,7 @@ int main(int argc, char *argv[])
 #ifdef USACV
   int dati=0;
   pthread_mutex_t mu = PTHREAD_MUTEX_INITIALIZER;
+  pthread_mutex_t mue = PTHREAD_MUTEX_INITIALIZER;
   pthread_cond_t empty = PTHREAD_COND_INITIALIZER;
   pthread_cond_t full = PTHREAD_COND_INITIALIZER;
 #else
@@ -177,7 +201,12 @@ int main(int argc, char *argv[])
     ap[i].buffer = buffer;
 #ifdef USACV
     ap[i].pdati = &dati;
-    ap[i].mutex = &mu;    
+    ap[i].mutex = &mu; 
+    #if Mutexe   
+    ap[i].mutexe = &mue;
+    #else
+    ap[i].mutexe = &mu;
+    #endif        
     ap[i].empty = &empty;
     ap[i].full = &full;
 #else
@@ -195,6 +224,11 @@ int main(int argc, char *argv[])
 #ifdef USACV
     ac[i].pdati = &dati;
     ac[i].mutex = &mu;
+    #if Mutexe   
+    ac[i].mutexe = &mue;
+    #else
+    ac[i].mutexe = &mu;
+    #endif
     ac[i].empty = &empty;
     ac[i].full = &full;
 #else
@@ -236,10 +270,11 @@ int main(int argc, char *argv[])
     pthread_join(cons[i],NULL);
     tot += ac[i].risultato;
   }
-  printf("Totale: %ld (%ld per produttore)\n",tot,tot/tp);
+  printf(Metodo "Totale: %ld (%ld per produttore)\n",tot,tot/tp);
   // deallocazione, distruzione, etc....
 #ifdef USACV
   xpthread_mutex_destroy(&mu,QUI);
+  xpthread_mutex_destroy(&mue,QUI);
   xpthread_cond_destroy(&empty,QUI);
   xpthread_cond_destroy(&full,QUI);
 #else  
@@ -248,6 +283,8 @@ int main(int argc, char *argv[])
   xsem_destroy(&sem_free_slots, QUI);
   xsem_destroy(&sem_data_items, QUI);
 #endif
+  double tot_time = (double) (times(NULL)-start)/sysconf(_SC_CLK_TCK);
+  printf(Metodo "Elapsed time: %.3lf secs (%.3lf musec x intero)\n",tot_time,1000000*tot_time/(num*tp));
   return 0;
 }
 
