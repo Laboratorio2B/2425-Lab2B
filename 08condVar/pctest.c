@@ -6,6 +6,12 @@
  * Produttori e consumatori fanno operazioni inutili e veloci 
  * perché lo scopo è misurare l'overhead del paradigma
  * 
+ * In questa versione se Mutexe!=0 si utilizzano due
+ * diversi mutex per le due diverse CV: purtroppo 
+ * il programma entra in deadlock se si usa più di prod 
+ * o consumatore anche se non ho ben capito dove:
+ * studiare i valori scritti su stderr
+ * 
  * */
 #include "xerrori.h"
 #include <sys/times.h>
@@ -16,10 +22,10 @@
 
 #ifdef USACV
 #warning "Usa Condition Variables"
-#define Metodo " (CV) "
+#define Metodo " ( CV) "
 // se Mutexe!=0 allora vengono usati due mutex distinti:
 // uno per la CV empty e l'altro per la CV full, ma il programma
-// si blocca, forse per l'accesso simultaneo a p->dati 
+// si blocca se ci sono più produttori o più consumatori
 #define Mutexe 1
 #else
 #define Metodo " (Sem) "
@@ -88,9 +94,11 @@ void *cbody(void *arg)
     xpthread_mutex_lock(a->mutexe,QUI);
     while(*(a->pdati)==0) {
       // attende fino a quando il buffer è vuoto
+      fprintf(stderr,"C %d\n",*(a->pdati));
       xpthread_cond_wait(a->empty,a->mutexe,QUI);
     }
     *(a->pdati) -= 1;    
+    fprintf(stderr," C %d\n",*(a->pdati));
 #else
     xsem_wait(a->sem_data_items,QUI);
     xpthread_mutex_lock(a->pmutex_buf,QUI);
@@ -128,9 +136,11 @@ void *pbody(void *arg)
     xpthread_mutex_lock(a->mutex,QUI);
     while(*(a->pdati)==Buf_size) {
       // attende fino a quando il buffer rimane pieno 
+      fprintf(stderr,"P %d\n",*(a->pdati));
       xpthread_cond_wait(a->full,a->mutex,QUI);
     }
     *(a->pdati) += 1;
+    fprintf(stderr," P %d\n",*(a->pdati));
 #else
     xsem_wait(a->sem_free_slots,QUI);
     xpthread_mutex_lock(a->pmutex_buf,QUI);
@@ -264,7 +274,7 @@ int main(int argc, char *argv[])
 #endif
   }
 
-  // attendo i consumatori 
+  // calcola risultato sommando contributo dei thread
   long tot=0;
   for(int i=0;i<tc;i++) { 
     pthread_join(cons[i],NULL);

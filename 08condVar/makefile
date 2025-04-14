@@ -17,13 +17,15 @@ LDLIBS=-lm -lrt -pthread
 
 # elenco degli eseguibili da creare
 EXECS=heap.out rw.out somma_primi_files.out stack.out
+PC_EXECS=pctest.out pctestCV.out pctestC11.out atomic_pctestC11.out 
+
 
 # primo target: gli eseguibili sono precondizioni del target
 # quindi verranno tutti creati
 all: $(EXECS) 
 
 # dove versioni di prod/con con semafori oppure condvar
-pctests: pctest.out pctestCV.out
+pctests: $(PC_EXECS)
 
 
 # regola per la creazione degli eseguibili utilizzando xerrori.o
@@ -36,17 +38,24 @@ pctests: pctest.out pctestCV.out
 
 # compila pctest.c con opzione -O3 per ottimizzare la velocità 
 pctest.o: pctest.c xerrori.h
-	$(CC) $(CFLAGS) -O3 -c $< 
+	$(CC) $(CFLAGS) -O3 -c $< -o $@
 
 # come sopra ma definisce la costante USACV quindi vengono
 # usate le CV invece dei semafori nel paradigma prod-cons
 pctestCV.o: pctest.c xerrori.h
 	$(CC) $(CFLAGS) -O3 -c $<  -o $@ -DUSACV
 
+# versione atomic dei precedenti
+pctestC11.out: pctestC11.c semC11.h
+	$(CC) $(CFLAGS) -O3  $< -o $@
+atomic_pctestC11.out: atomic_pctestC11.c semC11.h
+	$(CC) $(CFLAGS) -O3  $<  -o $@ 
+
+
 
 # esempio di target che non corrisponde a una compilazione
 # ma esegue la cancellazione dei file oggetto e degli eseguibili
 clean: 
-	rm -f *.o $(EXECS) pctest.out pctestCV.out
+	rm -f *.o $(EXECS) $(PC_EXECS)
 
 
