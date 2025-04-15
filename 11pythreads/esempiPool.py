@@ -37,7 +37,7 @@ def main(p):
     executor.submit(tipo1,3.1415)
     print("Esecuzioni tipo 1 inviate")
     # with concurrent.futures.ThreadPoolExecutor(max_workers=p) as executor2:
-    executor.map(tipo2,[x for x in range(1,7)])
+    executor.map(tipo2,range(2,8))
     print("Esecuzioni tipo 2 inviate")
   
 

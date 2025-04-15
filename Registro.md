@@ -447,14 +447,20 @@ Mutex in Python (classe Lock), esempio: `sommaprimi.py`.
 **Lezione 45** (10/4/25)
 
 
-Prova in itinere. 
+Prova in itinere (testo disponibile su moodle) 
 
-
+	
 -----
 
 
 **Lezione 46** (15/4/25)
 
+Altri esempi di Thread Pool: `esempiPool.py`
+[semafori e condition variables in python](https://superfastpython.com/threading-in-python/):
+`somma_primi_files.py` e `rw.py`.
+
+[Threads C11: Concurrency support library](https://en.cppreference.com/w/c/thread). [Atomic operations library](https://en.cppreference.com/w/c/atomic). Atomics: Sezioni 40.1, 40.2, 40.6 della  
+[Beej's guide to C programming](https://beej.us/guide/bgc/html/split/index.html).
 
 
 ---- 

@@ -28,7 +28,7 @@ void *tbody(void *v) {
   // cerco i primi nell'intervallo assegnato
   for(int j=d->start;j<d->end;j++) {
       if(primo(j)) 
-        // *(d->somma) = *(d->somma) + 1;    // non atomico
+        //*(d->somma) = *(d->somma) + 1;    // non atomico
         atomic_fetch_add(d->somma,1);  // incrementa in maniera atomica 
         // *(d->somma) += 1;           // anche questo è atomico 
   }
