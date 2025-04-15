@@ -6,12 +6,6 @@
  * Produttori e consumatori fanno operazioni inutili e veloci 
  * perché lo scopo è misurare l'overhead del paradigma
  * 
- * In questa versione se Mutexe!=0 si utilizzano due
- * diversi mutex per le due diverse CV: purtroppo 
- * il programma entra in deadlock se si usa più di prod 
- * o consumatore anche se non ho ben capito dove:
- * studiare i valori scritti su stderr
- * 
  * */
 #include "xerrori.h"
 #include <sys/times.h>
@@ -23,10 +17,6 @@
 #ifdef USACV
 #warning "Usa Condition Variables"
 #define Metodo " ( CV) "
-// se Mutexe!=0 allora vengono usati due mutex distinti:
-// uno per la CV empty e l'altro per la CV full, ma il programma
-// si blocca se ci sono più produttori o più consumatori
-#define Mutexe 1
 #else
 #define Metodo " (Sem) "
 #endif
@@ -50,7 +40,6 @@ typedef struct {
 #ifdef USACV
   int *pdati;   // puntatore a # tot dati disponibili  
   pthread_mutex_t *mutex;
-  pthread_mutex_t *mutexe;
   pthread_cond_t *empty;
   pthread_cond_t *full;
 #else  
@@ -69,7 +58,6 @@ typedef struct {
 #ifdef USACV
   int *pdati;
   pthread_mutex_t *mutex;
-  pthread_mutex_t *mutexe;
   pthread_cond_t *empty;
   pthread_cond_t *full;
 #else
@@ -91,14 +79,11 @@ void *cbody(void *arg)
   int n;
   do {
 #ifdef USACV
-    xpthread_mutex_lock(a->mutexe,QUI);
+    xpthread_mutex_lock(a->mutex,QUI);
     while(*(a->pdati)==0) {
-      // attende fino a quando il buffer è vuoto
-      fprintf(stderr,"C %d\n",*(a->pdati));
-      xpthread_cond_wait(a->empty,a->mutexe,QUI);
+      xpthread_cond_wait(a->empty,a->mutex,QUI);
     }
     *(a->pdati) -= 1;    
-    fprintf(stderr," C %d\n",*(a->pdati));
 #else
     xsem_wait(a->sem_data_items,QUI);
     xpthread_mutex_lock(a->pmutex_buf,QUI);
@@ -108,11 +93,6 @@ void *cbody(void *arg)
     *(a->pcindex) +=1;
 
 #ifdef USACV
-    #if Mutexe
-    // se mutexe!=mutex allora unlock(mutexe)+lock(mutex)
-    xpthread_mutex_unlock(a->mutexe,QUI);
-    xpthread_mutex_lock(a->mutex,QUI);
-    #endif  
     // segnala che il buffer non è più pieno
     xpthread_cond_signal(a->full,QUI);
     xpthread_mutex_unlock(a->mutex,QUI);
@@ -135,12 +115,9 @@ void *pbody(void *arg)
 #ifdef USACV
     xpthread_mutex_lock(a->mutex,QUI);
     while(*(a->pdati)==Buf_size) {
-      // attende fino a quando il buffer rimane pieno 
-      fprintf(stderr,"P %d\n",*(a->pdati));
       xpthread_cond_wait(a->full,a->mutex,QUI);
     }
     *(a->pdati) += 1;
-    fprintf(stderr," P %d\n",*(a->pdati));
 #else
     xsem_wait(a->sem_free_slots,QUI);
     xpthread_mutex_lock(a->pmutex_buf,QUI);
@@ -149,13 +126,8 @@ void *pbody(void *arg)
     *(a->ppindex) +=1;
 #ifdef USACV
     // segnala che il buffer non è più vuoto
-    #if Mutexe
-    // se mutexe!=mutex allora unlock(mutex)+lock(mutexe)
-    xpthread_mutex_unlock(a->mutex,QUI);
-    xpthread_mutex_lock(a->mutexe,QUI);
-    #endif  
     xpthread_cond_signal(a->empty,QUI);
-    xpthread_mutex_unlock(a->mutexe,QUI);
+    xpthread_mutex_unlock(a->mutex,QUI);
 #else
     xpthread_mutex_unlock(a->pmutex_buf,QUI);
     xsem_post(a->sem_data_items,QUI);
@@ -187,7 +159,6 @@ int main(int argc, char *argv[])
 #ifdef USACV
   int dati=0;
   pthread_mutex_t mu = PTHREAD_MUTEX_INITIALIZER;
-  pthread_mutex_t mue = PTHREAD_MUTEX_INITIALIZER;
   pthread_cond_t empty = PTHREAD_COND_INITIALIZER;
   pthread_cond_t full = PTHREAD_COND_INITIALIZER;
 #else
@@ -212,11 +183,6 @@ int main(int argc, char *argv[])
 #ifdef USACV
     ap[i].pdati = &dati;
     ap[i].mutex = &mu; 
-    #if Mutexe   
-    ap[i].mutexe = &mue;
-    #else
-    ap[i].mutexe = &mu;
-    #endif        
     ap[i].empty = &empty;
     ap[i].full = &full;
 #else
@@ -234,11 +200,6 @@ int main(int argc, char *argv[])
 #ifdef USACV
     ac[i].pdati = &dati;
     ac[i].mutex = &mu;
-    #if Mutexe   
-    ac[i].mutexe = &mue;
-    #else
-    ac[i].mutexe = &mu;
-    #endif
     ac[i].empty = &empty;
     ac[i].full = &full;
 #else
@@ -284,7 +245,6 @@ int main(int argc, char *argv[])
   // deallocazione, distruzione, etc....
 #ifdef USACV
   xpthread_mutex_destroy(&mu,QUI);
-  xpthread_mutex_destroy(&mue,QUI);
   xpthread_cond_destroy(&empty,QUI);
   xpthread_cond_destroy(&full,QUI);
 #else  
