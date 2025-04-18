@@ -17,7 +17,7 @@ LDLIBS=-lm -lrt -pthread
 
 # elenco degli eseguibili da creare
 EXECS=heap.out rw.out somma_primi_files.out stack.out
-PC_EXECS=pctest.out pctestCV.out pctestC11.out pctestC11CV.out atomic_pctest.out atomic_pctestC11.out
+PC_EXECS=pctest.out pctestCV.out pctestC11.out pctestC11CV.out
 
 
 # primo target: gli eseguibili sono precondizioni del target
@@ -44,10 +44,6 @@ pctest.o: pctest.c xerrori.h
 # usate le CV invece dei semafori nel paradigma prod-cons
 pctestCV.o: pctest.c xerrori.h
 	$(CC) $(CFLAGS) -O3 -c $<  -o $@ -DUSACV
-
-# versione atomic dei precedenti (non funziona)
-#atomic_pctest.o: atomic_pctest.c xerrori.h
-#	$(CC) $(CFLAGS) -O3 -c $< -o $@ 
 
 
 # versione C11 dei precedenti

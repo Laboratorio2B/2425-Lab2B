@@ -1,14 +1,17 @@
 #include "xerrori.h"
 #include <stdatomic.h>
 
-// primo esempio di utilizzo di thread
-// conteggio dei primi con thread multipli
+// versione modificata di contaprimi.c
+// nella quale viene mostrato l'utilizzo 
+// di una variabile atomic_int che
+// per aggiornare in simultanea la somma dei primi 
+// contenuta in *(d->somma)
 
-// mostra come usare una struct per condividere dei parametri 
-// di input e output tra thread principale e ausiliari
 
-// si tratta della situazione piu semplice in cui il lavoro 
-// può essere soddiviso in più parti indipendenti;
+// Il codice ha solo interesse didattico: non c'è motivo
+// per incrementare continuamente una variabile condivisa
+// i singoli thread potrebbero incrementare una variabile private
+// e calcolare la somma complessiva solo alla fine 
 
 
 //Prototipo test di primalità
@@ -18,7 +21,7 @@ bool primo(int n);
 typedef struct {
   int start;            // intervallo dove cercare i primo 
   int end;              // parametri di input
-  atomic_int *somma;           // parametro di output
+  atomic_int *somma;    // parametro di output 
 } dati;
 
 // funzione passata a pthred_create
@@ -27,13 +30,14 @@ void *tbody(void *v) {
   fprintf(stderr, "Conto i primi fra %d e %d\n", d->start, d->end);
   // cerco i primi nell'intervallo assegnato
   for(int j=d->start;j<d->end;j++) {
-      if(primo(j)) 
-        //*(d->somma) = *(d->somma) + 1;    // non atomico
+      if(primo(j)) {
+        // quando trovo un primo incemento di uno *(d->somma)
         atomic_fetch_add(d->somma,1);  // incrementa in maniera atomica 
-        // *(d->somma) += 1;           // anche questo è atomico 
+        // *(d->somma) += 1;           // anche questo è atomico ma è meno chiaro 
+        //*(d->somma) = *(d->somma) + 1;   // attenzione questo non atomico
+      }
   }
   fprintf(stderr, "Il thread che partiva da %d ha terminato\n", d->start);
-  // d->somma_parziale = primi;
   pthread_exit(NULL);
 }
 
@@ -50,7 +54,7 @@ int main(int argc,char *argv[])
   if(p<=0) termina("numero di thread non valido");
 
   // creazione thread ausiliari
-  atomic_int somma = 0;
+  atomic_int somma = 0; 
   pthread_t t[p];   // array di p indentificatori di thread 
   dati d[p];        // array di p struct che passerò ai p thread
   for(int i=0; i<p; i++) {

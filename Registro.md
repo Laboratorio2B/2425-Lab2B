@@ -459,15 +459,19 @@ Altri esempi di Thread Pool: `esempiPool.py`
 [semafori e condition variables in python](https://superfastpython.com/threading-in-python/):
 `somma_primi_files.py` e `rw.py`.
 
-[Threads C11: Concurrency support library](https://en.cppreference.com/w/c/thread). [Atomic operations library](https://en.cppreference.com/w/c/atomic). Atomics: Sezioni 40.1, 40.2, 40.6 della  
-[Beej's guide to C programming](https://beej.us/guide/bgc/html/split/index.html).
+[Threads C11: Concurrency support library](https://en.cppreference.com/w/c/thread). [Atomic operations library](https://en.cppreference.com/w/c/atomic). Atomics: Sezioni da 40.1 a 40.6 della  
+[Beej's guide to C programming](https://beej.us/guide/bgc/html/split/chapter-atomics.html).
+Primo esempio di uso di una variable atomic: `07threads/atcontaprimi.c`
 
 
 ---- 
 
 **Lezione 47** (17/4/25)
 
+Uso di `atomic_flag_test_and_set` per realizzare uno spinlock; confronto fra spinlock, mutex e variaili atomiche: `spinlock.c`. Uso di `atomic_compare_exchange_weak` per la relelizzazone di uno stack lock-free; confronto fra stack lock-free e mutex: `stack.c`.
 
+
+Esempi e discussione di domande della prova orale. 
 
 ---- 
 
