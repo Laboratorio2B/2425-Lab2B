@@ -65,7 +65,8 @@ void push(LockFreeStack* stack, int value) {
     
     Node* old_head = atomic_load(&stack->head);    // Read the current head
     do {
-        // old_head = atomic_load(&stack->head);    // Read the current head
+        // re-read the current head, not necessary since old_head is updated by atomic_compare_exchange  
+        // old_head = atomic_load(&stack->head); 
         new_node->next = old_head;               // Set next pointer for the new node
     } while (!atomic_compare_exchange_weak(&stack->head, 
                              &old_head, new_node));
@@ -194,6 +195,11 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    // Wait for push threads to complete.
+    for (int i = 0; i < data.num_push_threads; i++) {
+        pthread_join(push_threads[i], NULL);
+    }
+    
     // Create consumer (pop) threads.
     for (int i = 0; i < data.num_pop_threads; i++) {
         if (pthread_create(&pop_threads[i], NULL, pop_thread, &data) != 0) {
@@ -201,11 +207,7 @@ int main(int argc, char* argv[]) {
             exit(EXIT_FAILURE);
         }
     }
-
-    // Wait for push threads to complete.
-    for (int i = 0; i < data.num_push_threads; i++) {
-        pthread_join(push_threads[i], NULL);
-    }
+    
     // Wait for pop threads to complete.
     for (int i = 0; i < data.num_pop_threads; i++) {
         pthread_join(pop_threads[i], NULL);

@@ -13,7 +13,7 @@
 // viene evitata con un mutex
 
 // Se viene definito USE_ATOMIC_SUM la race condition
-// viene evitata meorizzando la somma in una variblie atomic_long
+// viene evitata meorizzando la somma in una variabile atomic_long
 // che quindi può essere aggiornata in maniera atomica 
 // con la funzione atomic_fetch_add
 
@@ -25,6 +25,9 @@
 
 // gli esperimenti mostrano che l'uso della variabile atomic è 
 // piu veloce del mutex che e piu veloce dello spinlock 
+// viene utilizzata una pthread barrier per far partire tutti 
+// i thread allo stesso momento allo scopo di massimizzare la
+// probabilità di accessi simultanei alla variabile condivisa
 
 
 typedef struct {
