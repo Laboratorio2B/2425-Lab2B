@@ -8,8 +8,8 @@
 
 // Scopo del programma:
 //  mostrare come si legge da un file di testo 
-//  e come una funzione può restituier un array
-//  alla fuznione chiamante
+//  e come una funzione può restituire un array
+//  alla funzione chiamante
 
 // prototipo della funzione termina()
 void termina(char *messaggio);

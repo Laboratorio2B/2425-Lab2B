@@ -10,7 +10,7 @@
 // scopo del programma:
 //   mostrare le opzioni di come leggere delle stringhe con 
 //   scanf (e simili, tipo fscanf) 
-// Fare riferimento ai lucidi dentroScanf.pdf
+// Fare riferimento ai lucidi letturaStringhe.pdf
 
 // Ricordare sempre che l'uso di scanf("%s"...) è un'operazione
 // a rischio di buffer overflow in quanto

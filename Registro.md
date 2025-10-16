@@ -374,7 +374,7 @@ Documentazione sulle pipe, pagine: `pipe(2)` e `pipe(7)`.
 Comandi `mkfifo(1)` e `mkfifo(3)`.  
 Comunicazione tra processi mediante named pipe (anche in Python) con riferimento a `pipe(7)`, `fifo(7)`. 
 Lancio di un nuovo eseguibile mediante `fork` seguito da `execl`.
-Introduzione all'uso della memoria condivisa con riferimento a `shm_overview(7)`
+Introduzione all'uso della memoria condivisa con riferimento a `shm_overview(7)`.
 Uso e significato di `shm_open`, `ftruncate`, `mmap`, `munmap`, `shm_unlink`.
 
 
@@ -389,8 +389,10 @@ Introduzione ai segnali con riferimento a `signal(7)`. Comando `kill(1)`.
 Utilizzo di `sigaction` per definire un handler. 
 
 
+----
 
-## Gestione di segnali (10signali)
+
+## Gestione di segnali (10segnali)
 
 
 
@@ -428,6 +430,7 @@ Esempio: `segnaliRT.c`
 Threads in Python: il [Global Interpreter Lock](https://realpython.com/python-gil/) e i suoi effetti. [Creazione e join di thread](https://realpython.com/intro-to-python-threading/). 
 
 
+---
 
 
 ## Introduzione ai thread in Python (11pythreads)
@@ -459,6 +462,7 @@ Altri esempi di Thread Pool: `esempiPool.py`
 `somma_primi_files.py` e `rw.py`.
 
 
+----
 
 
 ## Cenni sulla libreria threads C11 e variabili atomic (12atomic)

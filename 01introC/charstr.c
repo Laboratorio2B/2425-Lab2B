@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   char *z = strdup("the answer is 42");
   printf("originale: %s, lunghezza %zd\n",z,strlen(z));
   // sia per la printf() che per la strlen()
-  // la stringa termina quando si incotra il byte 0 in z[5] 
+  // la stringa termina quando si incontra il byte 0 in z[5] 
   z[5] = 0;
   printf("originale: %s, lunghezza %zd\n",z,strlen(z));
   // la strdup esegue una malloc() quindi devo deallocare con free()
