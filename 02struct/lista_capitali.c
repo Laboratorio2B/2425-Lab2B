@@ -107,7 +107,7 @@ capitale *crea_lista_testa(FILE *f)
 }
 
 // crea una lista con gli oggetti capitale letti da 
-// *f inserendoli per lattudini descrescente
+// *f inserendoli per latitudini descrescente
 capitale *crea_lista_lat(FILE *f)
 {
   // costruzione lista leggendo capitali dal file
@@ -117,7 +117,7 @@ capitale *crea_lista_lat(FILE *f)
     if(b==NULL) break;
     // inserisco b in testa alla lista    
     testa = inserisci_lat_ric(testa,b);
-  }  
+  }
   return testa;
 }
 
@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
   rewind(f); // riavvolge il file
   testa=crea_lista_coda(f);
   puts("--- inizio lista ---");
-  // stampa lista capitali appena creata
+  // stampa lista capitali appena ri-creata
   lista_capitale_stampa(testa,stdout);  
   puts("--- fine lista ---");
 
@@ -211,7 +211,16 @@ int main(int argc, char *argv[])
   puts("--- inizio lista ---");
   lista_capitale_stampa(testa,stdout);  
   puts("--- fine lista ---");
+  lista_capitale_distruggi(testa);
 
+  // costruzione lista inserendo per latitudine decrescente
+  rewind(f); // riavvolge il file
+  testa=crea_lista_lat(f);
+  puts("--- inizio lista ---");
+  // stampa lista capitali appena ri-creata
+  lista_capitale_stampa(testa,stdout);  
+  puts("--- fine lista ---");
+  
   if(fclose(f)==EOF)
     termina("Errore chiusura");
   // dealloca la memoria usata dalla lista 
