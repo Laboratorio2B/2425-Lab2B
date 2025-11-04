@@ -8,9 +8,15 @@
 #include <math.h>
 #include "strint.h"
 
+// Scopo del programma:
+//   mostrare un altro esempio di ABR
+//   mostrare l'uso della compilazione separata 
+
+
 
 // prototipi delle funzioni che appaiono dopo il main()
 void termina(const char *messaggio);
+
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +26,7 @@ int main(int argc, char *argv[])
   } 
 
   // inserisce le stringhe passate sulla linea di comando
-  // nell'abr con intero consecutivo 
+  // nell'abr associando gli interi 0,1,2,....
   strint *root = NULL;
   for(int i=1;i<argc;i++) {
     strint *si = strint_crea(argv[i],i-1);

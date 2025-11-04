@@ -9,6 +9,9 @@
 #include "strint.h"
 
 
+// funzioni per la gestione di una coppia stringa,intero
+// rappresentata dal tipo strint definito dentro strint.h
+
 void strint_stampa(const strint *a, FILE *f) {
   fprintf(f,"%20s (%d)\n",a->s,a->n);
 }
@@ -62,10 +65,6 @@ int abr_strint_sommanodi(const strint *root)
   }
   return tot;
 }
-
-
-
-
 
 
 // stampa tutti gli elementi dell'albero
